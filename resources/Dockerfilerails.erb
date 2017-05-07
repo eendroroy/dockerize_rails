@@ -11,7 +11,8 @@ RUN bundle install
 
 COPY . /usr/src/app
 COPY ./<%= PATHS.relative_from_current(PATHS.config) %>/entry-point.sh /usr/src/app/entry-point.sh
-COPY ./<%= PATHS.relative_from_current(PATHS.config) %>/database.yml /usr/src/app/database.yml
+COPY ./<%= PATHS.relative_from_current(PATHS.config) %>/database.yml /usr/src/app/config/database.yml
+COPY ./<%= PATHS.relative_from_current(PATHS.config) %>/secrets.yml /usr/src/app/config/secrets.yml
 
 EXPOSE <%= defined?(application_port) ? application_port : 5000 %>
-CMD ["bash", "entry-point.sh"]
+CMD ["bash", "/usr/src/app/entry-point.sh"]

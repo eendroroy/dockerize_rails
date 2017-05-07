@@ -17,13 +17,12 @@ services:
       - POSTGRES_PASSWORD=<%= defined?(db_pass) ? db_pass : 'postgres' %>
       <% elsif database == 'mysql' %>- MYSQL_ROOT_PASSWORD=<%= defined?(db_root_pass) ? db_root_pass : 'root' %>
       - MYSQL_USER=<%= defined?(db_user) ? db_user : 'root' %>
-      - MYSQL_ROOT_PASSWORD=<%= defined?(db_pass) ? db_pass : 'root' %>
+      - MYSQL_PASSWORD=<%= defined?(db_pass) ? db_pass : 'root' %>
       <% end %>
-
   rails:
     build:
       context: .
-      dockerfile: ./rockered/DockerfileRails
+      dockerfile: ./rockered/Dockerfilerails
       args:
         buildno: 1
     expose:
@@ -31,6 +30,6 @@ services:
     ports:
       - <%= defined?(application_port) ? "#{application_port}:#{application_port}" : '5000:5000' %>
     links:
-      - '<%= database %>:databasehost'
+      - '<%= database %>:<%= defined?(database_host_name) ? database_host_name : 'db' %>'
     depends_on:
       - <%= defined?(database) ? database : 'mysql' %>
