@@ -25,21 +25,19 @@ module Rockered
     end
 
     def self.create_namespace(rc, dbc)
-      namespace = read_rc(rc)
+      namespace = namespace_from_rc(rc)
       namespace.database = 'mysql' if dbc[rc['application_env']]['adapter'].start_with?('mysql')
       namespace.database = 'postgresql' if dbc[rc['application_env']]['adapter'].start_with?('postgresql')
+      namespace.db_user = dbc[rc['application_env']]['username']
+      namespace.db_pass = dbc[rc['application_env']]['password']
       namespace.database_dockerfile = PATHS.relative_from_current("#{PATHS.config}/Dockerfile#{namespace.database}")
       namespace
     end
 
-    def self.read_rc(rc, namespace = OpenStruct.new)
+    def self.namespace_from_rc(rc, namespace = OpenStruct.new)
       {
-        rails_version: '5',
-        application_env: 'production',
-        application_port: '5000',
-        db_root_pass: 'root',
-        postgres_version: 'alpine',
-        mysql_version: '5.7'
+        rails_version: '5', application_env: 'production', application_port: '5000',
+        db_root_pass: 'root', postgres_version: 'alpine', mysql_version: '5.7'
       }.map do |k, v|
         namespace.send("#{attr}=", rc[k] || v)
       end
@@ -70,25 +68,27 @@ module Rockered
       0
     end
 
-    def self.update_database_config(dbc)
-      (dbc.keys.reject { |f| f.match(%r{^(default)/}) }).each do |k|
-        dbc[k].keys.include?('host') ? dbc[k]['host'] = 'databasehost' : next
-      end
-      dbc.delete 'default'
+    def self.create_custom_database_config(dbc)
       puts "  ==> #{PATHS.relative_from_current(File.join(PATHS.config, 'database.yml'))}".green
       File.open(File.join(PATHS.config, 'database.yml'), 'w+').write(dbc.to_yaml)
       0
     end
 
     def self.generate_config_files(rc)
+      response = 0
       dbc = ConfigHelper.read_app_config
+      dbc.delete 'default'
+      { host: 'databasehost', username: 'user', password: 'pass', database: 'rockered_ENV' }.map do |k, v|
+        dbc.keys.each { |section| dbc[section][k.to_s] = v.gsub('ENV', section) }
+      end
+      response |= create_custom_database_config dbc
+
       namespace = create_namespace rc, dbc
 
       puts 'Generating config files ...'.yellow
-      write_to_config_dir %w[entry-point.sh DockerfileRails Dockerfilemysql Dockerfilepostgres], namespace
-      update_database_config dbc
-      write_to_current_dir %w[docker-compose.yml], namespace
-      0
+      response |= write_to_config_dir %w[entry-point.sh DockerfileRails Dockerfilemysql Dockerfilepostgresql], namespace
+      response |= write_to_current_dir %w[docker-compose.yml], namespace
+      response
     end
   end
 end

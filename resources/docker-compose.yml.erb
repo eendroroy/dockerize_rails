@@ -1,6 +1,24 @@
 version: '3'
 
 services:
+  <%= defined?(database) ? database : 'mysql' %>:
+    build:
+      context: .
+      dockerfile: ./<%= database_dockerfile %>
+      args:
+        buildno: 1
+    volumes:
+      - '.<%= defined?(data_dir) ? data_dir : '/rockered/data_dir' %>:/var/lib/<%= defined?(database) ? database : 'mysql' %>:rw'
+    ports:
+      <% if database == 'postgresql' %>- '5432:5432'
+      <% elsif database == 'mysql' %>- '3300:3306'<% end %>
+    environment:
+      <% if database == 'postgresql' %>- POSTGRES_USER=<%= defined?(db_user) ? db_user : 'postgres' %>
+      - POSTGRES_PASSWORD=<%= defined?(db_pass) ? db_pass : 'postgres' %>
+      <% elsif database == 'mysql' %>- MYSQL_ROOT_PASSWORD=<%= defined?(db_root_pass) ? db_root_pass : 'root' %>
+      - MYSQL_USER=<%= defined?(db_user) ? db_user : 'root' %>
+      - MYSQL_ROOT_PASSWORD=<%= defined?(db_pass) ? db_pass : 'root' %>
+      <% end %>
 
   rails:
     build:
@@ -14,21 +32,5 @@ services:
       - <%= defined?(application_port) ? "#{application_port}:#{application_port}" : '5000:5000' %>
     links:
       - '<%= database %>:databasehost'
-
-  <%= defined?(database) ? database : 'mysql' %>:
-    context: .
-      dockerfile: ./<%= database_dockerfile %>
-      args:
-        buildno: 1
-    volumes:
-      - '.<%= defined?(data_dir) ? data_dir : '/rockered/data_dir' %>:/var/lib/<%= defined?(database) ? database : 'mysql' %>:rw'
-    ports:
-      <% if database == 'mysql' %>- '3306:3306'
-      <% elsif database == 'postgresql' %>- '5432:5432'
-      <% else %>- '3306:3306'
-      <% end %>
-    environment:
-      <% if database == 'mysql' %>- MYSQL_ROOT_PASSWORD=<%= defined?(db_root_pass) ? db_root_pass : 'root' %>
-      <% elsif database == 'postgresql' %>- POSTGRES_PASSWORD=<%= defined?(db_root_pass) ? db_root_pass : 'root' %>
-      <% else %> - MYSQL_ROOT_PASSWORD=<%= defined?(db_root_pass) ? db_root_pass : 'root' %>
-      <% end %>
+    depends_on:
+      - <%= defined?(database) ? database : 'mysql' %>
