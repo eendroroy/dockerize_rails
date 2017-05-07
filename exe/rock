@@ -1,3 +1,3 @@
 require 'rockered'
 
-Rockered::CommandLine.invoke
+RockerCLI.run
