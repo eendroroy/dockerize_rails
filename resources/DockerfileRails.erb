@@ -1,0 +1,16 @@
+FROM rails:<%= rails_ersion | 5 %>
+
+RUN gem install bundler
+
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+
+COPY ./Gemfile /usr/src/app/
+COPY ./Gemfile.lock /usr/src/app/
+RUN bundle install
+
+COPY . /usr/src/app
+COPY ./docker/entry-point.sh /usr/src/app/entry-point.sh
+
+EXPOSE 666
+CMD ["bash", "entry-point.sh"]

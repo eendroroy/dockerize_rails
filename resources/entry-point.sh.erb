@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+RAILS_ENV=<%= environment | 'production' %> bundle exec rake assets:precompile
+RAILS_ENV=<%= environment | 'production' %> bundle exec rake db:setup
+RAILS_ENV=<%= environment | 'production' %> bundle exec rake db:migrate
+RAILS_ENV=<%= environment | 'production' %> bundle exec rails server -b 0.0.0.0 -p <%= port | 5000 %>
