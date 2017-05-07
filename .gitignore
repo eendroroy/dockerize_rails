@@ -11,4 +11,6 @@
 .ruby-version
 *.gem
 /vendor/ruby
-/config/rockered.yml
+/config/*
+/docker/*
+!*/.gitkeep
