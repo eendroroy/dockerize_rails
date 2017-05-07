@@ -12,5 +12,6 @@
 *.gem
 /vendor/ruby
 /config/*
-/docker/*
+/rockered
 !*/.gitkeep
+/docker-compose.yml

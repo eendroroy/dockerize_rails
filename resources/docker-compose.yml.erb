@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+
+  rails:
+    build:
+      context: .
+      dockerfile: rockered/DockerfileRails
+      args:
+        buildno: 1
+    expose:
+      - '666'
+    ports:
+      - '666:666'
+    links:
+      - 'mysql:databasehost'
+
+  mysql:
+    context: .
+      dockerfile: rockered/DockerfileMySQL
+      args:
+        buildno: 1
+    volumes:
+      - './rockered/data_dir:/var/lib/mysql:rw'
+    ports:
+      - '3306:3306'
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
