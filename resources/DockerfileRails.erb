@@ -1,4 +1,4 @@
-FROM rails:<%= defined?(rails_ersion) ? rails_version : 5 %>
+FROM rails:<%= defined?(rails_version) ? rails_version : 5 %>
 
 RUN gem install bundler
 
@@ -11,6 +11,7 @@ RUN bundle install
 
 COPY . /usr/src/app
 COPY ./docker/entry-point.sh /usr/src/app/entry-point.sh
+COPY ./rockered/database.yml /usr/src/app/database.yml
 
-EXPOSE 666
+EXPOSE <%= defined?(application_port) ? application_port : 5000 %>
 CMD ["bash", "entry-point.sh"]

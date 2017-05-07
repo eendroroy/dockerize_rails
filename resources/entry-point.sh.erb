@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
+<% if not defined?(application_env) or application_env == 'production' or application_env == 'staging' %>
+RAILS_ENV=<%= defined?(application_env) ? application_env : 'production' %> bundle exec rake assets:precompile
+<% end %>
+RAILS_ENV=<%= defined?(application_env) ? application_env : 'production' %> bundle exec rake db:setup
 
-RAILS_ENV=<%= defined?(environment) ? environment : 'production' %> bundle exec rake assets:precompile
-RAILS_ENV=<%= defined?(environment) ? environment : 'production' %> bundle exec rake db:setup
-RAILS_ENV=<%= defined?(environment) ? environment : 'production' %> bundle exec rake db:migrate
-RAILS_ENV=<%= defined?(environment) ? environment : 'production' %> bundle exec rails server -b 0.0.0.0 -p <%= defined?(application_port) ? application_port : 5000 %>
+RAILS_ENV=<%= defined?(application_env) ? application_env : 'production' %> bundle exec rake db:migrate
+
+RAILS_ENV=<%= defined?(application_env) ? application_env : 'production' %> bundle exec rails server -b 0.0.0.0 -p <%= defined?(application_port) ? application_port : 5000 %>

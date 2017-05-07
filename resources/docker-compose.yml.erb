@@ -13,7 +13,7 @@ services:
     ports:
       - <%= defined?(application_port) ? "#{application_port}:#{application_port}" : '5000:5000' %>
     links:
-      - 'mysql:databasehost'
+      - '<%= database %>:databasehost'
 
   <%= database %>:
     context: .
@@ -21,8 +21,10 @@ services:
       args:
         buildno: 1
     volumes:
-      - '.<%= defined?(data_dir) ? data_dir : '/rockered/data_dir' %>:/var/lib/mysql:rw'
+      <% if database == 'mysql' %>- '.<%= defined?(data_dir) ? data_dir : '/rockered/data_dir' %>:/var/lib/mysql:rw' <% end %>
+      <% if database == 'postgres' %>- '.<%= defined?(data_dir) ? data_dir : '/rockered/data_dir' %>:/var/lib/postgresql:rw' <% end %>
     ports:
       - '3306:3306'
     environment:
-      - MYSQL_ROOT_PASSWORD=root
+      <% if database == 'mysql' %>- MYSQL_ROOT_PASSWORD=<%= defined?(db_root_pass) ? db_root_pass : 'root' %> <% end %>
+      <% if database == 'postgres' %>- POSTGRES_PASSWORD=<%= defined?(db_root_pass) ? db_root_pass : 'root' %> <% end %>
