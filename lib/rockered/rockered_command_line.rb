@@ -3,7 +3,7 @@ module Rockered
     require 'colorize'
 
     def run
-      create_config
+      create_rockered_config
     end
 
     private
@@ -12,6 +12,10 @@ module Rockered
 
     def create_config
       ConfigGenerator.create_configs
+    end
+
+    def create_rockered_config
+      ConfigGenerator.configure_rockered
     end
 
     def parse_config

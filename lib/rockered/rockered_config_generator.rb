@@ -2,6 +2,15 @@ module Rockered
   module ConfigGenerator
     CONFIG_DIR_NAME = 'docker'.freeze
 
+    def self.configure_rockered
+      puts "  ==> #{PATHS.relative_from_current(PATHS.rockered_config_file)}".green
+      File.open(PATHS.rockered_config_file, 'w+').write(
+        StringIO.new(
+          ERB.new(File.read(File.join(PATHS.resources, 'rockered.yml.erb'))).result(binding)
+        ).read
+      )
+    end
+
     def self.create_configs
       create_config_directory
       generate_config_files
@@ -61,7 +70,7 @@ module Rockered
       namespace = create_namespace dbc
 
       puts 'Generating config files ...'.yellow
-      write_to_config_dir %w[rockered.yml entry-point.sh DockerfileRails Dockerfilemysql Dockerfilepostgres], namespace
+      write_to_config_dir %w[entry-point.sh DockerfileRails Dockerfilemysql Dockerfilepostgres], namespace
       update_database_config dbc
       write_to_current_dir %w[docker-compose.yml], namespace
     end
