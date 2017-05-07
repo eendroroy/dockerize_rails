@@ -16,6 +16,10 @@ module Rockered
       File.join(current, 'rockered')
     end
 
+    def self.rockered_config_file
+      File.join(current, '.rockered.yml')
+    end
+
     def self.relative(base, target)
       Pathname.new(target).relative_path_from(Pathname.new(base)).to_s
     end
