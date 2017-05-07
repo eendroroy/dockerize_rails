@@ -3,14 +3,25 @@ module Rockered
     require 'colorize'
 
     def run
-      create_rockered_config
+      opts = parse_opts
+      invoke(opts.command, opts. args)
     end
 
     private
 
-    def parse_opts; end
+    def invoke(command, _args)
+      case command
+      when 'configure', 'c' then create_rockered_config
+      when 'config_gen', 'cg' then create_configs
+      else puts Rockered::HELP_MESSAGE.white
+      end
+    end
 
-    def create_config
+    def parse_opts
+      OpenStruct.new(command: ARGV[0].to_s, args: ARGV[1..ARGV.size].to_a)
+    end
+
+    def create_configs
       ConfigGenerator.create_configs
     end
 
