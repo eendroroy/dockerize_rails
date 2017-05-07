@@ -15,16 +15,20 @@ services:
     links:
       - '<%= database %>:databasehost'
 
-  <%= database %>:
+  <%= defined?(database) ? database : 'mysql' %>:
     context: .
       dockerfile: ./<%= database_dockerfile %>
       args:
         buildno: 1
     volumes:
-      <% if database == 'mysql' %>- '.<%= defined?(data_dir) ? data_dir : '/rockered/data_dir' %>:/var/lib/mysql:rw' <% end %>
-      <% if database == 'postgres' %>- '.<%= defined?(data_dir) ? data_dir : '/rockered/data_dir' %>:/var/lib/postgresql:rw' <% end %>
+      - '.<%= defined?(data_dir) ? data_dir : '/rockered/data_dir' %>:/var/lib/<%= defined?(database) ? database : 'mysql' %>:rw'
     ports:
-      - '3306:3306'
+      <% if database == 'mysql' %>- '3306:3306'
+      <% elsif database == 'postgresql' %>- '5432:5432'
+      <% else %>- '3306:3306'
+      <% end %>
     environment:
-      <% if database == 'mysql' %>- MYSQL_ROOT_PASSWORD=<%= defined?(db_root_pass) ? db_root_pass : 'root' %> <% end %>
-      <% if database == 'postgres' %>- POSTGRES_PASSWORD=<%= defined?(db_root_pass) ? db_root_pass : 'root' %> <% end %>
+      <% if database == 'mysql' %>- MYSQL_ROOT_PASSWORD=<%= defined?(db_root_pass) ? db_root_pass : 'root' %>
+      <% elsif database == 'postgresql' %>- POSTGRES_PASSWORD=<%= defined?(db_root_pass) ? db_root_pass : 'root' %>
+      <% else %> - MYSQL_ROOT_PASSWORD=<%= defined?(db_root_pass) ? db_root_pass : 'root' %>
+      <% end %>
