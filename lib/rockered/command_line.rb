@@ -10,11 +10,28 @@ module Rockered
     private
 
     def invoke(command, _args)
+      commands = processed_commands
       case command
-      when 'configure', 'c' then create_rockered_config
-      when 'config_gen', 'cg' then create_configs
-      else puts Rockered::HELP_MESSAGE.white
+      when *(commands[:configure_rockered]) then create_rockered_config
+      when *(commands[:configure]) then create_configs
+      else puts generate_help.white
       end
+    end
+
+    def processed_commands
+      Hash[COMMANDS.keys.map do |k|
+        [k, COMMANDS[k][:aliases].map(&:to_s)]
+      end]
+    end
+
+    def generate_help
+      ['',
+       'Available Commands are:',
+       '',
+       COMMANDS.keys.map do |k|
+         "    #{COMMANDS[k][:aliases].map(&:to_s).join(', ').ljust(30, ' ')} - #{COMMANDS[k][:help]}"
+       end,
+       ''].join("\n")
     end
 
     def parse_opts
