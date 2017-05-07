@@ -1,1 +1,1 @@
-FROM mysql:<%= mysql_version %>
+FROM mysql:<%= defined?(mysql_version) ? mysql_version : 5.7 %>

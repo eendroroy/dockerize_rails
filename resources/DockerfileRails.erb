@@ -1,4 +1,4 @@
-FROM rails:<%= rails_ersion | 5 %>
+FROM rails:<%= defined?(rails_ersion) ? rails_version : 5 %>
 
 RUN gem install bundler
 
