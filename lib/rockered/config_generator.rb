@@ -9,11 +9,12 @@ module Rockered
           ERB.new(File.read(File.join(PATHS.resources, 'rockered.yml.erb'))).result(binding)
         ).read
       )
+      0
     end
 
-    def self.create_configs
+    def self.create_configs(rc)
       create_config_directory
-      generate_config_files
+      generate_config_files(rc)
     end
 
     def self.create_config_directory
@@ -23,14 +24,25 @@ module Rockered
       FileUtils.mkdir_p(data_dir) unless File.directory?(data_dir)
     end
 
-    def self.create_namespace(dbc)
-      namespace = OpenStruct.new
+    def self.create_namespace(rc, dbc)
+      namespace = read_rc(rc)
+      namespace.database = 'mysql' if dbc[rc['application_env']]['adapter'].start_with?('mysql')
+      namespace.database = 'postgresql' if dbc[rc['application_env']]['adapter'].start_with?('postgresql')
+      namespace.database_dockerfile = PATHS.relative_from_current("#{PATHS.config}/Dockerfile#{namespace.database}")
+      namespace
+    end
 
-      dbc.keys.each do |k|
-        namespace.database = 'mysql' if dbc[k].keys.include?('adapter') && dbc[k]['adapter'].start_with?('mysql')
-        namespace.database_dockerfile = PATHS.relative_from_current(File.join(PATHS.config, 'Dockerfilemysql'))
+    def self.read_rc(rc, namespace = OpenStruct.new)
+      {
+        rails_version: '5',
+        application_env: 'production',
+        application_port: '5000',
+        db_root_pass: 'root',
+        postgres_version: 'alpine',
+        mysql_version: '5.7'
+      }.map do |k, v|
+        namespace.send("#{attr}=", rc[k] || v)
       end
-
       namespace
     end
 
@@ -43,6 +55,7 @@ module Rockered
           ).read
         )
       end
+      0
     end
 
     def self.write_to_current_dir(config_names, namespace)
@@ -54,6 +67,7 @@ module Rockered
           ).read
         )
       end
+      0
     end
 
     def self.update_database_config(dbc)
@@ -63,16 +77,18 @@ module Rockered
       dbc.delete 'default'
       puts "  ==> #{PATHS.relative_from_current(File.join(PATHS.config, 'database.yml'))}".green
       File.open(File.join(PATHS.config, 'database.yml'), 'w+').write(dbc.to_yaml)
+      0
     end
 
-    def self.generate_config_files
+    def self.generate_config_files(rc)
       dbc = ConfigHelper.read_app_config
-      namespace = create_namespace dbc
+      namespace = create_namespace rc, dbc
 
       puts 'Generating config files ...'.yellow
       write_to_config_dir %w[entry-point.sh DockerfileRails Dockerfilemysql Dockerfilepostgres], namespace
       update_database_config dbc
       write_to_current_dir %w[docker-compose.yml], namespace
+      0
     end
   end
 end

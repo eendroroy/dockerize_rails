@@ -1,7 +1,7 @@
 module Rockered
   module CommandLine
     def run
-      CommandLineMethods.invoke
+      exit(CommandLineMethods.invoke)
     end
   end
 end

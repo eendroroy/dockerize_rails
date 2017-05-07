@@ -4,36 +4,28 @@ module Rockered
 
     def self.invoke
       opts = parse_opts
-      commands = processed_commands
+      commands = Helpers.processed_commands
+      rc = ConfigHelper.read_rockered_config(opts.command)
       case opts.command
-      when *(commands[:configure_rockered]) then create_rockered_config
-      when *(commands[:configure]) then create_configs
-      else puts generate_help.white
+      when *(commands[:configure_rockered])
+        return create_rockered_config
+      when *(commands[:configure])
+        return create_configs(rc)
+      when *(commands[:help])
+        puts Helpers.help.white
+        return 0
+      else
+        puts Helpers.help.white
+        return 1
       end
-    end
-
-    def self.processed_commands
-      Hash[COMMANDS.keys.map do |k|
-        [k, COMMANDS[k][:aliases].map(&:to_s)]
-      end]
-    end
-
-    def self.generate_help
-      ['',
-       'Available Commands are:',
-       '',
-       COMMANDS.keys.map do |k|
-         "    #{COMMANDS[k][:aliases].map(&:to_s).join(', ').ljust(30, ' ')} - #{COMMANDS[k][:help]}"
-       end,
-       ''].join("\n")
     end
 
     def self.parse_opts
       OpenStruct.new(command: ARGV[0].to_s, args: ARGV[1..ARGV.size].to_a)
     end
 
-    def self.create_configs
-      ConfigGenerator.create_configs
+    def self.create_configs(rc)
+      ConfigGenerator.create_configs(rc)
     end
 
     def self.create_rockered_config

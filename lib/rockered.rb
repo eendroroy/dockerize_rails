@@ -4,6 +4,7 @@ require 'rockered/config_generator'
 require 'rockered/config_helper'
 require 'rockered/docker_helper'
 require 'rockered/paths'
+require 'rockered/helpers'
 require 'rockered/version'
 require 'rockered/constants'
 
@@ -14,6 +15,7 @@ module Rockered
   private_constant :COMMANDS
   private_constant :DockerHelper
   private_constant :PATHS
+  private_constant :Helpers
 end
 
 class RockererCLI
