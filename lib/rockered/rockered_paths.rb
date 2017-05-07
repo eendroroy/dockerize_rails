@@ -12,8 +12,16 @@ module Rockered
       File.join(root, 'resources')
     end
 
-    def self.config_dir
-      File.join(current, 'docker')
+    def self.config
+      File.join(current, 'rockered')
+    end
+
+    def self.relative(base, target)
+      Pathname.new(target).relative_path_from(Pathname.new(base)).to_s
+    end
+
+    def self.relative_from_current(target)
+      relative(current, target)
     end
   end
 end
