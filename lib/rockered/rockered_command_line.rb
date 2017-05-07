@@ -15,7 +15,7 @@ module Rockered
     end
 
     def parse_config
-      ConfigParser.config
+      ConfigHelper.config
     end
 
     def info
