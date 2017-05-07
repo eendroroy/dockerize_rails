@@ -37,7 +37,7 @@ module Rockered
     def self.namespace_from_rc(rc, namespace = OpenStruct.new)
       {
         rails_version: '5', application_env: 'production', application_port: '5000',
-        db_root_pass: 'root', postgres_version: 'alpine', mysql_version: '5.7'
+        db_root_pass: 'root', postgres_version: 'alpine', mysql_version: '5.7', database_host_name: 'database_name'
       }.map do |k, v|
         namespace.send("#{attr}=", rc[k] || v)
       end
@@ -46,7 +46,7 @@ module Rockered
 
     def self.write_to_config_dir(config_names, namespace)
       config_names.each do |conf|
-        puts "  ==> #{PATHS.relative_from_current(File.join(PATHS.config, conf).to_s)}".green
+        puts "    ==> #{PATHS.relative_from_current(File.join(PATHS.config, conf).to_s)}".green
         File.open(File.join(PATHS.config, conf), 'w+').write(
           StringIO.new(
             ERB.new(File.read(File.join(PATHS.resources, "#{conf}.erb"))).result(namespace.instance_eval { binding })
@@ -58,7 +58,7 @@ module Rockered
 
     def self.write_to_current_dir(config_names, namespace)
       config_names.each do |conf|
-        puts "  ==> #{PATHS.relative_from_current(File.join(PATHS.current, conf).to_s)}".green
+        puts "    ==> #{PATHS.relative_from_current(File.join(PATHS.current, conf).to_s)}".green
         File.open(File.join(PATHS.current, conf), 'w+').write(
           StringIO.new(
             ERB.new(File.read(File.join(PATHS.resources, "#{conf}.erb"))).result(namespace.instance_eval { binding })
@@ -69,7 +69,7 @@ module Rockered
     end
 
     def self.create_custom_database_config(dbc)
-      puts "  ==> #{PATHS.relative_from_current(File.join(PATHS.config, 'database.yml'))}".green
+      puts "    ==> #{PATHS.relative_from_current(File.join(PATHS.config, 'database.yml'))}".green
       File.open(File.join(PATHS.config, 'database.yml'), 'w+').write(dbc.to_yaml)
       0
     end
@@ -78,16 +78,16 @@ module Rockered
       response = 0
       dbc = ConfigHelper.read_app_config
       dbc.delete 'default'
-      { host: 'databasehost', username: 'user', password: 'pass', database: 'rockered_ENV' }.map do |k, v|
-        dbc.keys.each { |section| dbc[section][k.to_s] = v.gsub('ENV', section) }
+      { host: rc['database_host_name'], username: 'root', password: 'root', database: 'rockered_#' }.map do |k, v|
+        dbc.keys.each { |section| dbc[section][k.to_s] = v.gsub('#', section) }
       end
-      response |= create_custom_database_config dbc
-
       namespace = create_namespace rc, dbc
 
-      puts 'Generating config files ...'.yellow
-      response |= write_to_config_dir %w[entry-point.sh DockerfileRails Dockerfilemysql Dockerfilepostgresql], namespace
-      response |= write_to_current_dir %w[docker-compose.yml], namespace
+      puts "\nGenerating config files ...".yellow
+      response |= create_custom_database_config dbc
+      response |= write_to_config_dir TEMPLATES[:config_dir], namespace
+      response |= write_to_current_dir TEMPLATES[:current_dir], namespace
+      puts
       response
     end
   end
