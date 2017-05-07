@@ -1,5 +1,8 @@
-require "rockered/version"
+require 'rockered/rockered_command_line'
+require 'rockered/rockered_config_generator'
+require 'rockered/rockered_paths'
+require 'rockered/version'
 
-module Rockered
-  # Your code goes here...
+class RockererCLI
+  extend Rockered::CommandLine
 end
