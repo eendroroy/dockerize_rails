@@ -1,24 +1,26 @@
 # Rockered
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/rockered`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+[![Gem Version](https://badge.fury.io/rb/rockered.svg)](https://badge.fury.io/rb/rockered)
+[![Build Status](https://travis-ci.org/eendroroy/rockered.svg?branch=master)](https://travis-ci.org/eendroroy/rockered)
+[![Code Climate](https://codeclimate.com/github/eendroroy/rockered/badges/gpa.svg)](https://codeclimate.com/github/eendroroy/rockered)
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Add this line to your rails application's Gemfile:
 
 ```ruby
 gem 'rockered'
 ```
 
 And then execute:
-
-    $ bundle
+```bash
+$ bundle
+```
 
 Or install it yourself as:
-
-    $ gem install rockered
+```bash
+$ gem install rockered
+```
 
 ## Usage
 
