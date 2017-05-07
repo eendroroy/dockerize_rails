@@ -4,8 +4,6 @@ module Rockered
 
     def run
       create_config
-      parse_config
-      info
     end
 
     private
@@ -13,11 +11,11 @@ module Rockered
     def parse_opts; end
 
     def create_config
-      puts ConfigGenerator.create_configs
+      ConfigGenerator.create_configs
     end
 
     def parse_config
-      puts ConfigParser.config
+      ConfigParser.config
     end
 
     def info
