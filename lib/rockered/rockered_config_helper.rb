@@ -1,5 +1,5 @@
 module Rockered
-  module ConfigParser
+  module ConfigHelper
     require 'yaml'
 
     def self.read_app_config
