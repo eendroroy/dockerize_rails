@@ -14,3 +14,5 @@
 /rockered
 !*/.gitkeep
 /docker-compose.yml
+/config
+/.rockered.yml
