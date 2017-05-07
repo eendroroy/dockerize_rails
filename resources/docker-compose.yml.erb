@@ -5,23 +5,23 @@ services:
   rails:
     build:
       context: .
-      dockerfile: rockered/DockerfileRails
+      dockerfile: ./rockered/DockerfileRails
       args:
         buildno: 1
     expose:
-      - '666'
+      - <%= defined?(application_port) ? application_port : '5000' %>
     ports:
-      - '666:666'
+      - <%= defined?(application_port) ? "#{application_port}:#{application_port}" : '5000:5000' %>
     links:
       - 'mysql:databasehost'
 
-  mysql:
+  <%= database %>:
     context: .
-      dockerfile: rockered/DockerfileMySQL
+      dockerfile: ./<%= database_dockerfile %>
       args:
         buildno: 1
     volumes:
-      - './rockered/data_dir:/var/lib/mysql:rw'
+      - '.<%= defined?(data_dir) ? data_dir : '/rockered/data_dir' %>:/var/lib/mysql:rw'
     ports:
       - '3306:3306'
     environment:
