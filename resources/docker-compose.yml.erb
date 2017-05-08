@@ -8,7 +8,7 @@ services:
       args:
         buildno: 1
     volumes:
-      - '.<%= defined?(data_dir) ? data_dir : '/rockered/data_dir' %>:/var/lib/<%= defined?(database) ? database : 'mysql' %>:rw'
+      - './<%= defined?(data_dir) ? data_dir : "#{PATHS.relative_from_current(PATHS.config)}/data_dir" %>:/var/lib/<%= defined?(database) ? database : 'mysql' %>:rw'
     ports:
       <% if database == 'postgresql' %>- '5432:5432'
       <% elsif database == 'mysql' %>- '3300:3306'<% end %>
@@ -16,19 +16,19 @@ services:
       <% if database == 'postgresql' %>- POSTGRES_USER=<%= defined?(db_user) ? db_user : 'postgres' %>
       - POSTGRES_PASSWORD=<%= defined?(db_pass) ? db_pass : 'postgres' %>
       <% elsif database == 'mysql' %>- MYSQL_ROOT_PASSWORD=<%= defined?(db_root_pass) ? db_root_pass : 'root' %>
-      - MYSQL_USER=<%= defined?(db_user) ? db_user : 'root' %>
-      - MYSQL_PASSWORD=<%= defined?(db_pass) ? db_pass : 'root' %>
+      <% if defined?(db_user) && db_user != 'root' %>- MYSQL_USER=<%= defined?(db_user) ? db_user : 'user' %>
+      - MYSQL_PASSWORD=<%= defined?(db_pass) ? db_pass : 'pass' %><% end %>
       <% end %>
   rails:
     build:
       context: .
-      dockerfile: ./rockered/Dockerfilerails
+      dockerfile: ./<%= PATHS.relative_from_current(PATHS.config) %>/Dockerfilerails
       args:
         buildno: 1
     expose:
-      - <%= defined?(application_port) ? application_port : '5000' %>
+      - '<%= defined?(application_port) ? application_port : '5000' %>'
     ports:
-      - <%= defined?(application_port) ? "#{application_port}:#{application_port}" : '5000:5000' %>
+      - '<%= defined?(application_port) ? "#{application_port}:#{application_port}" : '5000:5000' %>'
     links:
       - '<%= database %>:<%= defined?(database_host_name) ? database_host_name : 'db' %>'
     depends_on:

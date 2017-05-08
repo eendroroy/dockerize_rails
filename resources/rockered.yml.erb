@@ -8,7 +8,7 @@ rails_version: 5
 # set docker container's rails environment to production, staging, or development
 #
 # default is 'production'
-application_env: production
+application_env: development
 
 # set docker container's rails port
 # if you have any application running on a specific port, suppose 80
@@ -35,7 +35,8 @@ postgres_version: alpine
 # default is 5.7
 mysql_version: 5.7
 
-# set database host name to link rails and database container
-#
-# default is 'db'
+# set database properties
 database_host_name: db
+database_user_name: user
+database_user_pass: pass
+database_name_prefix: rockered
