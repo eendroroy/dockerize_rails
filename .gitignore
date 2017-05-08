@@ -16,3 +16,5 @@
 /docker-compose.yml
 /config
 /.rockered.yml
+/.rockered
+/.dockerignore

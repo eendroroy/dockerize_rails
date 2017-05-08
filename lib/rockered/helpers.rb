@@ -12,16 +12,19 @@ module Rockered
 
     def self.help
       ['',
-       'Available Commands are:',
+       'Usage: rocker <command>',
+       '   or: bundle exec rocker <command>',
+       '',
+       '    commands:',
        '',
        COMMANDS.keys.map do |k|
-         "    #{COMMANDS[k][:aliases].map(&:to_s).join(', ').ljust(30, ' ')} - #{COMMANDS[k][:help]}"
+         "        #{COMMANDS[k][:aliases].map(&:to_s).join(', ').ljust(30, ' ')} - #{COMMANDS[k][:help]}"
        end,
        '',
        ''].join("\n")
     end
 
-    def print_formatted_info(name, value)
+    def self.print_formatted_info(name, value)
       print name.ljust(15, ' ').yellow, value.blue
     end
   end

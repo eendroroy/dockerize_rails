@@ -66,6 +66,21 @@ database_name_prefix: #{database_name_prefix}
 "
     end
 
+    def self.to_hash
+      {
+        rails_version: rails_version,
+        application_env: application_env,
+        application_port: application_port,
+        postgres_version: postgres_version,
+        mysql_version: mysql_version,
+        db_root_pass: db_root_pass,
+        database_host_name: database_host_name,
+        database_user_name: database_user_name,
+        database_user_pass: database_user_pass,
+        database_name_prefix: database_name_prefix
+      }
+    end
+
     class << self
       attr_accessor :rails_version
       attr_accessor :application_env

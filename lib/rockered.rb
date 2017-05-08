@@ -8,6 +8,7 @@ require 'rockered/helpers'
 require 'rockered/version'
 require 'rockered/constants'
 require 'rockered/command_line'
+require 'rockered/r_name_space'
 
 module Rockered
   private_constant :CommandLineMethods

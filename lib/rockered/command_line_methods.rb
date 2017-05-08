@@ -3,33 +3,34 @@ module Rockered
     require 'colorize'
 
     def self.invoke
-      opts = Helpers.parse_opts
       commands = Helpers.processed_commands
-      rc = ConfigLoader.load_rockered_config(opts.command)
-      case opts.command
+      case Helpers.parse_opts.command
       when *(commands[:configure])
         return configure
-      when *(commands[:dockrize])
-        return dockrize(rc)
+      when *(commands[:dockerize])
+        RNameSpace.load
+        return dockrize
+      when *(commands[:docker_info])
+        return docker_info
       when *(commands[:help])
-        help
-        return 0
+        return help
       else
-        help
-        return 1
+        return help 1
       end
     end
 
-    def self.dockrize(rc)
-      ConfigGenerator.dockrize(rc)
+    def self.dockrize
+      ConfigGenerator.dockrize
     end
 
     def self.configure
       ConfigGenerator.configure
     end
 
-    def self.help
+    def self.help(status = 0)
+      puts "\nCommand not found".red if status != 0
       puts Helpers.help.white
+      status
     end
 
     def self.docker_info
@@ -42,6 +43,7 @@ module Rockered
       # Helpers.print_formatted_info 'OS', "#{v['Os']}_#{v['Arch']}_#{v['KernelVersion']}\n"
       Helpers.print_formatted_info 'Experimental', "#{v['Experimental']}\n"
       Helpers.print_formatted_info 'Build Time', "#{DateTime.parse(v['BuildTime']).strftime('%b %d, %Y %I:%M %p')}\n"
+      0
     end
   end
 end
