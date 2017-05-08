@@ -1,4 +1,4 @@
-require 'rockered/command_line'
+require 'rockered/rockered_config'
 require 'rockered/command_line_methods'
 require 'rockered/config_generator'
 require 'rockered/config_loader'
@@ -7,6 +7,7 @@ require 'rockered/paths'
 require 'rockered/helpers'
 require 'rockered/version'
 require 'rockered/constants'
+require 'rockered/command_line'
 
 module Rockered
   private_constant :CommandLineMethods
