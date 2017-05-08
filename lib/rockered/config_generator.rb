@@ -1,8 +1,10 @@
 module Rockered
   module ConfigGenerator
     def self.configure
+      puts "\nGenerating Rockered config file ...\n".yellow
       puts "  ==> #{PATHS.relative_from_current(PATHS.rockered_config_file)}".green
       File.open(PATHS.rockered_config_file, 'w+').write(RockeredConfig.to_yaml_str)
+      puts
       0
     end
 
@@ -22,7 +24,7 @@ module Rockered
 
     def self.generate_config_files
       resp = 0
-      puts "\nGenerating config files ...".yellow
+      puts "\nGenerating config files ...\n".yellow
       resp += create_custom_database_config
       resp += write_to_dir PATHS.config_directory, TEMPLATES[:config_dir]
       resp += write_to_dir PATHS.current, TEMPLATES[:current_dir]

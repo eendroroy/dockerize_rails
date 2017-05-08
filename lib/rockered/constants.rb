@@ -27,7 +27,7 @@ module Rockered
       Dockerfilepostgresql
       sqls/initdb-mysql.sql
     ].freeze,
-    current_dir: %w[docker-compose.yml .dockerignore].freeze
+    current_dir: %w[.dockerignore docker-compose.yml].freeze
   }.freeze
 
   CONFIG_DIRECTORY_NAME = '.rockered'.freeze
