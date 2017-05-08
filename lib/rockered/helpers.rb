@@ -1,5 +1,7 @@
 module Rockered
   module Helpers
+    require 'ostruct'
+
     def self.processed_commands
       Hash[COMMANDS.keys.map do |k|
         [k, COMMANDS[k][:aliases].map(&:to_s)]

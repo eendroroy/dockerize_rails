@@ -1,5 +1,7 @@
 module Rockered
   class RNameSpace
+    require 'ostruct'
+
     @namespace = OpenStruct.new
 
     attr_reader :namespace

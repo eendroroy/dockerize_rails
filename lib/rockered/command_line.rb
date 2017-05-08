@@ -1,7 +1,8 @@
 module Rockered
   module CommandLine
     def run
-      exit(CommandLineMethods.invoke)
+      opts = Helpers.parse_opts
+      exit(CommandLineMethods.invoke(opts))
     end
   end
 end

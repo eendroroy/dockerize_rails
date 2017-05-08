@@ -1,14 +1,14 @@
-require 'rockered/version'
-require 'rockered/constants'
 require 'rockered/paths'
-require 'rockered/rockered_config'
-require 'rockered/command_line'
-require 'rockered/command_line_methods'
 require 'rockered/helpers'
-require 'rockered/config_loader'
-require 'rockered/config_generator'
 require 'rockered/r_name_space'
+require 'rockered/config_loader'
+require 'rockered/rockered_config'
+require 'rockered/config_generator'
 require 'rockered/docker_helper'
+require 'rockered/constants'
+require 'rockered/version'
+require 'rockered/command_line_methods'
+require 'rockered/command_line'
 
 module Rockered
   private_constant :CommandLineMethods

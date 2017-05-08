@@ -2,9 +2,9 @@ module Rockered
   module CommandLineMethods
     require 'colorize'
 
-    def self.invoke
+    def self.invoke(opts)
       commands = Helpers.processed_commands
-      case Helpers.parse_opts.command
+      case opts[0]
       when *(commands[:configure])
         return configure
       when *(commands[:dockerize])
