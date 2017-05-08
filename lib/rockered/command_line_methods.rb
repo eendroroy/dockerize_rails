@@ -36,6 +36,7 @@ module Rockered
     def self.docker_info
       v = DockerHelper.version
 
+      puts
       Helpers.print_formatted_info 'Docker Version', "#{v['Version']}\n"
       Helpers.print_formatted_info 'API', "#{v['ApiVersion']} : #{v['MinAPIVersion']}\n"
       Helpers.print_formatted_info 'Git Commit', "#{v['GitCommit']}\n"
@@ -43,6 +44,7 @@ module Rockered
       # Helpers.print_formatted_info 'OS', "#{v['Os']}_#{v['Arch']}_#{v['KernelVersion']}\n"
       Helpers.print_formatted_info 'Experimental', "#{v['Experimental']}\n"
       Helpers.print_formatted_info 'Build Time', "#{DateTime.parse(v['BuildTime']).strftime('%b %d, %Y %I:%M %p')}\n"
+      puts
       0
     end
   end

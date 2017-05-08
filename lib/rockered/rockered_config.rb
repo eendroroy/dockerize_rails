@@ -1,5 +1,7 @@
 module Rockered
   class RockeredConfig
+    @application_name     = 'rockered'
+
     @rails_version        = 'latest'
     @application_env      = 'development'
     @application_port     = '5000'
@@ -11,10 +13,28 @@ module Rockered
     @database_host_name   = 'db'
     @database_user_name   = 'user'
     @database_user_pass   = 'pass'
-    @database_name_prefix = 'rockered'
+
+    def self.load_rockered_config
+      if File.exist? PATHS.rockered_config_file
+        rockered_config = YAML.load_file(PATHS.rockered_config_file)
+        %w[
+          @application_name rails_version application_env application_port postgres_version mysql_version
+          db_root_pass database_host_name database_user_name database_user_pass database_name_prefix
+        ].each do |attr|
+          send("#{attr}=", rockered_config[attr]) unless rockered_config[attr].nil?
+        end
+      else
+        puts "\nRockered not yet configured...\nRun 'bundle exec rocker configure' to configure rockered.\n".yellow
+      end
+    end
 
     def self.to_yaml_str
       "---
+# Set application name
+#
+# Default is #{application_name}
+@application_name: #{application_name}
+
 # Set rails version
 # Visit: https://hub.docker.com/_/rails/ for list of available versions
 #
@@ -61,13 +81,12 @@ database_user_name: #{database_user_name}
 # Default #{database_user_pass}
 database_user_pass: #{database_user_pass}
 
-# Default #{database_name_prefix}
-database_name_prefix: #{database_name_prefix}
 "
     end
 
     def self.to_hash
       {
+        application_name: application_name,
         rails_version: rails_version,
         application_env: application_env,
         application_port: application_port,
@@ -76,12 +95,12 @@ database_name_prefix: #{database_name_prefix}
         db_root_pass: db_root_pass,
         database_host_name: database_host_name,
         database_user_name: database_user_name,
-        database_user_pass: database_user_pass,
-        database_name_prefix: database_name_prefix
+        database_user_pass: database_user_pass
       }
     end
 
     class << self
+      attr_accessor :application_name
       attr_accessor :rails_version
       attr_accessor :application_env
       attr_accessor :application_port
@@ -91,7 +110,6 @@ database_name_prefix: #{database_name_prefix}
       attr_accessor :database_host_name
       attr_accessor :database_user_name
       attr_accessor :database_user_pass
-      attr_accessor :database_name_prefix
     end
   end
 end

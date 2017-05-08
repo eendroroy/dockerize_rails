@@ -13,17 +13,17 @@ module Rockered
     end
 
     def self.help
-      ['',
-       'Usage: rocker <command>',
-       '   or: bundle exec rocker <command>',
-       '',
-       '    commands:',
-       '',
+      ['
+Usage: rocker <command>
+   or: bundle exec rocker <command>
+
+   commands:
+       ',
        COMMANDS.keys.map do |k|
          "        #{COMMANDS[k][:aliases].map(&:to_s).join(', ').ljust(30, ' ')} - #{COMMANDS[k][:help]}"
        end,
-       '',
-       ''].join("\n")
+       '
+       '].join("\n")
     end
 
     def self.print_formatted_info(name, value)

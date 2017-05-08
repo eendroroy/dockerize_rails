@@ -7,6 +7,7 @@ module Rockered
     attr_reader :namespace
 
     def self.load
+      RockeredConfig.load_rockered_config
       load_from_app_config
       load_from_rockered_config
     end
