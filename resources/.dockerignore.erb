@@ -1,0 +1,19 @@
+.idea/*
+.bundle
+test
+vendor/bundle
+vendor/ruby
+log/*
+tmp/*
+!/log/.keep
+!/tmp/.keep
+.byebug_history
+config/database.yml
+.ruby-gemset
+.ruby-version
+public/uploads
+public/assets
+
+docker-compose.yml
+<%= PATHS.relative_from_current(PATHS.rockered_config_file) %>
+<%= PATHS.relative_from_current(PATHS.config_directory) %>

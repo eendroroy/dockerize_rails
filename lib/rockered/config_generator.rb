@@ -27,7 +27,7 @@ module Rockered
       namespace.database = 'postgresql' if dbc[rc['application_env']]['adapter'].start_with?('postgresql')
       namespace.db_user = dbc[rc['application_env']]['username']
       namespace.db_pass = dbc[rc['application_env']]['password']
-      namespace.database_dockerfile = PATHS.relative_from_current("#{PATHS.config}/Dockerfile#{namespace.database}")
+      namespace.database_dockerfile = PATHS.relative_from_current("#{PATHS.config_directory}/Dockerfile#{namespace.database}")
       namespace
     end
 
@@ -44,8 +44,8 @@ module Rockered
 
     def self.write_to_config_dir(config_names, namespace)
       config_names.each do |conf|
-        puts "    ==> #{PATHS.relative_from_current(File.join(PATHS.config, conf).to_s)}".green
-        File.open(File.join(PATHS.config, conf), 'w+').write(
+        puts "    ==> #{PATHS.relative_from_current(File.join(PATHS.config_directory, conf).to_s)}".green
+        File.open(File.join(PATHS.config_directory, conf), 'w+').write(
           StringIO.new(
             ERB.new(File.read(File.join(PATHS.resources, "#{conf}.erb"))).result(namespace.instance_eval { binding })
           ).read
@@ -67,8 +67,8 @@ module Rockered
     end
 
     def self.create_custom_database_config(dbc)
-      puts "    ==> #{PATHS.relative_from_current(File.join(PATHS.config, 'database.yml'))}".green
-      File.open(File.join(PATHS.config, 'database.yml'), 'w+').write(dbc.to_yaml)
+      puts "    ==> #{PATHS.relative_from_current(File.join(PATHS.config_directory, 'database.yml'))}".green
+      File.open(File.join(PATHS.config_directory, 'database.yml'), 'w+').write(dbc.to_yaml)
       0
     end
 

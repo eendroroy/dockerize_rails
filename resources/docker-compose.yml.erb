@@ -8,7 +8,7 @@ services:
       args:
         buildno: 1
     volumes:
-      - './<%= defined?(data_dir) ? data_dir : "#{PATHS.relative_from_current(PATHS.config)}/data_dir" %>:/var/lib/<%= defined?(database) ? database : 'mysql' %>:rw'
+      - './<%= defined?(data_dir) ? data_dir : "#{PATHS.relative_from_current(PATHS.config_directory)}/data_dir" %>:/var/lib/<%= defined?(database) ? database : 'mysql' %>:rw'
     ports:
       <% if database == 'postgresql' %>- '5432:5432'
       <% elsif database == 'mysql' %>- '3300:3306'<% end %>
@@ -22,7 +22,7 @@ services:
   rails:
     build:
       context: .
-      dockerfile: ./<%= PATHS.relative_from_current(PATHS.config) %>/Dockerfilerails
+      dockerfile: ./<%= PATHS.relative_from_current(PATHS.config_directory) %>/Dockerfilerails
       args:
         buildno: 1
     expose:

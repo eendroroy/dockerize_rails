@@ -12,7 +12,7 @@ module Rockered
       File.join(root, 'resources')
     end
 
-    def self.config
+    def self.config_directory
       File.join(current, CONFIG_DIRECTORY_NAME)
     end
 

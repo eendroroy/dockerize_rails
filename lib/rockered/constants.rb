@@ -8,20 +8,20 @@ module Rockered
   TEMPLATES = {
     config_dir: %w[
       secrets.yml
-      entry-point.sh
+      rails-entry-point.sh
       Dockerfilerails
       Dockerfilemysql
       Dockerfilepostgresql
       sqls/initdb-mysql.sql
     ].freeze,
-    current_dir: %w[docker-compose.yml].freeze
+    current_dir: %w[docker-compose.yml .dockerignore].freeze
   }.freeze
 
   CONFIG_DIRECTORY_NAME = '.rockered'.freeze
 
   DIRECTORIES = {
-    conf_dir: PATHS.config,
-    data_dir: File.join(PATHS.config, 'data_dir'),
-    sqls_dir: File.join(PATHS.config, 'sqls')
+    conf_dir: PATHS.config_directory,
+    data_dir: File.join(PATHS.config_directory, 'data_dir'),
+    sqls_dir: File.join(PATHS.config_directory, 'sqls')
   }.freeze
 end

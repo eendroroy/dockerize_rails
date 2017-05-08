@@ -32,10 +32,6 @@ module Rockered
       ConfigGenerator.configure_rockered
     end
 
-    def self.parse_config
-      ConfigLoader.config
-    end
-
     def self.info
       v = DockerHelper.version
 
