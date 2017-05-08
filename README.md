@@ -17,14 +17,14 @@ And then execute:
 $ bundle
 ```
 
-Or install it yourself as:
-```bash
-$ gem install rockered
-```
-
 ## Usage
 
-TODO: Write usage instructions here
+```bash
+$ bundle exec rocker help
+$ bundle exec rocker configure
+$ bundle exec rocker dockerize
+$ bundle exec rocker docker_info
+```
 
 ## Development
 
