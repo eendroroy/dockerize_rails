@@ -1,19 +1,19 @@
 module Rockered
   COMMANDS = {
     configure: {
-      aliases: %I[configure c rc cr],
+      aliases: %i[configure c rc cr],
       help: 'Generates \'.rockered.yml\''.freeze
     },
     dockerize: {
-      aliases: %I[dockerize rock dc d],
+      aliases: %i[dockerize rock dc d],
       help: 'Generates docker config files'.freeze
     },
     docker_info: {
-      aliases: %I[docker_info di],
+      aliases: %i[docker_info di],
       help: 'Shows Docker information'.freeze
     },
     help: {
-      aliases: %I[help h],
+      aliases: %i[help h],
       help: 'prints this message'.freeze
     }
   }.freeze
