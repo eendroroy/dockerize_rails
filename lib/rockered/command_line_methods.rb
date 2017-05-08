@@ -5,7 +5,7 @@ module Rockered
     def self.invoke
       opts = parse_opts
       commands = Helpers.processed_commands
-      rc = ConfigHelper.read_rockered_config(opts.command)
+      rc = ConfigLoader.load_rockered_config(opts.command)
       case opts.command
       when *(commands[:configure_rockered])
         return create_rockered_config
@@ -33,7 +33,7 @@ module Rockered
     end
 
     def self.parse_config
-      ConfigHelper.config
+      ConfigLoader.config
     end
 
     def self.info

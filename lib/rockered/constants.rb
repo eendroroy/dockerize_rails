@@ -12,8 +12,16 @@ module Rockered
       Dockerfilerails
       Dockerfilemysql
       Dockerfilepostgresql
-      sql/initdb-mysql.sql
+      sqls/initdb-mysql.sql
     ].freeze,
     current_dir: %w[docker-compose.yml].freeze
+  }.freeze
+
+  CONFIG_DIRECTORY_NAME = '.rockered'.freeze
+
+  DIRECTORIES = {
+    conf_dir: PATHS.config,
+    data_dir: File.join(PATHS.config, 'data_dir'),
+    sqls_dir: File.join(PATHS.config, 'sqls')
   }.freeze
 end

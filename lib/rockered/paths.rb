@@ -13,7 +13,7 @@ module Rockered
     end
 
     def self.config
-      File.join(current, 'rockered')
+      File.join(current, CONFIG_DIRECTORY_NAME)
     end
 
     def self.rockered_config_file
