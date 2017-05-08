@@ -16,9 +16,10 @@ module Rockered
 
     def self.load_rockered_config
       if File.exist? PATHS.rockered_config_file
+        puts PATHS.rockered_config_file
         rockered_config = YAML.load_file(PATHS.rockered_config_file)
         %w[
-          @application_name rails_version application_env application_port postgres_version mysql_version
+          application_name rails_version application_env application_port postgres_version mysql_version
           db_root_pass database_host_name database_user_name database_user_pass database_name_prefix
         ].each do |attr|
           send("#{attr}=", rockered_config[attr]) unless rockered_config[attr].nil?
@@ -33,7 +34,7 @@ module Rockered
 # Set application name
 #
 # Default is #{application_name}
-@application_name: #{application_name}
+application_name: #{application_name}
 
 # Set rails version
 # Visit: https://hub.docker.com/_/rails/ for list of available versions
