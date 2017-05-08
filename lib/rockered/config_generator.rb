@@ -2,11 +2,7 @@ module Rockered
   module ConfigGenerator
     def self.configure_rockered
       puts "  ==> #{PATHS.relative_from_current(PATHS.rockered_config_file)}".green
-      File.open(PATHS.rockered_config_file, 'w+').write(
-        StringIO.new(
-          ERB.new(File.read(File.join(PATHS.resources, 'rockered.yml.erb'))).result(binding)
-        ).read
-      )
+      File.open(PATHS.rockered_config_file, 'w+').write(RockeredConfig.to_yaml_str)
       0
     end
 
