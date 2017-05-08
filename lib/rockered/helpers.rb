@@ -6,6 +6,10 @@ module Rockered
       end]
     end
 
+    def self.parse_opts
+      OpenStruct.new(command: ARGV[0].to_s, args: ARGV[1..ARGV.size].to_a)
+    end
+
     def self.help
       ['',
        'Available Commands are:',
@@ -15,6 +19,10 @@ module Rockered
        end,
        '',
        ''].join("\n")
+    end
+
+    def print_formatted_info(name, value)
+      print name.ljust(15, ' ').yellow, value.blue
     end
   end
 end

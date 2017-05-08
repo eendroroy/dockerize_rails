@@ -3,7 +3,6 @@ module Rockered
     require 'yaml'
 
     @app_config = nil
-    @rockered_config = nil
 
     def self.load_app_config
       if @app_config.nil?
@@ -26,7 +25,7 @@ module Rockered
 
     def self.load_rockered_config(command)
       commands = Helpers.processed_commands
-      if (commands[:configure_rockered] + commands[:help]).include?(command) && !File.exist?(PATHS.rockered_config_file)
+      if (commands[:configure] + commands[:help]).include?(command) && !File.exist?(PATHS.rockered_config_file)
         nil
       elsif File.exist? PATHS.rockered_config_file
         @rockered_config = YAML.load_file(PATHS.rockered_config_file) if @rockered_config.nil?

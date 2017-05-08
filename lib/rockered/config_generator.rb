@@ -1,12 +1,12 @@
 module Rockered
   module ConfigGenerator
-    def self.configure_rockered
+    def self.configure
       puts "  ==> #{PATHS.relative_from_current(PATHS.rockered_config_file)}".green
       File.open(PATHS.rockered_config_file, 'w+').write(RockeredConfig.to_yaml_str)
       0
     end
 
-    def self.create_configs(rc)
+    def self.dockrize(rc)
       create_config_directories
       generate_config_files(rc)
     end
