@@ -1,6 +1,13 @@
 #!/usr/bin/env bash
-<% if application_env != development %>
+<% if application_env == 'production' || application_env == 'staging' %>
 RAILS_ENV=<%= application_env %> bundle exec rake assets:precompile
+<% elsif application_env == 'development' %>
+<% elsif application_env == 'test' %>
+echo "Rails can not be running in 'test' environment"
+exit 1
+<% else %>
+echo "Unknown environment '<%= application_env %>'"
+exit 1
 <% end %>
 RAILS_ENV=<%= application_env %> bundle exec rake db:create
 
