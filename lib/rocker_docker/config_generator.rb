@@ -10,7 +10,7 @@ module RockerDocker
       0
     end
 
-    def self.dockrize
+    def self.dockerize
       resp = 0
       puts "\nGenerating config files ...\n".yellow
       resp += create_config_directories

@@ -9,7 +9,7 @@ module RockerDocker
         return configure
       when *(commands[:dockerize])
         RockerDockerNameSpace.load
-        return dockrize
+        return dockerize
       when *(commands[:docker_info])
         return docker_info
       when *(commands[:help])
@@ -19,8 +19,8 @@ module RockerDocker
       end
     end
 
-    def self.dockrize
-      ConfigGenerator.dockrize
+    def self.dockerize
+      ConfigGenerator.dockerize
     end
 
     def self.configure
