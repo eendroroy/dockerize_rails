@@ -71,8 +71,8 @@ module RockerDocker
         f.write(
           StringIO.new(
             ERB.new(File.read(File.join(
-              PATHS.resources(resource_name),
-              "#{conf}.erb"
+                                PATHS.resources(resource_name),
+                                "#{conf}.erb"
             ))).result(RockerDockerNameSpace.eval_i)
           ).read
         )

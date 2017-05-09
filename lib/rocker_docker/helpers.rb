@@ -20,7 +20,7 @@ Usage: rocker <command>
    commands:
        ',
        Constants::COMMANDS.keys.map do |k|
-         "        #{Constants::COMMANDS[k][:aliases].map(&:to_s).join(', ').ljust(30, ' ')}" +
+         "        #{Constants::COMMANDS[k][:aliases].map(&:to_s).join(', ').ljust(30, ' ')}" \
            " - #{Constants::COMMANDS[k][:help]}"
        end,
        '
