@@ -11,14 +11,30 @@ module RockerDocker
     end
 
     def self.dockerize
-      resp = 0
+      status = 0
       puts "\nGenerating config files ...\n".yellow
-      resp += create_config_directories
-      resp += create_config_files
+      status += create_config_directories
+      status += create_config_files
       puts "\nDon't forget to update "\
         "\"#{Constants::CONFIG_DIRECTORY_NAME}/#{Constants::RAILS_DIRECTORY_NAME}/secrtes.yml\"".yellow.underline
       puts
-      resp
+      status
+    end
+
+    def self.undockerize
+      puts "\nRemoving docker config files ...\n".yellow
+      remove_config_directories
+    end
+
+    def self.rmdir(dir)
+      FileUtils.rm_rf(File.join(PATHS.current, dir)) if File.directory?(File.join(PATHS.current, dir))
+    end
+
+    def self.remove_config_directories
+      rmdir(Constants::CONFIG_DIRECTORY_NAME)
+      FileUtils.rm_rf(Constants::DOCKERIGNORE_FILE_NAME)
+      FileUtils.rm_rf(Constants::DOCKER_COMPOSE_FILE_NAME)
+      0
     end
 
     def self.mkdir(dir)
@@ -26,9 +42,7 @@ module RockerDocker
     end
 
     def self.create_config_directories
-      (Templates::ROOT_DIRECTORIES + Templates::RAILS_DIRECTORIES).each do |v|
-        FileUtils.mkdir_p(v) unless File.directory?(v)
-      end
+      (Templates::ROOT_DIRECTORIES + Templates::RAILS_DIRECTORIES).each { |v| mkdir(v) }
       Templates::MYSQL_DIRECTORIES.each { |v| mkdir(v) } if RockerDockerConfig.databases.values.include? 'mysql'
       Templates::POSTGRES_DIRECTORIES.each { |v| mkdir(v) } if RockerDockerConfig.databases.values.include? 'postgresql'
       0
@@ -43,10 +57,10 @@ module RockerDocker
     end
 
     def self.create_rails_configs
-      resp = 0
-      resp += write_to_dir PATHS.rails_directory, Templates::RAILS_TEMPLATES, 'rails'
-      resp += create_custom_database_config
-      resp
+      status = 0
+      status += write_to_dir PATHS.rails_directory, Templates::RAILS_TEMPLATES, 'rails'
+      status += create_custom_database_config
+      status
     end
 
     def self.create_mysql_configs
@@ -62,12 +76,12 @@ module RockerDocker
     end
 
     def self.create_config_files
-      resp = 0
-      resp += create_rails_configs
-      resp += create_mysql_configs if RockerDockerConfig.databases.values.include? 'mysql'
-      resp += create_postgresql_configs if RockerDockerConfig.databases.values.include? 'postgresql'
-      resp += create_root_configs
-      resp
+      status = 0
+      status += create_rails_configs
+      status += create_mysql_configs if RockerDockerConfig.databases.values.include? 'mysql'
+      status += create_postgresql_configs if RockerDockerConfig.databases.values.include? 'postgresql'
+      status += create_root_configs
+      status
     end
 
     def self.write_to_dir(dir, config_names, resource_name = '')
@@ -88,6 +102,8 @@ module RockerDocker
     end
 
     class << self
+      private :rmdir
+      private :remove_config_directories
       private :mkdir
       private :create_config_directories
       private :create_custom_database_config

@@ -13,6 +13,10 @@ module RockerDocker
         aliases: %I[docker_info di],
         help: 'Shows Docker information'.freeze
       },
+      undockerize: {
+        aliases: %I[undockerize ud du u dd],
+        help: 'Removes docker configurations'.freeze
+      },
       help: {
         aliases: %I[help h],
         help: 'prints this message'.freeze
