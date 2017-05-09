@@ -1,0 +1,20 @@
+.idea/*
+.bundle
+test
+vendor/bundle
+vendor/ruby
+log/*
+tmp/*
+!/log/.keep
+!/tmp/.keep
+.byebug_history
+config/database.yml
+.ruby-gemset
+.ruby-version
+public/uploads
+public/assets
+
+<%= Constants::ROCKER_DOCKER_CONFIG_FILE_NAME %>
+<%= Constants::DOCKER_COMPOSE_FILE_NAME %>
+<%= Constants::DOCKERIGNORE_FILE_NAME %>
+<%= "#{Constants::CONFIG_DIRECTORY_NAME}/#{database}/#{Constants::DATA_DIRECTORY_NAME}/*" %>
