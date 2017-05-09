@@ -1,35 +1,36 @@
 version: '3'
 
 services:
-  <%= database %>:
-    build:
-      context: .
-      dockerfile: ./<%= "#{Constants::CONFIG_DIRECTORY_NAME}/#{database}/Dockerfile" %>
-      args:
-        buildno: 1
-    volumes:
-      - './<%= "#{Constants::CONFIG_DIRECTORY_NAME}/#{database}/#{Constants::DATA_DIRECTORY_NAME}" %>:/var/lib/<%= database %>:rw'
-    ports:
-      <% if database == 'postgresql' %>- '5400:5432'
-      <% elsif database == 'mysql' %>- '3300:3306'<% end %>
-    environment:
-      <% if database == 'postgresql' %>- POSTGRES_USER=<%= database_user_name %>
-      - POSTGRES_PASSWORD=<%= database_user_pass %>
-      <% elsif database == 'mysql' %>- MYSQL_ROOT_PASSWORD=<%= db_root_pass %>
-      <% if database_user_name != 'root' %>- MYSQL_USER=<%= database_user_name %>
-      - MYSQL_PASSWORD=<%= database_user_pass %><% end %>
-      <% end %>
   rails:
     build:
       context: .
       dockerfile: ./<%= "#{Constants::CONFIG_DIRECTORY_NAME}/rails/Dockerfile" %>/
-      args:
-        buildno: 1
     expose:
       - '<%= application_port %>'
     ports:
       - '<%= "#{application_port}:#{application_port}" %>'
+<% if databases.values.include?('mysql') || databases.values.include?('postgres') %>
     links:
-      - '<%= database %>:<%= database_host_name %>'
+      - '<%= databases[application_env] %>:<%= databases[application_env] %>host'
     depends_on:
-      - <%= database %>
+      - <%= databases[application_env] %>
+<% end %>
+
+<% if databases.values.include?('mysql') || databases.values.include?('postgres') %>
+  <%= databases[application_env] %>:
+    build:
+      context: .
+      dockerfile: ./<%= "#{Constants::CONFIG_DIRECTORY_NAME}/#{databases[application_env]}/Dockerfile" %>
+    volumes:
+      - './<%= "#{Constants::CONFIG_DIRECTORY_NAME}/#{databases[application_env]}/#{Constants::DATA_DIRECTORY_NAME}" %>:/var/lib/<%= databases[application_env] %>:rw'
+    ports:
+      <% if databases[application_env] == 'postgresql' %>- '5400:5432'
+      <% elsif databases[application_env] == 'mysql' %>- '3300:3306'<% end %>
+    environment:
+      <% if databases[application_env] == 'postgresql' %>- POSTGRES_USER=<%= database_user_name %>
+      - POSTGRES_PASSWORD=<%= database_user_pass %>
+      <% elsif databases[application_env] == 'mysql' %>- MYSQL_ROOT_PASSWORD=<%= db_root_pass %>
+      <% if database_user_name != 'root' %>- MYSQL_USER=<%= database_user_name %>
+      - MYSQL_PASSWORD=<%= database_user_pass %><% end %>
+      <% end %>
+<% end %>
