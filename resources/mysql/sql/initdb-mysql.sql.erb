@@ -1,0 +1,11 @@
+CREATE DATABASE IF NOT EXISTS <%= defined?(database_name_prefix) ? database_name_prefix : 'rockered' %>_development;
+CREATE DATABASE IF NOT EXISTS <%= defined?(database_name_prefix) ? database_name_prefix : 'rockered' %>_test;
+CREATE DATABASE IF NOT EXISTS <%= defined?(database_name_prefix) ? database_name_prefix : 'rockered' %>_staging;
+CREATE DATABASE IF NOT EXISTS <%= defined?(database_name_prefix) ? database_name_prefix : 'rockered' %>_production;
+
+GRANT ALL PRIVILEGES ON <%= defined?(database_name_prefix) ? database_name_prefix : 'rockered' %>_development.* TO '<%= database_user_name %>'@'%' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON <%= defined?(database_name_prefix) ? database_name_prefix : 'rockered' %>_test.* TO '<%= database_user_name %>'@'%' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON <%= defined?(database_name_prefix) ? database_name_prefix : 'rockered' %>_staging.* TO '<%= database_user_name %>'@'%' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON <%= defined?(database_name_prefix) ? database_name_prefix : 'rockered' %>_production.* TO '<%= database_user_name%>'@'%' WITH GRANT OPTION;
+
+SHOW DATABASES ;

@@ -4,7 +4,7 @@ module Rockered
 
     @app_config = nil
 
-    def self.load_app_config
+    def self.app_config
       if @app_config.nil?
         @app_config = YAML.load_file(File.join(PATHS.current, 'config/database.yml'))
         process_app_config

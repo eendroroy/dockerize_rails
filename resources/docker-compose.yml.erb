@@ -1,35 +1,35 @@
 version: '3'
 
 services:
-  <%= defined?(database) ? database : 'mysql' %>:
+  <%= database %>:
     build:
       context: .
-      dockerfile: ./<%= database_dockerfile %>
+      dockerfile: ./<%= "#{CONFIG_DIRECTORY_NAME}/#{database}/Dockerfile" %>
       args:
         buildno: 1
     volumes:
-      - './<%= defined?(data_dir) ? data_dir : "#{PATHS.relative_from_current(PATHS.config_directory)}/data_dir" %>:/var/lib/<%= defined?(database) ? database : 'mysql' %>:rw'
+      - './<%= "#{CONFIG_DIRECTORY_NAME}/#{database}/#{DATA_DIRECTORY_NAME}" %>:/var/lib/<%= database %>:rw'
     ports:
       <% if database == 'postgresql' %>- '5432:5432'
       <% elsif database == 'mysql' %>- '3300:3306'<% end %>
     environment:
-      <% if database == 'postgresql' %>- POSTGRES_USER=<%= defined?(db_user) ? db_user : 'postgres' %>
-      - POSTGRES_PASSWORD=<%= defined?(db_pass) ? db_pass : 'postgres' %>
-      <% elsif database == 'mysql' %>- MYSQL_ROOT_PASSWORD=<%= defined?(db_root_pass) ? db_root_pass : 'root' %>
-      <% if defined?(db_user) && db_user != 'root' %>- MYSQL_USER=<%= defined?(db_user) ? db_user : 'user' %>
-      - MYSQL_PASSWORD=<%= defined?(db_pass) ? db_pass : 'pass' %><% end %>
+      <% if database == 'postgresql' %>- POSTGRES_USER=<%= database_user_name %>
+      - POSTGRES_PASSWORD=<%= database_user_pass %>
+      <% elsif database == 'mysql' %>- MYSQL_ROOT_PASSWORD=<%= db_root_pass %>
+      <% if database_user_name != 'root' %>- MYSQL_USER=<%= database_user_name %>
+      - MYSQL_PASSWORD=<%= database_user_pass %><% end %>
       <% end %>
   rails:
     build:
       context: .
-      dockerfile: ./<%= PATHS.relative_from_current(PATHS.config_directory) %>/Dockerfilerails
+      dockerfile: ./<%= "#{CONFIG_DIRECTORY_NAME}/rails/Dockerfile" %>/
       args:
         buildno: 1
     expose:
-      - '<%= defined?(application_port) ? application_port : '5000' %>'
+      - '<%= application_port %>'
     ports:
-      - '<%= defined?(application_port) ? "#{application_port}:#{application_port}" : '5000:5000' %>'
+      - '<%= "#{application_port}:#{application_port}" %>'
     links:
-      - '<%= database %>:<%= defined?(database_host_name) ? database_host_name : 'db' %>'
+      - '<%= database %>:<%= database_host_name %>'
     depends_on:
-      - <%= defined?(database) ? database : 'mysql' %>
+      - <%= database %>

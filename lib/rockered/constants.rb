@@ -18,23 +18,14 @@ module Rockered
     }
   }.freeze
 
-  TEMPLATES = {
-    config_dir: %w[
-      secrets.yml
-      rails-entry-point.sh
-      Dockerfilerails
-      Dockerfilemysql
-      Dockerfilepostgresql
-      sqls/initdb-mysql.sql
-    ].freeze,
-    current_dir: %w[.dockerignore docker-compose.yml].freeze
-  }.freeze
+  ROCKERED_CONFIG_FILE_NAME = '.rockered.yml'.freeze
+  DOCKER_COMPOSE_FILE_NAME = 'docker-compose.yml'.freeze
+  DOCKERIGNORE_FILE_NAME = '.dockerignore'.freeze
 
+  RAILS_DIRECTORY_NAME = 'rails'.freeze
+  MYSQL_DIRECTORY_NAME = 'mysql'.freeze
+  POSTGRESQL_DIRECTORY_NAME = 'postgresql'.freeze
   CONFIG_DIRECTORY_NAME = '.rockered'.freeze
-
-  DIRECTORIES = {
-    conf_dir: PATHS.config_directory,
-    data_dir: File.join(PATHS.config_directory, 'data_dir'),
-    sqls_dir: File.join(PATHS.config_directory, 'sqls')
-  }.freeze
+  DATA_DIRECTORY_NAME = 'data_dir'.freeze
+  SQL_DIRECTORY_NAME = 'sql'.freeze
 end

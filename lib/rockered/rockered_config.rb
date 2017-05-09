@@ -15,9 +15,8 @@ module Rockered
     @database_user_pass   = 'pass'
 
     def self.load_rockered_config
-      if File.exist? PATHS.rockered_config_file
-        puts PATHS.rockered_config_file
-        rockered_config = YAML.load_file(PATHS.rockered_config_file)
+      if File.exist? File.join(PATHS.current, ROCKERED_CONFIG_FILE_NAME)
+        rockered_config = YAML.load_file(File.join(PATHS.current, ROCKERED_CONFIG_FILE_NAME))
         %w[
           application_name rails_version application_env application_port postgres_version mysql_version
           db_root_pass database_host_name database_user_name database_user_pass database_name_prefix
@@ -25,7 +24,8 @@ module Rockered
           send("#{attr}=", rockered_config[attr]) unless rockered_config[attr].nil?
         end
       else
-        puts "\nRockered not yet configured...\nRun 'bundle exec rocker configure' to configure rockered.\n".yellow
+        puts "\nRockered config file not generated...".yellow
+        puts "Run 'bundle exec rocker configure' to generate configuration file.\n".yellow
       end
     end
 

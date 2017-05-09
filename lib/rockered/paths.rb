@@ -8,16 +8,32 @@ module Rockered
       Dir.pwd
     end
 
-    def self.resources
-      File.join(root, 'resources')
+    def self.resources(name = '')
+      File.join(root, 'resources', name)
     end
 
     def self.config_directory
       File.join(current, CONFIG_DIRECTORY_NAME)
     end
 
-    def self.rockered_config_file
-      File.join(current, '.rockered.yml')
+    def self.rails_directory
+      File.join(config_directory, RAILS_DIRECTORY_NAME)
+    end
+
+    def self.mysql_directory
+      File.join(config_directory, MYSQL_DIRECTORY_NAME)
+    end
+
+    def self.postgresql_directory
+      File.join(config_directory, POSTGRESQL_DIRECTORY_NAME)
+    end
+
+    def self.data_directory(db_dir_name)
+      File.join(config_directory, db_dir_name, DATA_DIRECTORY_NAME)
+    end
+
+    def self.sql_directory(db_dir_name)
+      File.join(config_directory, db_dir_name, SQL_DIRECTORY_NAME)
     end
 
     def self.relative(base, target)

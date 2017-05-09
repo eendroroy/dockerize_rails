@@ -13,14 +13,9 @@ module Rockered
     end
 
     def self.load_from_app_config
-      dbc = ConfigLoader.load_app_config
+      dbc = ConfigLoader.app_config
       @namespace.database = 'mysql' if dbc[RockeredConfig.application_env]['adapter'].start_with?('mysql')
       @namespace.database = 'postgresql' if dbc[RockeredConfig.application_env]['adapter'].start_with?('postgresql')
-      @namespace.db_user = dbc[RockeredConfig.application_env]['username']
-      @namespace.db_pass = dbc[RockeredConfig.application_env]['password']
-      @namespace.database_dockerfile = PATHS.relative_from_current(
-        "#{PATHS.config_directory}/Dockerfile#{@namespace.database}"
-      )
     end
 
     def self.load_from_rockered_config
