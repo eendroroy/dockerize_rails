@@ -1,0 +1,29 @@
+default: &default
+  adapter: sqlite3
+  encoding: utf8
+  pool: 5
+  timeout: 5000
+
+development:
+  <<: *default
+  username: root
+  password: root
+  database: db/rocker_docker_development.sqlite3
+
+test:
+  <<: *default
+  username: root
+  password: root
+  database: db/rocker_docker_test.sqlite3
+
+staging:
+  <<: *default
+  username: root
+  password: root
+  database: db/rocker_docker_staging.sqlite3
+
+production:
+  <<: *default
+  username: root
+  password: root
+  database: db/rocker_docker_production.sqlite3
