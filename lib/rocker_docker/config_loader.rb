@@ -1,4 +1,4 @@
-module Rockered
+module RockerDocker
   module ConfigLoader
     require 'yaml'
 
@@ -15,10 +15,10 @@ module Rockered
     def self.process_app_config
       @app_config.delete 'default'
       @app_config.keys.each do |section|
-        @app_config[section]['username'] = RockeredConfig.database_user_name
-        @app_config[section]['password'] = RockeredConfig.database_user_pass
-        @app_config[section]['database'] = "#{RockeredConfig.application_name}_#{section}"
-        @app_config[section]['host'] = RockeredConfig.database_host_name
+        @app_config[section]['username'] = RockerDockerConfig.database_user_name
+        @app_config[section]['password'] = RockerDockerConfig.database_user_pass
+        @app_config[section]['database'] = "#{RockerDockerConfig.application_name}_#{section}"
+        @app_config[section]['host'] = RockerDockerConfig.database_host_name
       end
     end
   end

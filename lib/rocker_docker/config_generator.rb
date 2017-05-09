@@ -1,10 +1,10 @@
-module Rockered
+module RockerDocker
   module ConfigGenerator
     def self.configure
-      puts "\nGenerating Rockered config file ...\n".yellow
-      puts "  ==> #{ROCKERED_CONFIG_FILE_NAME}".green
-      f = File.open(File.join(PATHS.current, ROCKERED_CONFIG_FILE_NAME), 'w+')
-      f.write(RockeredConfig.to_yaml_str)
+      puts "\nGenerating RockerDocker config file ...\n".yellow
+      puts "  ==> #{ROCKER_DOCKER_CONFIG_FILE_NAME}".green
+      f = File.open(File.join(PATHS.current, ROCKER_DOCKER_CONFIG_FILE_NAME), 'w+')
+      f.write(RockerDockerConfig.to_yaml_str)
       f.close
       puts
       0
@@ -70,7 +70,7 @@ module Rockered
         f = File.open(File.join(dir, conf), 'w+')
         f.write(
           StringIO.new(
-            ERB.new(File.read(File.join(PATHS.resources(resource_name), "#{conf}.erb"))).result(RNameSpace.eval_i)
+            ERB.new(File.read(File.join(PATHS.resources(resource_name), "#{conf}.erb"))).result(RockerDockerNameSpace.eval_i)
           ).read
         )
         f.close

@@ -1,6 +1,6 @@
-module Rockered
-  class RockeredConfig
-    @application_name     = 'rockered'
+module RockerDocker
+  class RockerDockerConfig
+    @application_name     = 'rocker_docker'
 
     @rails_version        = 'latest'
     @application_env      = 'development'
@@ -14,17 +14,17 @@ module Rockered
     @database_user_name   = 'user'
     @database_user_pass   = 'pass'
 
-    def self.load_rockered_config
-      if File.exist? File.join(PATHS.current, ROCKERED_CONFIG_FILE_NAME)
-        rockered_config = YAML.load_file(File.join(PATHS.current, ROCKERED_CONFIG_FILE_NAME))
+    def self.load_rocker_docker_config
+      if File.exist? File.join(PATHS.current, ROCKER_DOCKER_CONFIG_FILE_NAME)
+        rocker_docker_config = YAML.load_file(File.join(PATHS.current, ROCKER_DOCKER_CONFIG_FILE_NAME))
         %w[
           application_name rails_version application_env application_port postgres_version mysql_version
           db_root_pass database_host_name database_user_name database_user_pass database_name_prefix
         ].each do |attr|
-          send("#{attr}=", rockered_config[attr]) unless rockered_config[attr].nil?
+          send("#{attr}=", rocker_docker_config[attr]) unless rocker_docker_config[attr].nil?
         end
       else
-        puts "\nRockered config file not generated...".yellow
+        puts "\nRockerDocker config file not generated...".yellow
         puts "Run 'bundle exec rocker configure' to generate configuration file.\n".yellow
       end
     end

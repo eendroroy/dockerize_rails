@@ -1,15 +1,15 @@
-# Rockered
+# RockerDocker
 
-[![Gem Version](https://badge.fury.io/rb/rockered.svg)](https://badge.fury.io/rb/rockered)
-[![Build Status](https://travis-ci.org/eendroroy/rockered.svg?branch=master)](https://travis-ci.org/eendroroy/rockered)
-[![Code Climate](https://codeclimate.com/github/eendroroy/rockered/badges/gpa.svg)](https://codeclimate.com/github/eendroroy/rockered)
+[![Gem Version](https://badge.fury.io/rb/rocker_docker.svg)](https://badge.fury.io/rb/rocker_docker)
+[![Build Status](https://travis-ci.org/eendroroy/rocker_docker.svg?branch=master)](https://travis-ci.org/eendroroy/rocker_docker)
+[![Code Climate](https://codeclimate.com/github/eendroroy/rocker_docker/badges/gpa.svg)](https://codeclimate.com/github/eendroroy/rocker_docker)
 
 ## Installation
 
 Add this line to your rails application's Gemfile:
 
 ```ruby
-gem 'rockered'
+gem 'rocker_docker'
 ```
 
 And then execute:
@@ -34,7 +34,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/eendroroy/rockered. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/eendroroy/rocker_docker. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 
 ## License

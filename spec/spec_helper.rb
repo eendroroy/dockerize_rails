@@ -1,5 +1,5 @@
 require 'bundler/setup'
-require 'rockered'
+require 'rocker_docker'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
@@ -10,7 +10,7 @@ RSpec.configure do |config|
   end
 end
 
-module Rockered
+module RockerDocker
   module CommandLine
     def run(command, args)
       original_stdout = $stdout.clone
@@ -22,6 +22,6 @@ module Rockered
   end
 end
 
-class RockererCLI
-  extend Rockered::CommandLine
+class RockerDockerCLI
+  extend RockerDocker::CommandLine
 end

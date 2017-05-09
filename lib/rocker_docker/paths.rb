@@ -1,4 +1,4 @@
-module Rockered
+module RockerDocker
   module PATHS
     def self.root
       File.expand_path '../..', File.dirname(__FILE__)

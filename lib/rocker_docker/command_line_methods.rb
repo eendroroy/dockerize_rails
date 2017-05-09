@@ -1,4 +1,4 @@
-module Rockered
+module RockerDocker
   module CommandLineMethods
     require 'colorize'
 
@@ -8,7 +8,7 @@ module Rockered
       when *(commands[:configure])
         return configure
       when *(commands[:dockerize])
-        RNameSpace.load
+        RockerDockerNameSpace.load
         return dockrize
       when *(commands[:docker_info])
         return docker_info

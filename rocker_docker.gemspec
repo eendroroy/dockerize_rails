@@ -3,18 +3,18 @@
 
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'rockered/version'
+require 'rocker_docker/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'rockered'
-  spec.version       = Rockered::VERSION
+  spec.name          = 'rocker_docker'
+  spec.version       = RockerDocker::VERSION
 
   spec.authors       = ['indrajit']
   spec.email         = ['eendroroy@gmail.com']
 
   spec.summary       = 'A docker util for rails application'
   spec.description   = 'A docker util for rails application'
-  spec.homepage      = 'https://github.com/eendroroy/rockered'
+  spec.homepage      = 'https://github.com/eendroroy/rocker_docker'
   spec.license       = 'MIT'
 
   spec.required_ruby_version = '>= 2.0.0'

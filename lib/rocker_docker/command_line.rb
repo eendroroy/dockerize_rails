@@ -1,4 +1,4 @@
-module Rockered
+module RockerDocker
   module CommandLine
     def run
       opts = Helpers.parse_opts

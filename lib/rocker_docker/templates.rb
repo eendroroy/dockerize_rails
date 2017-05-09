@@ -1,4 +1,4 @@
-module Rockered
+module RockerDocker
   module Templates
     ROOT_TEMPLATES = %W[#{DOCKER_COMPOSE_FILE_NAME} #{DOCKERIGNORE_FILE_NAME}].freeze
 

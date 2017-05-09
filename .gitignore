@@ -11,10 +11,10 @@
 .ruby-version
 *.gem
 /vendor/ruby
-/rockered
+/rocker_docker
 !*/.gitkeep
 /docker-compose.yml
 /config
-/.rockered.yml
-/.rockered
+/.rocker_docker.yml
+/.rocker_docker
 /.dockerignore

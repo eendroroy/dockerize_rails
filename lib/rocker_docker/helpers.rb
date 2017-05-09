@@ -1,4 +1,4 @@
-module Rockered
+module RockerDocker
   module Helpers
     require 'ostruct'
 
