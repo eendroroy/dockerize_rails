@@ -19,5 +19,9 @@ module RockerDocker
         @app_config[section]['password'] = RockerDockerConfig.database_user_pass
       end
     end
+
+    class << self
+      private :process_app_config
+    end
   end
 end
