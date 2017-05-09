@@ -17,8 +17,6 @@ module RockerDocker
       @app_config.keys.each do |section|
         @app_config[section]['username'] = RockerDockerConfig.database_user_name
         @app_config[section]['password'] = RockerDockerConfig.database_user_pass
-        @app_config[section]['database'] = "#{RockerDockerConfig.application_name}_#{section}"
-        @app_config[section]['host'] = RockerDockerConfig.database_host_name
       end
     end
   end

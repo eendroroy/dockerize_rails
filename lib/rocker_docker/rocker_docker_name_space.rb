@@ -13,9 +13,14 @@ module RockerDocker
     end
 
     def self.load_from_app_config
-      dbc = ConfigLoader.app_config
-      @namespace.database = 'mysql' if dbc[RockerDockerConfig.application_env]['adapter'].start_with?('mysql')
-      @namespace.database = 'postgresql' if dbc[RockerDockerConfig.application_env]['adapter'].start_with?('postgresql')
+      app_c = ConfigLoader.app_config
+      @namespace.databases = {}
+      app_c.keys.each do |env|
+        @namespace.databases[env] = 'mysql' if app_c[env]['adapter'].start_with?('mysql')
+        @namespace.databases[env] = 'postgresql' if app_c[env]['adapter'].start_with?('postgresql')
+        @namespace.databases[env] = 'sqlite' if app_c[env]['adapter'].start_with?('sqlite')
+      end
+      RockerDockerConfig.databases = @namespace.databases
     end
 
     def self.load_from_rocker_docker_config

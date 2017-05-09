@@ -10,16 +10,17 @@ module RockerDocker
     @mysql_version        = 'latest'
 
     @db_root_pass         = 'root'
-    @database_host_name   = 'db'
     @database_user_name   = 'user'
     @database_user_pass   = 'pass'
+
+    @databases            = {}
 
     def self.load_rocker_docker_config
       if File.exist? File.join(PATHS.current, Constants::ROCKER_DOCKER_CONFIG_FILE_NAME)
         rocker_docker_config = YAML.load_file(File.join(PATHS.current, Constants::ROCKER_DOCKER_CONFIG_FILE_NAME))
         %w[
           application_name rails_version application_env application_port postgres_version mysql_version
-          db_root_pass database_host_name database_user_name database_user_pass database_name_prefix
+          db_root_pass database_user_name database_user_pass database_name_prefix
         ].each do |attr|
           send("#{attr}=", rocker_docker_config[attr]) unless rocker_docker_config[attr].nil?
         end
@@ -73,15 +74,11 @@ mysql_version: #{mysql_version}
 
 # Set database properties
 
-# Default #{database_host_name}
-database_host_name: #{database_host_name}
-
 # Default #{database_user_name}
 database_user_name: #{database_user_name}
 
 # Default #{database_user_pass}
 database_user_pass: #{database_user_pass}
-
 "
     end
 
@@ -94,7 +91,6 @@ database_user_pass: #{database_user_pass}
         postgres_version: postgres_version,
         mysql_version: mysql_version,
         db_root_pass: db_root_pass,
-        database_host_name: database_host_name,
         database_user_name: database_user_name,
         database_user_pass: database_user_pass
       }
@@ -108,9 +104,9 @@ database_user_pass: #{database_user_pass}
       attr_accessor :postgres_version
       attr_accessor :mysql_version
       attr_accessor :db_root_pass
-      attr_accessor :database_host_name
       attr_accessor :database_user_name
       attr_accessor :database_user_pass
+      attr_accessor :databases
     end
   end
 end
