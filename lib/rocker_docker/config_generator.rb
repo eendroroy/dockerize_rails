@@ -2,8 +2,8 @@ module RockerDocker
   module ConfigGenerator
     def self.configure
       puts "\nGenerating RockerDocker config file ...\n".yellow
-      puts "  ==> #{ROCKER_DOCKER_CONFIG_FILE_NAME}".green
-      f = File.open(File.join(PATHS.current, ROCKER_DOCKER_CONFIG_FILE_NAME), 'w+')
+      puts "  ==> #{Constants::ROCKER_DOCKER_CONFIG_FILE_NAME}".green
+      f = File.open(File.join(PATHS.current, Constants::ROCKER_DOCKER_CONFIG_FILE_NAME), 'w+')
       f.write(RockerDockerConfig.to_yaml_str)
       f.close
       puts
@@ -28,7 +28,7 @@ module RockerDocker
 
     def self.create_custom_database_config
       puts "    ==> #{PATHS.relative_from_current(File.join(PATHS.rails_directory, 'database.yml'))}".green
-      f = File.open(File.join(PATHS.config_directory, RAILS_DIRECTORY_NAME, 'database.yml'), 'w+')
+      f = File.open(File.join(PATHS.config_directory, Constants::RAILS_DIRECTORY_NAME, 'database.yml'), 'w+')
       f.write(ConfigLoader.app_config.to_yaml)
       f.close
       0
@@ -70,7 +70,10 @@ module RockerDocker
         f = File.open(File.join(dir, conf), 'w+')
         f.write(
           StringIO.new(
-            ERB.new(File.read(File.join(PATHS.resources(resource_name), "#{conf}.erb"))).result(RockerDockerNameSpace.eval_i)
+            ERB.new(File.read(File.join(
+              PATHS.resources(resource_name),
+              "#{conf}.erb"
+            ))).result(RockerDockerNameSpace.eval_i)
           ).read
         )
         f.close

@@ -4,11 +4,11 @@ services:
   <%= database %>:
     build:
       context: .
-      dockerfile: ./<%= "#{CONFIG_DIRECTORY_NAME}/#{database}/Dockerfile" %>
+      dockerfile: ./<%= "#{Constants::CONFIG_DIRECTORY_NAME}/#{database}/Dockerfile" %>
       args:
         buildno: 1
     volumes:
-      - './<%= "#{CONFIG_DIRECTORY_NAME}/#{database}/#{DATA_DIRECTORY_NAME}" %>:/var/lib/<%= database %>:rw'
+      - './<%= "#{Constants::CONFIG_DIRECTORY_NAME}/#{database}/#{Constants::DATA_DIRECTORY_NAME}" %>:/var/lib/<%= database %>:rw'
     ports:
       <% if database == 'postgresql' %>- '5432:5432'
       <% elsif database == 'mysql' %>- '3300:3306'<% end %>
@@ -22,7 +22,7 @@ services:
   rails:
     build:
       context: .
-      dockerfile: ./<%= "#{CONFIG_DIRECTORY_NAME}/rails/Dockerfile" %>/
+      dockerfile: ./<%= "#{Constants::CONFIG_DIRECTORY_NAME}/rails/Dockerfile" %>/
       args:
         buildno: 1
     expose:

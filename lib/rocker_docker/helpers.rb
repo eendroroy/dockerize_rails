@@ -3,8 +3,8 @@ module RockerDocker
     require 'ostruct'
 
     def self.processed_commands
-      Hash[COMMANDS.keys.map do |k|
-        [k, COMMANDS[k][:aliases].map(&:to_s)]
+      Hash[Constants::COMMANDS.keys.map do |k|
+        [k, Constants::COMMANDS[k][:aliases].map(&:to_s)]
       end]
     end
 
@@ -19,8 +19,9 @@ Usage: rocker <command>
 
    commands:
        ',
-       COMMANDS.keys.map do |k|
-         "        #{COMMANDS[k][:aliases].map(&:to_s).join(', ').ljust(30, ' ')} - #{COMMANDS[k][:help]}"
+       Constants::COMMANDS.keys.map do |k|
+         "        #{Constants::COMMANDS[k][:aliases].map(&:to_s).join(', ').ljust(30, ' ')}" +
+           " - #{Constants::COMMANDS[k][:help]}"
        end,
        '
        '].join("\n")

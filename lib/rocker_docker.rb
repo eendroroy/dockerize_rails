@@ -12,13 +12,16 @@ require 'rocker_docker/command_line_methods'
 require 'rocker_docker/command_line'
 
 module RockerDocker
-  private_constant :CommandLineMethods
-  private_constant :ConfigGenerator
-  private_constant :ConfigLoader
-  private_constant :COMMANDS
-  private_constant :DockerHelper
   private_constant :PATHS
   private_constant :Helpers
+  private_constant :RockerDockerNameSpace
+  private_constant :ConfigLoader
+  private_constant :RockerDockerConfig
+  private_constant :ConfigGenerator
+  private_constant :DockerHelper
+  private_constant :Constants
+  private_constant :Templates
+  private_constant :CommandLineMethods
 end
 
 class RockerDockerCLI
