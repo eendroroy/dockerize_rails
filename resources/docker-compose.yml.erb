@@ -10,7 +10,7 @@ services:
     volumes:
       - './<%= "#{Constants::CONFIG_DIRECTORY_NAME}/#{database}/#{Constants::DATA_DIRECTORY_NAME}" %>:/var/lib/<%= database %>:rw'
     ports:
-      <% if database == 'postgresql' %>- '5432:5432'
+      <% if database == 'postgresql' %>- '5400:5432'
       <% elsif database == 'mysql' %>- '3300:3306'<% end %>
     environment:
       <% if database == 'postgresql' %>- POSTGRES_USER=<%= database_user_name %>

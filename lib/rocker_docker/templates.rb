@@ -15,7 +15,6 @@ module RockerDocker
     ].freeze
     POSTGRES_DIRECTORIES = %W[
       #{Constants::CONFIG_DIRECTORY_NAME}/#{Constants::POSTGRESQL_DIRECTORY_NAME}
-      #{Constants::CONFIG_DIRECTORY_NAME}/#{Constants::POSTGRESQL_DIRECTORY_NAME}/#{Constants::SQL_DIRECTORY_NAME}
       #{Constants::CONFIG_DIRECTORY_NAME}/#{Constants::POSTGRESQL_DIRECTORY_NAME}/#{Constants::DATA_DIRECTORY_NAME}
     ].freeze
   end
