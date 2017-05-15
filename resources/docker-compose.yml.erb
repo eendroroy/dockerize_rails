@@ -24,13 +24,20 @@ services:
     volumes:
       - './<%= "#{Constants::CONFIG_DIRECTORY_NAME}/#{databases[application_env]}/#{Constants::DATA_DIRECTORY_NAME}" %>:/var/lib/<%= databases[application_env] %>:rw'
     ports:
-      <% if databases[application_env] == 'postgresql' %>- '5400:5432'
-      <% elsif databases[application_env] == 'mysql' %>- '3300:3306'<% end %>
+      <% if databases[application_env] == 'postgresql' %>
+      - '5400:5432'
+      <% elsif databases[application_env] == 'mysql' %>
+      - '3300:3306'
+      <% end %>
     environment:
-      <% if databases[application_env] == 'postgresql' %>- POSTGRES_USER=<%= database_user_name %>
+      <% if databases[application_env] == 'postgresql' %>
+      - POSTGRES_USER=<%= database_user_name %>
       - POSTGRES_PASSWORD=<%= database_user_pass %>
-      <% elsif databases[application_env] == 'mysql' %>- MYSQL_ROOT_PASSWORD=<%= db_root_pass %>
-      <% if database_user_name != 'root' %>- MYSQL_USER=<%= database_user_name %>
-      - MYSQL_PASSWORD=<%= database_user_pass %><% end %>
+      <% elsif databases[application_env] == 'mysql' %>
+      - MYSQL_ROOT_PASSWORD=<%= db_root_pass %>
+        <% if database_user_name != 'root' %>
+      - MYSQL_USER=<%= database_user_name %>
+      - MYSQL_PASSWORD=<%= database_user_pass %>
+        <% end %>
       <% end %>
 <% end %>
