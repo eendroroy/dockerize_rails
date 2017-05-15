@@ -11,7 +11,7 @@ services:
       - '<%= "#{application_port}:#{application_port}" %>'
 <% if databases.values.include?('mysql') || databases.values.include?('postgres') %>
     links:
-      - '<%= databases[application_env] %>:<%= databases[application_env] %>host'
+      - '<%= databases[application_env] %>:databasehost'
     depends_on:
       - <%= databases[application_env] %>
 <% end %>
