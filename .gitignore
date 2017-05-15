@@ -13,7 +13,6 @@
 *.gem
 /vendor/ruby
 !*/.gitkeep
-/config
 /docker-compose.yml
 /.rocker_docker.yml
 /.rocker_docker
