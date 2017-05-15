@@ -44,18 +44,20 @@ application_name: #{application_name}
 rails_version: #{rails_version}
 
 # Set docker container's rails environment to production, staging, or development
+# Make sure application is properly configured to run in 'application_env' (#{application_env})
 #
 # Default is #{application_env}
 application_env: #{application_env}
 
-# Set docker container's rails port
-# If you have any application running on a specific port, suppose 80, then don't use port 80 as container port
+# Set docker container's rails port to access from local machine
+# Make sure it doesn't conflict with any of the ports active in host machine
 #
 # Default #{application_port}
 application_port: #{application_port}
 
 # Set root password for docker database container
 # it doesn't make any changes in your computer's database
+# It will be used only for MySQL database
 #
 # Default #{db_root_pass}
 db_root_pass: #{db_root_pass}
@@ -74,9 +76,13 @@ mysql_version: #{mysql_version}
 
 # Set database properties
 
+# Default database username for container's internal use
+# It has no impact on host machine's database
 # Default #{database_user_name}
 database_user_name: #{database_user_name}
 
+# Default database password for container's internal use
+# It has no impact on host machine's database
 # Default #{database_user_pass}
 database_user_pass: #{database_user_pass}
 "
