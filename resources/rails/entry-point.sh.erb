@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
+<% if databases.values.include?('mysql') || databases.values.include?('postgres') %>
+echo "Waiting for database server to start properly ..." && sleep 10
+<% end %>
 <% if application_env == 'production' || application_env == 'staging' %>
 RAILS_ENV=<%= application_env %> bundle exec rake assets:precompile
 <% elsif application_env == 'development' %>
 <% elsif application_env == 'test' %>
-echo "Rails can not be running in 'test' environment"
+echo "Rails application can not be running in 'test' environment"
 exit 1
 <% else %>
 echo "Unknown environment '<%= application_env %>'"
