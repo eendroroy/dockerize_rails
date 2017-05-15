@@ -1,6 +1,6 @@
 module RockerDocker
   module PATHS
-    def self.root
+    def self.gem_root
       File.expand_path '../..', File.dirname(__FILE__)
     end
 
@@ -8,8 +8,12 @@ module RockerDocker
       Dir.pwd
     end
 
+    def self.rails_root?
+      File.exist? File.join(current, 'bin', 'rails')
+    end
+
     def self.resources(name = '')
-      File.join(root, 'resources', name)
+      File.join(gem_root, 'resources', name)
     end
 
     def self.config_directory
