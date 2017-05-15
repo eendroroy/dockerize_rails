@@ -12,6 +12,14 @@ module RockerDocker
       OpenStruct.new(command: ARGV[0].to_s, args: ARGV[1..ARGV.size].to_a)
     end
 
+    def self.ensure_rails_root
+      unless PATHS.rails_root?
+        puts "\n'#{`pwd`.strip}' is not a rails application root.\n".red
+        exit(1)
+      end
+      0
+    end
+
     def self.help
       ['
 Usage: rocker <command>
