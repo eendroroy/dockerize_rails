@@ -9,7 +9,6 @@ module RockerDocker
       when *(commands[:configure])
         return configure
       when *(commands[:dockerize])
-        RockerDockerNameSpace.load
         return dockerize
       when *(commands[:undockerize])
         return undockerize
@@ -24,14 +23,18 @@ module RockerDocker
     # rubocop:enable Metrics/MethodLength
 
     def self.dockerize
+      Helpers.ensure_rails_root
+      RockerDockerNameSpace.load
       ConfigGenerator.dockerize
     end
 
     def self.undockerize
+      Helpers.ensure_rails_root
       ConfigGenerator.undockerize
     end
 
     def self.configure
+      Helpers.ensure_rails_root
       ConfigGenerator.configure
     end
 
