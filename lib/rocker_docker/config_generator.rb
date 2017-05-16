@@ -26,25 +26,21 @@ module RockerDocker
       remove_config_directories
     end
 
-    def self.rmdir(dir)
-      FileUtils.rm_rf(File.join(PATHS.current, dir)) if File.directory?(File.join(PATHS.current, dir))
+    def self.dir_op(dir, method)
+      FileUtils.send(method, File.join(PATHS.current, dir))
     end
 
     def self.remove_config_directories
-      rmdir(Constants::CONFIG_DIRECTORY_NAME)
-      FileUtils.rm_rf(Constants::DOCKERIGNORE_FILE_NAME)
-      FileUtils.rm_rf(Constants::DOCKER_COMPOSE_FILE_NAME)
+      dir_op(Constants::CONFIG_DIRECTORY_NAME, 'rm_rf')
+      dir_op(Constants::DOCKERIGNORE_FILE_NAME, 'rm_rf')
+      dir_op(Constants::DOCKER_COMPOSE_FILE_NAME, 'rm_rf')
       0
     end
 
-    def self.mkdir(dir)
-      FileUtils.mkdir_p(File.join(PATHS.current, dir)) unless File.directory?(File.join(PATHS.current, dir))
-    end
-
     def self.create_config_directories
-      (Templates::ROOT_DIRECTORIES + Templates::RAILS_DIRECTORIES).each { |v| mkdir(v) }
-      Templates::MYSQL_DIRECTORIES.each { |v| mkdir(v) } if RockerDockerConfig.databases.values.include? 'mysql'
-      Templates::POSTGRES_DIRECTORIES.each { |v| mkdir(v) } if RockerDockerConfig.databases.values.include? 'postgresql'
+      (Templates::ROOT_DIRECTORIES + Templates::RAILS_DIRECTORIES).each { |v| dir_op(v, 'mkdir_p') }
+      Templates::MYSQL_DIRECTORIES.each { |v| dir_op(v, 'mkdir_p') } if RockerDockerConfig.databases.values.include? 'mysql'
+      Templates::POSTGRES_DIRECTORIES.each { |v| dir_op(v, 'mkdir_p') } if RockerDockerConfig.databases.values.include? 'postgresql'
       0
     end
 
@@ -102,9 +98,8 @@ module RockerDocker
     end
 
     class << self
-      private :rmdir
+      private :dir_op
       private :remove_config_directories
-      private :mkdir
       private :create_config_directories
       private :create_custom_database_config
       private :create_rails_configs
