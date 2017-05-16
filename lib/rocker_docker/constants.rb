@@ -29,7 +29,7 @@ module RockerDocker
 
     RAILS_DIRECTORY_NAME = 'rails'.freeze
     MYSQL_DIRECTORY_NAME = 'mysql'.freeze
-    POSTGRESQL_DIRECTORY_NAME = 'postgresql'.freeze
+    PG_DIRECTORY_NAME = 'postgresql'.freeze
     CONFIG_DIRECTORY_NAME = '.rocker_docker'.freeze
     DATA_DIRECTORY_NAME = 'data_dir'.freeze
     SQL_DIRECTORY_NAME = 'sql'.freeze

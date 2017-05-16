@@ -15,9 +15,9 @@ module RockerDocker
     def self.process_app_config
       @app_config.delete 'default'
       @app_config.keys.each do |section|
-        @app_config[section]['username'] = RockerDockerConfig.database_user_name
-        @app_config[section]['password'] = RockerDockerConfig.database_user_pass
-        @app_config[section]['database'] = "#{RockerDockerConfig.application_name}_#{section}"
+        @app_config[section]['username'] = RDConfig.database_user_name
+        @app_config[section]['password'] = RDConfig.database_user_pass
+        @app_config[section]['database'] = "#{RDConfig.application_name}_#{section}"
         @app_config[section]['host'] = 'databasehost'
       end
     end

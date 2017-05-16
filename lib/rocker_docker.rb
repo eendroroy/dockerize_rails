@@ -14,9 +14,9 @@ require 'rocker_docker/command_line'
 module RockerDocker
   private_constant :PATHS
   private_constant :Helpers
-  private_constant :RockerDockerNameSpace
+  private_constant :RDNameSpace
   private_constant :ConfigLoader
-  private_constant :RockerDockerConfig
+  private_constant :RDConfig
   private_constant :ConfigGenerator
   private_constant :DockerHelper
   private_constant :Constants

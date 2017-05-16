@@ -2,7 +2,7 @@ module RockerDocker
   module CommandLineMethods
     require 'colorize'
 
-    # rubocop:disable Metrics/MethodLength
+    # -rubocop:disable Metrics/MethodLength
     def self.invoke(command, _args)
       commands = Helpers.processed_commands
       case command
@@ -20,11 +20,11 @@ module RockerDocker
         return help 1
       end
     end
-    # rubocop:enable Metrics/MethodLength
+    # -rubocop:enable Metrics/MethodLength
 
     def self.dockerize
       Helpers.ensure_rails_root
-      RockerDockerNameSpace.load
+      RDNameSpace.load
       ConfigGenerator.dockerize
     end
 

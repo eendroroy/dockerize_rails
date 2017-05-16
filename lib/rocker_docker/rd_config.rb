@@ -1,5 +1,5 @@
 module RockerDocker
-  class RockerDockerConfig
+  class RDConfig
     @application_name     = 'rocker_docker'
 
     @rails_version        = 'latest'

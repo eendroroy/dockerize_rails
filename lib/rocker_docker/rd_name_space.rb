@@ -1,5 +1,5 @@
 module RockerDocker
-  class RockerDockerNameSpace
+  class RDNameSpace
     require 'ostruct'
 
     @namespace = OpenStruct.new
@@ -7,7 +7,7 @@ module RockerDocker
     attr_reader :namespace
 
     def self.load
-      RockerDockerConfig.load_rocker_docker_config
+      RDConfig.load_rocker_docker_config
       load_from_app_config
       load_from_rocker_docker_config
     end
@@ -20,11 +20,11 @@ module RockerDocker
         @namespace.databases[env] = 'postgresql' if app_c[env]['adapter'].start_with?('postgresql')
         @namespace.databases[env] = 'sqlite' if app_c[env]['adapter'].start_with?('sqlite')
       end
-      RockerDockerConfig.databases = @namespace.databases
+      RDConfig.databases = @namespace.databases
     end
 
     def self.load_from_rocker_docker_config
-      RockerDockerConfig.to_hash.map do |k, v|
+      RDConfig.to_hash.map do |k, v|
         @namespace.send("#{k}=", v)
       end
     end

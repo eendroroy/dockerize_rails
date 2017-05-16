@@ -4,7 +4,7 @@ module RockerDocker
       puts "\nGenerating RockerDocker config file ...\n".yellow
       puts "  ==> #{Constants::ROCKER_DOCKER_CONFIG_FILE_NAME}".blue
       f = File.open(File.join(PATHS.current, Constants::ROCKER_DOCKER_CONFIG_FILE_NAME), 'w+')
-      f.write(RockerDockerConfig.to_yaml_str)
+      f.write(RDConfig.to_yaml_str)
       f.close
       puts
       0
@@ -39,8 +39,8 @@ module RockerDocker
 
     def self.create_config_directories
       (Templates::ROOT_DIRECTORIES + Templates::RAILS_DIRECTORIES).each { |v| dir_op(v, 'mkdir_p') }
-      Templates::MYSQL_DIRECTORIES.each { |v| dir_op(v, 'mkdir_p') } if RockerDockerConfig.databases.values.include? 'mysql'
-      Templates::POSTGRES_DIRECTORIES.each { |v| dir_op(v, 'mkdir_p') } if RockerDockerConfig.databases.values.include? 'postgresql'
+      Templates::MYSQL_DIRECTORIES.each { |v| dir_op(v, 'mkdir_p') } if RDConfig.databases.values.include? 'mysql'
+      Templates::PG_DIRECTORIES.each { |v| dir_op(v, 'mkdir_p') } if RDConfig.databases.values.include? 'postgresql'
       0
     end
 
@@ -74,8 +74,8 @@ module RockerDocker
     def self.create_config_files
       status = 0
       status += create_rails_configs
-      status += create_mysql_configs if RockerDockerConfig.databases.values.include? 'mysql'
-      status += create_postgresql_configs if RockerDockerConfig.databases.values.include? 'postgresql'
+      status += create_mysql_configs if RDConfig.databases.values.include? 'mysql'
+      status += create_postgresql_configs if RDConfig.databases.values.include? 'postgresql'
       status += create_root_configs
       status
     end
@@ -89,7 +89,7 @@ module RockerDocker
             ERB.new(File.read(File.join(
                                 PATHS.resources(resource_name),
                                 "#{conf}.erb"
-            ))).result(RockerDockerNameSpace.eval_i)
+            ))).result(RDNameSpace.eval_i)
           ).read.gsub!(/\s*\n+/, "\n")
         )
         f.close

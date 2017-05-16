@@ -29,7 +29,7 @@ module RockerDocker
     end
 
     def self.postgresql_directory
-      File.join(config_directory, Constants::POSTGRESQL_DIRECTORY_NAME)
+      File.join(config_directory, Constants::PG_DIRECTORY_NAME)
     end
 
     def self.data_directory(db_dir_name)
