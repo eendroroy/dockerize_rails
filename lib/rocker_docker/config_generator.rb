@@ -94,7 +94,7 @@ module RockerDocker
                                 PATHS.resources(resource_name),
                                 "#{conf}.erb"
             ))).result(RockerDockerNameSpace.eval_i)
-          ).read.gsub!(/\n+/, "\n")
+          ).read.gsub!(/\s*\n+/, "\n")
         )
         f.close
       end
