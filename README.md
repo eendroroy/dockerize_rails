@@ -2,8 +2,6 @@
 
 [![Gem Version](https://badge.fury.io/rb/rocker_docker.svg)](https://badge.fury.io/rb/rocker_docker)
 [![Build Status](https://travis-ci.org/eendroroy/rocker_docker.svg?branch=master)](https://travis-ci.org/eendroroy/rocker_docker)
-[![Run Status](https://api.shippable.com/projects/591ae4566927020700bf5ae8/badge?branch=master)](https://app.shippable.com/github/eendroroy/rocker_docker)
-[![Coverage Badge](https://api.shippable.com/projects/591ae4566927020700bf5ae8/coverageBadge?branch=master)](https://app.shippable.com/github/eendroroy/rocker_docker)
 [![Code Climate](https://codeclimate.com/github/eendroroy/rocker_docker/badges/gpa.svg)](https://codeclimate.com/github/eendroroy/rocker_docker)
 
 ## Installation
