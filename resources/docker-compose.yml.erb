@@ -9,14 +9,14 @@ services:
       - '<%= application_port %>'
     ports:
       - '<%= "#{application_port}:#{application_port}" %>'
-<% if databases.values.include?('mysql') || databases.values.include?('postgres') %>
+<% if databases.values.include?('mysql') || databases.values.include?('postgresql') %>
     links:
       - '<%= databases[application_env] %>:databasehost'
     depends_on:
       - <%= databases[application_env] %>
 <% end %>
 
-<% if databases.values.include?('mysql') || databases.values.include?('postgres') %>
+<% if databases.values.include?('mysql') || databases.values.include?('postgresql') %>
   <%= databases[application_env] %>:
     build:
       context: .
