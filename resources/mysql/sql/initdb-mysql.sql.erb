@@ -1,11 +1,9 @@
-CREATE DATABASE IF NOT EXISTS <%= defined?(database_name_prefix) ? database_name_prefix : 'rocker_docker' %>_development;
-CREATE DATABASE IF NOT EXISTS <%= defined?(database_name_prefix) ? database_name_prefix : 'rocker_docker' %>_test;
-CREATE DATABASE IF NOT EXISTS <%= defined?(database_name_prefix) ? database_name_prefix : 'rocker_docker' %>_staging;
-CREATE DATABASE IF NOT EXISTS <%= defined?(database_name_prefix) ? database_name_prefix : 'rocker_docker' %>_production;
+<% databases.keys.each do |db| %>
+CREATE DATABASE IF NOT EXISTS <%= ConfigLoader.app_config[db]['database'] %>;
+<% end %>
 
-GRANT ALL PRIVILEGES ON <%= defined?(database_name_prefix) ? database_name_prefix : 'rocker_docker' %>_development.* TO '<%= database_user_name %>'@'%' WITH GRANT OPTION;
-GRANT ALL PRIVILEGES ON <%= defined?(database_name_prefix) ? database_name_prefix : 'rocker_docker' %>_test.* TO '<%= database_user_name %>'@'%' WITH GRANT OPTION;
-GRANT ALL PRIVILEGES ON <%= defined?(database_name_prefix) ? database_name_prefix : 'rocker_docker' %>_staging.* TO '<%= database_user_name %>'@'%' WITH GRANT OPTION;
-GRANT ALL PRIVILEGES ON <%= defined?(database_name_prefix) ? database_name_prefix : 'rocker_docker' %>_production.* TO '<%= database_user_name%>'@'%' WITH GRANT OPTION;
-
+<% databases.keys.each do |db| %>
+GRANT ALL PRIVILEGES ON <%= ConfigLoader.app_config[db]['database'] %>.* TO '<%= database_user_name %>'@'%' WITH GRANT OPTION;
+<% end %>
 SHOW DATABASES ;
+
