@@ -1,4 +1,11 @@
-FROM rails:<%= defined?(rails_version) ? rails_version : 5 %>
+FROM ruby:<%= ruby_version %>
+
+<% if ruby_version.include? 'alpine' %>
+<% else %>
+RUN apt-get update &&\
+    apt-get -y install mysql-client postgresql-client sqlite3 nodejs --no-install-recommends &&\
+    rm -rf /var/lib/apt/lists/*
+<% end %>
 
 RUN gem install bundler
 
