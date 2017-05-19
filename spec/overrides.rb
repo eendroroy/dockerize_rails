@@ -3,7 +3,7 @@ module RockerDocker
     def run(command, args)
       original_stdout = $stdout.clone
       $stdout.reopen(File.new('/dev/null', 'w'))
-      resp = CommandLineMethods.invoke(command, args)
+      resp = CommandLineMethods.invoke([command, args])
       $stdout.reopen(original_stdout)
       resp
     end
