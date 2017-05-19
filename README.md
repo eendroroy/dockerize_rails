@@ -1,5 +1,6 @@
 # RockerDocker
 
+[![GitHub tag](https://img.shields.io/github/tag/eendroroy/rocker_docker.svg)](https://github.com/eendroroy/rocker_docker)
 [![Gem Version](https://badge.fury.io/rb/rocker_docker.svg)](https://rubygems.org/gems/rocker_docker)
 [![Downloads](https://img.shields.io/gem/dt/rocker_docker.svg)](https://rubygems.org/gems/rocker_docker)
 [![Build Status](https://travis-ci.org/eendroroy/rocker_docker.svg?branch=master)](https://travis-ci.org/eendroroy/rocker_docker)
