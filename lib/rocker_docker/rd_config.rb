@@ -1,6 +1,5 @@
 module RockerDocker
   class RDConfig
-
     ATTRIBUTES = %i[
       application_name ruby_version application_env application_port postgres_version mysql_version
       db_root_pass database_user_name database_user_pass databases
@@ -25,7 +24,7 @@ module RockerDocker
       if File.exist? File.join(PATHS.current, Constants::ROCKER_DOCKER_CONFIG_FILE_NAME)
         rocker_docker_config = YAML.load_file(File.join(PATHS.current, Constants::ROCKER_DOCKER_CONFIG_FILE_NAME))
         ATTRIBUTES.each do |attr|
-          send("#{attr.to_s}=", rocker_docker_config[attr]) unless rocker_docker_config[attr].nil?
+          send("#{attr}=", rocker_docker_config[attr]) unless rocker_docker_config[attr].nil?
         end
       else
         puts "\nRockerDocker config file not generated...".yellow
@@ -33,7 +32,6 @@ module RockerDocker
       end
     end
 
-    # rubocop:disable Metrics/AbcSize
     def self.to_yaml_str
       "---
 # Set application name
@@ -91,7 +89,6 @@ database_user_name: #{database_user_name}
 database_user_pass: #{database_user_pass}
 "
     end
-    # rubocop:enable Metrics/AbcSize
 
     def self.to_hash
       Hash[ATTRIBUTES.map do |accessor|
