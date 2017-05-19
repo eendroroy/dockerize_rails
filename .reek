@@ -7,3 +7,6 @@ exclude_paths:
 
 TooManyConstants:
   max_constants: 10
+
+TooManyStatements:
+  max_statements: 15
