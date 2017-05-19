@@ -17,4 +17,6 @@ public/assets
 <%= Constants::ROCKER_DOCKER_CONFIG_FILE_NAME %>
 <%= Constants::DOCKER_COMPOSE_FILE_NAME %>
 <%= Constants::DOCKERIGNORE_FILE_NAME %>
-<%= "#{Constants::CONFIG_DIRECTORY_NAME}/#{database}/#{Constants::DATA_DIRECTORY_NAME}/*" %>
+<% if databases.values.include?('mysql') || databases.values.include?('postgresql') %>
+<%= "#{Constants::CONFIG_DIRECTORY_NAME}/#{databases[application_env]}/#{Constants::DATA_DIRECTORY_NAME}/*" %>
+<% end %>
