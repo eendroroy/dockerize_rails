@@ -10,3 +10,6 @@ TooManyConstants:
 
 TooManyStatements:
   max_statements: 15
+
+IrresponsibleModule:
+  enabled: false
