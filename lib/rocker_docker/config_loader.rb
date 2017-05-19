@@ -2,10 +2,10 @@ module RockerDocker
   module ConfigLoader
     require 'yaml'
 
-    @app_config = nil
+    @app_config = false
 
     def self.app_config
-      if @app_config.nil?
+      unless @app_config
         @app_config = YAML.load_file(File.join(PATHS.current, 'config/database.yml'))
         process_app_config
       end
@@ -15,10 +15,12 @@ module RockerDocker
     def self.process_app_config
       @app_config.delete 'default'
       @app_config.keys.each do |section|
-        @app_config[section]['username'] = RDConfig.database_user_name
-        @app_config[section]['password'] = RDConfig.database_user_pass
-        @app_config[section]['database'] = "#{RDConfig.application_name}_#{section}"
-        @app_config[section]['host'] = 'databasehost'
+        current_section = @app_config[section]
+        current_section['username'] = RDConfig.database_user_name
+        current_section['password'] = RDConfig.database_user_pass
+        current_section['database'] = "#{RDConfig.application_name}_#{section}"
+        current_section['host'] = 'databasehost'
+        @app_config[section] = current_section
       end
     end
 

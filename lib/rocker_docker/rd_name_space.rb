@@ -14,24 +14,31 @@ module RockerDocker
 
     def self.load_from_app_config
       app_c = ConfigLoader.app_config
-      @namespace.databases = {}
+      databases = {}
       app_c.keys.each do |env|
-        @namespace.databases[env] = 'mysql' if app_c[env]['adapter'].start_with?('mysql')
-        @namespace.databases[env] = 'postgresql' if app_c[env]['adapter'].start_with?('postgresql')
-        @namespace.databases[env] = 'sqlite' if app_c[env]['adapter'].start_with?('sqlite')
+        adapter = app_c[env]['adapter']
+        databases[env] =
+          if adapter.start_with?('mysql')
+            'mysql'
+          elsif adapter.start_with?('postgresql')
+            'postgresql'
+          elsif adapter.start_with?('sqlite')
+            'sqlite'
+          end
       end
-      RDConfig.databases = @namespace.databases
+      @namespace.databases = databases
+      RDConfig.databases = databases
     end
 
     def self.load_from_rocker_docker_config
-      RDConfig.to_hash.map do |k, v|
-        @namespace.send("#{k}=", v)
+      RDConfig.to_hash.map do |key, value|
+        @namespace.send("#{key}=", value)
       end
     end
 
     def self.add_hash(hash)
-      hash.map do |k, v|
-        @namespace.send("#{attr}=", rc[k] || v)
+      hash.map do |key, value|
+        @namespace.send("#{attr}=", rc[key] || value)
       end
     end
 

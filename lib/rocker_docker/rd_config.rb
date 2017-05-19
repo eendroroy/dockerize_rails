@@ -21,10 +21,12 @@ module RockerDocker
     @databases            = {}
 
     def self.load_rocker_docker_config
-      if File.exist? File.join(PATHS.current, Constants::ROCKER_DOCKER_CONFIG_FILE_NAME)
-        rocker_docker_config = YAML.load_file(File.join(PATHS.current, Constants::ROCKER_DOCKER_CONFIG_FILE_NAME))
+      rocker_docker_config_file = File.join(PATHS.current, Constants::ROCKER_DOCKER_CONFIG_FILE_NAME)
+      if File.exist? rocker_docker_config_file
+        rocker_docker_config = YAML.load_file(rocker_docker_config_file)
         ATTRIBUTES.each do |attr|
-          send("#{attr}=", rocker_docker_config[attr]) unless rocker_docker_config[attr].nil?
+          attr_conf = rocker_docker_config[attr]
+          send("#{attr}=", attr_conf) unless attr_conf.to_s.empty?
         end
       else
         puts "\nRockerDocker config file not generated...".yellow
