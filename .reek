@@ -13,3 +13,6 @@ TooManyStatements:
 
 IrresponsibleModule:
   enabled: false
+
+TooManyInstanceVariables:
+  enabled: false
