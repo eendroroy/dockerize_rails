@@ -3,6 +3,7 @@
 [![Gem Version](https://badge.fury.io/rb/rocker_docker.svg)](https://badge.fury.io/rb/rocker_docker)
 [![Build Status](https://travis-ci.org/eendroroy/rocker_docker.svg?branch=master)](https://travis-ci.org/eendroroy/rocker_docker)
 [![Code Climate](https://codeclimate.com/github/eendroroy/rocker_docker/badges/gpa.svg)](https://codeclimate.com/github/eendroroy/rocker_docker)
+[![Contributors](https://img.shields.io/github/contributors/eendroroy/model_2_factory-rails.svg)](CONTRIBUTORS.md)
 
 ## Installation
 
