@@ -1,0 +1,9 @@
+exclude_paths:
+  - vendor
+  - spec
+  - bin
+  - doc
+  - pkg
+
+TooManyConstants:
+  max_constants: 10
