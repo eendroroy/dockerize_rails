@@ -9,7 +9,7 @@ module RockerDocker
     end
 
     def self.parse_opts
-      OpenStruct.new(command: ARGV[0].to_s, args: ARGV[1..ARGV.size].to_a)
+      [ARGV[0].to_s, args: ARGV[1..ARGV.size].to_a]
     end
 
     def self.ensure_rails_root

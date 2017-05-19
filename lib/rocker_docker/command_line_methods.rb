@@ -3,9 +3,9 @@ module RockerDocker
     require 'colorize'
 
     # -rubocop:disable Metrics/MethodLength
-    def self.invoke(command, _args)
+    def self.invoke(options)
       commands = Helpers.processed_commands
-      case command
+      case options[0]
       when *(commands[:configure])
         return configure
       when *(commands[:dockerize])

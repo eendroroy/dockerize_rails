@@ -1,8 +1,7 @@
 module RockerDocker
   module CommandLine
     def run
-      opts = Helpers.parse_opts
-      exit(CommandLineMethods.invoke(opts.command, opts.args))
+      exit(CommandLineMethods.invoke(Helpers.parse_opts))
     end
   end
 end
