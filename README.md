@@ -30,6 +30,10 @@ $ bundle exec rocker undockerize
 $ bundle exec rocker docker_info
 ```
 
+## Demo
+
+[![asciicast](https://asciinema.org/a/121511.png)](https://asciinema.org/a/121511)
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
