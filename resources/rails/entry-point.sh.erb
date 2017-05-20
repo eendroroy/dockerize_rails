@@ -1,4 +1,8 @@
+<% if ruby_version.include? 'alpine' %>
+#!/usr/bin/env sh
+<% else %>
 #!/usr/bin/env bash
+<% end %>
 <% if databases.values.include?('mysql') || databases.values.include?('postgres') %>
 echo "Waiting for database server to start properly ..." && sleep 10
 <% end %>
