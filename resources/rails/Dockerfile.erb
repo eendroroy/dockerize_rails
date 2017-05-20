@@ -1,6 +1,7 @@
 FROM ruby:<%= ruby_version %>
 
 <% if ruby_version.include? 'alpine' %>
+RUN apk add --update mysql-client mysql-dev postgresql-client g++ ruby-dev make
 <% else %>
 RUN apt-get update &&\
     apt-get -y install mysql-client postgresql-client sqlite3 nodejs --no-install-recommends &&\
