@@ -25,7 +25,7 @@ module RockerDocker
       if File.exist? rocker_docker_config_file
         rocker_docker_config = YAML.load_file(rocker_docker_config_file)
         ATTRIBUTES.each do |attr|
-          attr_conf = rocker_docker_config[attr]
+          attr_conf = rocker_docker_config[attr.to_s]
           send("#{attr}=", attr_conf) unless attr_conf.to_s.empty?
         end
       else
