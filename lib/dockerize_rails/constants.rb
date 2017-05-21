@@ -10,7 +10,7 @@ module DockerizeRails
     CONFIG_DIRECTORY_NAME = '.dockerized'.freeze
     DATA_DIRECTORY_NAME = 'data_dir'.freeze
     SQL_DIRECTORY_NAME = 'sql'.freeze
-    
+
     COMMANDS = {
       configure: {
         aliases: %I[configure c rc cr],
