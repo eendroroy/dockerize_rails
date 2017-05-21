@@ -1,27 +1,27 @@
 default: &default
-  adapter: sqlite3
+  adapter: mysql2
   encoding: utf8
 
 development:
   <<: *default
   username: root
   password: root
-  database: db/rocker_docker_development.sqlite3
+  database: dockerize_rails_development
 
 test:
   <<: *default
   username: root
   password: root
-  database: db/rocker_docker_test.sqlite3
+  database: dockerize_rails_test
 
 staging:
   <<: *default
   username: root
   password: root
-  database: db/rocker_docker_staging.sqlite3
+  database: dockerize_rails_staging
 
 production:
   <<: *default
   username: root
   password: root
-  database: db/rocker_docker_production.sqlite3
+  database: dockerize_rails_production

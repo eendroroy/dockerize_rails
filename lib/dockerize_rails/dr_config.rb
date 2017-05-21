@@ -1,11 +1,11 @@
-module RockerDocker
-  class RDConfig
+module DockerizeRails
+  class DRConfig
     ATTRIBUTES = %i[
       application_name ruby_version application_env application_port postgres_version mysql_version
       db_root_pass database_user_name database_user_pass databases
     ].freeze
 
-    @application_name     = 'rocker_docker'
+    @application_name     = 'dockerize_rails'
 
     @ruby_version         = 'latest'
     @application_env      = 'development'
@@ -20,16 +20,16 @@ module RockerDocker
 
     @databases            = {}
 
-    def self.load_rocker_docker_config
-      rocker_docker_config_file = File.join(PATHS.current, Constants::ROCKER_DOCKER_CONFIG_FILE_NAME)
-      if File.exist? rocker_docker_config_file
-        rocker_docker_config = YAML.load_file(rocker_docker_config_file)
+    def self.load_dockerize_rails_config
+      dockerize_rails_config_file = File.join(PATHS.current, Constants::ROCKER_DOCKER_CONFIG_FILE_NAME)
+      if File.exist? dockerize_rails_config_file
+        dockerize_rails_config = YAML.load_file(dockerize_rails_config_file)
         ATTRIBUTES.each do |attr|
-          attr_conf = rocker_docker_config[attr.to_s]
+          attr_conf = dockerize_rails_config[attr.to_s]
           send("#{attr}=", attr_conf) unless attr_conf.to_s.empty?
         end
       else
-        puts "\nRockerDocker config file not generated...".yellow
+        puts "\nDockerizeRails config file not generated...".yellow
         puts "Run 'bundle exec rocker configure' to generate configuration file.\n".yellow
       end
     end

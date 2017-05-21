@@ -1,3 +1,0 @@
-require 'rocker_docker'
-
-RockerDockerCLI.run

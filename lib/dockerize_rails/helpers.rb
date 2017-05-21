@@ -1,4 +1,4 @@
-module RockerDocker
+module DockerizeRails
   module Helpers
     require 'ostruct'
 

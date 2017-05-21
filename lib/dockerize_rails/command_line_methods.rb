@@ -1,4 +1,4 @@
-module RockerDocker
+module DockerizeRails
   module CommandLineMethods
     require 'colorize'
 
@@ -24,7 +24,7 @@ module RockerDocker
 
     def self.dockerize
       Helpers.ensure_rails_root
-      RDNameSpace.load
+      DRNameSpace.load
       ConfigGenerator.dockerize
     end
 

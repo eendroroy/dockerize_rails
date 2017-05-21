@@ -1,9 +1,9 @@
-module RockerDocker
+module DockerizeRails
   module Constants
     COMMANDS = {
       configure: {
         aliases: %I[configure c rc cr],
-        help: 'Generates \'.rocker_docker.yml\''.freeze
+        help: "Generates '#{ROCKER_DOCKER_CONFIG_FILE_NAME}'".freeze
       },
       dockerize: {
         aliases: %I[dockerize rock dc d],
@@ -23,14 +23,14 @@ module RockerDocker
       }
     }.freeze
 
-    ROCKER_DOCKER_CONFIG_FILE_NAME = '.rocker_docker.yml'.freeze
+    ROCKER_DOCKER_CONFIG_FILE_NAME = '.dockerize.yml'.freeze
     DOCKER_COMPOSE_FILE_NAME = 'docker-compose.yml'.freeze
     DOCKERIGNORE_FILE_NAME = '.dockerignore'.freeze
 
     RAILS_DIRECTORY_NAME = 'rails'.freeze
     MYSQL_DIRECTORY_NAME = 'mysql'.freeze
     PG_DIRECTORY_NAME = 'postgresql'.freeze
-    CONFIG_DIRECTORY_NAME = '.rocker_docker'.freeze
+    CONFIG_DIRECTORY_NAME = '.dockerized'.freeze
     DATA_DIRECTORY_NAME = 'data_dir'.freeze
     SQL_DIRECTORY_NAME = 'sql'.freeze
   end

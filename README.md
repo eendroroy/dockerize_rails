@@ -1,18 +1,18 @@
-# RockerDocker
+# DockerizeRails
 
-[![GitHub tag](https://img.shields.io/github/tag/eendroroy/rocker_docker.svg)](https://github.com/eendroroy/rocker_docker)
-[![Gem Version](https://badge.fury.io/rb/rocker_docker.svg)](https://rubygems.org/gems/rocker_docker)
-[![Downloads](https://img.shields.io/gem/dt/rocker_docker.svg)](https://rubygems.org/gems/rocker_docker)
-[![Build Status](https://travis-ci.org/eendroroy/rocker_docker.svg?branch=master)](https://travis-ci.org/eendroroy/rocker_docker)
-[![Code Climate](https://codeclimate.com/github/eendroroy/rocker_docker/badges/gpa.svg)](https://codeclimate.com/github/eendroroy/rocker_docker)
-[![Contributors](https://img.shields.io/github/contributors/eendroroy/rocker_docker.svg)](CONTRIBUTORS.md)
+[![GitHub tag](https://img.shields.io/github/tag/eendroroy/dockerize_rails.svg)](https://github.com/eendroroy/dockerize_rails)
+[![Gem Version](https://badge.fury.io/rb/dockerize_rails.svg)](https://rubygems.org/gems/dockerize_rails)
+[![Downloads](https://img.shields.io/gem/dt/dockerize_rails.svg)](https://rubygems.org/gems/dockerize_rails)
+[![Build Status](https://travis-ci.org/eendroroy/dockerize_rails.svg?branch=master)](https://travis-ci.org/eendroroy/dockerize_rails)
+[![Code Climate](https://codeclimate.com/github/eendroroy/dockerize_rails/badges/gpa.svg)](https://codeclimate.com/github/eendroroy/dockerize_rails)
+[![Contributors](https://img.shields.io/github/contributors/eendroroy/dockerize_rails.svg)](CONTRIBUTORS.md)
 
 ## Installation
 
 Add this line to your rails application's Gemfile:
 
 ```ruby
-gem 'rocker_docker'
+gem 'dockerize_rails'
 ```
 
 And then execute:
@@ -23,11 +23,11 @@ $ bundle
 ## Usage
 
 ```bash
-$ bundle exec rocker help
-$ bundle exec rocker configure
-$ bundle exec rocker dockerize
-$ bundle exec rocker undockerize
-$ bundle exec rocker docker_info
+$ bundle exec dock help
+$ bundle exec dock configure
+$ bundle exec dock dockerize
+$ bundle exec dock undockerize
+$ bundle exec dock docker_info
 ```
 
 ## Demo
@@ -41,7 +41,7 @@ After checking out the repo, run `bin/setup` to install dependencies. Then, run 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/eendroroy/rocker_docker. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/eendroroy/dockerize_rails. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 
 ## License

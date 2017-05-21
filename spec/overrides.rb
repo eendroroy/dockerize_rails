@@ -1,4 +1,4 @@
-module RockerDocker
+module DockerizeRails
   module CommandLine
     def run(command, args)
       original_stdout = $stdout.clone
@@ -10,7 +10,7 @@ module RockerDocker
   end
 end
 
-module RockerDocker
+module DockerizeRails
   module Helpers
     def self.ensure_rails_root
       0
@@ -18,6 +18,6 @@ module RockerDocker
   end
 end
 
-class RockerDockerCLI
-  extend RockerDocker::CommandLine
+class DockerizeRailsCLI
+  extend DockerizeRails::CommandLine
 end

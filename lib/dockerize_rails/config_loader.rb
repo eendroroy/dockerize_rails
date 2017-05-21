@@ -1,4 +1,4 @@
-module RockerDocker
+module DockerizeRails
   module ConfigLoader
     require 'yaml'
 
@@ -16,9 +16,9 @@ module RockerDocker
       @app_config.delete 'default'
       @app_config.keys.each do |section|
         current_section = @app_config[section]
-        current_section['username'] = RDConfig.database_user_name
-        current_section['password'] = RDConfig.database_user_pass
-        current_section['database'] = "#{RDConfig.application_name}_#{section}"
+        current_section['username'] = DRConfig.database_user_name
+        current_section['password'] = DRConfig.database_user_pass
+        current_section['database'] = "#{DRConfig.application_name}_#{section}"
         current_section['host'] = 'databasehost'
         @app_config[section] = current_section
       end

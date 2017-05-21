@@ -1,4 +1,4 @@
-module RockerDocker
+module DockerizeRails
   module PATHS
     def self.gem_root
       File.expand_path '../..', File.dirname(__FILE__)

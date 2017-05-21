@@ -1,5 +1,5 @@
-module RockerDocker
-  class RDNameSpace
+module DockerizeRails
+  class DRNameSpace
     require 'ostruct'
 
     @namespace = OpenStruct.new
@@ -7,9 +7,9 @@ module RockerDocker
     attr_reader :namespace
 
     def self.load
-      RDConfig.load_rocker_docker_config
+      DRConfig.load_dockerize_rails_config
       load_from_app_config
-      load_from_rocker_docker_config
+      load_from_dockerize_rails_config
     end
 
     def self.load_from_app_config
@@ -27,11 +27,11 @@ module RockerDocker
           end
       end
       @namespace.databases = databases
-      RDConfig.databases = databases
+      DRConfig.databases = databases
     end
 
-    def self.load_from_rocker_docker_config
-      RDConfig.to_hash.map do |key, value|
+    def self.load_from_dockerize_rails_config
+      DRConfig.to_hash.map do |key, value|
         @namespace.send("#{key}=", value)
       end
     end
@@ -48,7 +48,7 @@ module RockerDocker
 
     class << self
       private :load_from_app_config
-      private :load_from_rocker_docker_config
+      private :load_from_dockerize_rails_config
     end
   end
 end

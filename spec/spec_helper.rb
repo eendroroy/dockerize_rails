@@ -1,5 +1,5 @@
 require 'bundler/setup'
-require 'rocker_docker'
+require 'dockerize_rails'
 require 'overrides'
 
 RSpec.configure do |config|

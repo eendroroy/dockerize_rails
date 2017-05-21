@@ -1,10 +1,10 @@
-module RockerDocker
+module DockerizeRails
   module ConfigGenerator
     def self.configure
-      puts "\nGenerating RockerDocker config file ...\n".yellow
+      puts "\nGenerating DockerizeRails config file ...\n".yellow
       puts "  ==> #{Constants::ROCKER_DOCKER_CONFIG_FILE_NAME}".blue
       file = File.open(File.join(PATHS.current, Constants::ROCKER_DOCKER_CONFIG_FILE_NAME), 'w+')
-      file.write(RDConfig.to_yaml_str)
+      file.write(DRConfig.to_yaml_str)
       file.close
       puts
       0
@@ -38,7 +38,7 @@ module RockerDocker
     end
 
     def self.create_config_directories
-      db_values = RDConfig.databases.values
+      db_values = DRConfig.databases.values
       dirs = Templates::ROOT_DIRECTORIES + Templates::RAILS_DIRECTORIES
       dirs += Templates::MYSQL_DIRECTORIES if db_values.include? 'mysql'
       dirs += Templates::PG_DIRECTORIES if db_values.include? 'postgresql'
@@ -74,7 +74,7 @@ module RockerDocker
     end
 
     def self.create_config_files
-      db_values = RDConfig.databases.values
+      db_values = DRConfig.databases.values
       status = 0
       status += create_rails_configs
       status += create_mysql_configs if db_values.include? 'mysql'
@@ -93,7 +93,7 @@ module RockerDocker
             ERB.new(File.read(File.join(
                                 PATHS.resources(resource_name),
                                 "#{conf}.erb"
-            ))).result(RDNameSpace.eval_i)
+            ))).result(DRNameSpace.eval_i)
           ).read.gsub!(/\s*\n+/, "\n")
         )
         file.close

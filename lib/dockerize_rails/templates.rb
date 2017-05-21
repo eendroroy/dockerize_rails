@@ -1,4 +1,4 @@
-module RockerDocker
+module DockerizeRails
   module Templates
     ROOT_TEMPLATES = %W[#{Constants::DOCKERIGNORE_FILE_NAME} #{Constants::DOCKER_COMPOSE_FILE_NAME}].freeze
 
