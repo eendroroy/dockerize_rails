@@ -32,7 +32,7 @@ $ bundle exec dock docker_info
 
 ## Demo
 
-[![asciicast](https://asciinema.org/a/121511.png)](https://asciinema.org/a/121511)
+[![asciicast](https://asciinema.org/a/121552.png)](https://asciinema.org/a/121552)
 
 ## Development
 
