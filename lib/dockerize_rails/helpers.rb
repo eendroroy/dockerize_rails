@@ -23,7 +23,7 @@ module DockerizeRails
     def self.help
       ['
 Usage: rocker <command>
-   or: bundle exec rocker <command>
+   or: bundle exec dock <command>
 
    commands:
        ',
