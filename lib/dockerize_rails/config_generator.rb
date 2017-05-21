@@ -2,8 +2,8 @@ module DockerizeRails
   module ConfigGenerator
     def self.configure
       puts "\nGenerating DockerizeRails config file ...\n".yellow
-      puts "  ==> #{Constants::ROCKER_DOCKER_CONFIG_FILE_NAME}".blue
-      file = File.open(File.join(PATHS.current, Constants::ROCKER_DOCKER_CONFIG_FILE_NAME), 'w+')
+      puts "  ==> #{Constants::DOCKERIZE_RAILS_CONFIG_FILE_NAME}".blue
+      file = File.open(File.join(PATHS.current, Constants::DOCKERIZE_RAILS_CONFIG_FILE_NAME), 'w+')
       file.write(DRConfig.to_yaml_str)
       file.close
       puts

@@ -1,9 +1,20 @@
 module DockerizeRails
   module Constants
+    DOCKERIZE_RAILS_CONFIG_FILE_NAME = '.dockerize.yml'.freeze
+    DOCKER_COMPOSE_FILE_NAME = 'docker-compose.yml'.freeze
+    DOCKERIGNORE_FILE_NAME = '.dockerignore'.freeze
+
+    RAILS_DIRECTORY_NAME = 'rails'.freeze
+    MYSQL_DIRECTORY_NAME = 'mysql'.freeze
+    PG_DIRECTORY_NAME = 'postgresql'.freeze
+    CONFIG_DIRECTORY_NAME = '.dockerized'.freeze
+    DATA_DIRECTORY_NAME = 'data_dir'.freeze
+    SQL_DIRECTORY_NAME = 'sql'.freeze
+    
     COMMANDS = {
       configure: {
         aliases: %I[configure c rc cr],
-        help: "Generates '#{ROCKER_DOCKER_CONFIG_FILE_NAME}'".freeze
+        help: "Generates '#{DOCKERIZE_RAILS_CONFIG_FILE_NAME}'".freeze
       },
       dockerize: {
         aliases: %I[dockerize rock dc d],
@@ -22,16 +33,5 @@ module DockerizeRails
         help: 'prints this message'.freeze
       }
     }.freeze
-
-    ROCKER_DOCKER_CONFIG_FILE_NAME = '.dockerize.yml'.freeze
-    DOCKER_COMPOSE_FILE_NAME = 'docker-compose.yml'.freeze
-    DOCKERIGNORE_FILE_NAME = '.dockerignore'.freeze
-
-    RAILS_DIRECTORY_NAME = 'rails'.freeze
-    MYSQL_DIRECTORY_NAME = 'mysql'.freeze
-    PG_DIRECTORY_NAME = 'postgresql'.freeze
-    CONFIG_DIRECTORY_NAME = '.dockerized'.freeze
-    DATA_DIRECTORY_NAME = 'data_dir'.freeze
-    SQL_DIRECTORY_NAME = 'sql'.freeze
   end
 end
