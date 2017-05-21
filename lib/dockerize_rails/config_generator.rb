@@ -32,8 +32,7 @@ module DockerizeRails
 
     def self.remove_config_directories
       dir_op(Constants::CONFIG_DIRECTORY_NAME, 'rm_rf')
-      dir_op(Constants::DOCKERIGNORE_FILE_NAME, 'rm_rf')
-      dir_op(Constants::DOCKER_COMPOSE_FILE_NAME, 'rm_rf')
+      Templates::ROOT_TEMPLATES.each { |conf| dir_op(conf, 'rm_rf') }
       0
     end
 
