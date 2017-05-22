@@ -18,6 +18,7 @@ module DockerizeRails
       puts "\nDon't forget to update "\
         "\"#{Constants::CONFIG_DIRECTORY_NAME}/#{Constants::RAILS_DIRECTORY_NAME}/secrtes.yml\"".yellow.underline
       puts
+      set_executables
       status
     end
 
@@ -32,8 +33,7 @@ module DockerizeRails
 
     def self.remove_config_directories
       dir_op(Constants::CONFIG_DIRECTORY_NAME, 'rm_rf')
-      dir_op(Constants::DOCKERIGNORE_FILE_NAME, 'rm_rf')
-      dir_op(Constants::DOCKER_COMPOSE_FILE_NAME, 'rm_rf')
+      Templates::ROOT_TEMPLATES.each { |conf| dir_op(conf, 'rm_rf') }
       0
     end
 
@@ -101,6 +101,12 @@ module DockerizeRails
       0
     end
 
+    def self.set_executables
+      Templates::EXECUTABLES.each do |exe|
+        File.chmod(0o775, File.join(PATHS.current, exe))
+      end
+    end
+
     class << self
       private :dir_op
       private :remove_config_directories
@@ -112,6 +118,7 @@ module DockerizeRails
       private :create_root_configs
       private :create_config_files
       private :write_config
+      private :set_executables
     end
   end
 end

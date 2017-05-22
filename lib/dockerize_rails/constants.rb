@@ -1,5 +1,7 @@
 module DockerizeRails
   module Constants
+    SHELL_SCRIPT_FILE_NAME = 'dockerw'.freeze
+
     DOCKERIZE_RAILS_CONFIG_FILE_NAME = '.dockerize.yml'.freeze
     DOCKER_COMPOSE_FILE_NAME = 'docker-compose.yml'.freeze
     DOCKERIGNORE_FILE_NAME = '.dockerignore'.freeze
