@@ -6,7 +6,7 @@ exclude_paths:
   - pkg
 
 TooManyConstants:
-  max_constants: 10
+  enabled: false
 
 TooManyStatements:
   max_statements: 15
