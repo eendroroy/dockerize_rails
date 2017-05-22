@@ -1,0 +1,253 @@
+#!/usr/bin/env bash
+
+RAILS_APP_NAME="<%= application_name %>_rails"
+MYSQL_APP_NAME="<%= application_name %>_mysql"
+POSTGRESQL_APP_NAME="<%= application_name %>_postgresql"
+SERVICE_NAME_POSTFIX="_service"
+
+build() {
+  if docker images | grep "${RAILS_APP_NAME}" > /dev/null; then
+    echo "<%= '  ==> Image ${RAILS_APP_NAME} already exists'.blue %>"
+  else
+    echo "<%= '  ==> Building ${RAILS_APP_NAME}'.blue %>"
+    docker build \
+      -t ${RAILS_APP_NAME} \
+      -f ./<%= "#{Constants::CONFIG_DIRECTORY_NAME}/rails/Dockerfile" %> . > /dev/null
+  fi
+<% if databases[application_env] == 'mysql' %>
+  if docker images | grep "${MYSQL_APP_NAME}" > /dev/null; then
+    echo "<%= '  ==> Image ${MYSQL_APP_NAME} already exists'.blue %>"
+  else
+    echo "<%= '  ==> Building ${MYSQL_APP_NAME}'.blue %>"
+    docker build \
+      -t ${MYSQL_APP_NAME} \
+      -f ./<%= "#{Constants::CONFIG_DIRECTORY_NAME}/#{databases[application_env]}/Dockerfile" %> . > /dev/null
+  fi
+<% elsif databases[application_env] == 'postgresql' %>
+  if docker images | grep "${POSTGRESQL_APP_NAME}" > /dev/null; then
+    echo "<%= '  ==> Image ${POSTGRESQL_APP_NAME} already exists'.blue %>"
+  else
+    echo "<%= '  ==> Building ${POSTGRESQL_APP_NAME}'.blue %>"
+    docker build \
+      -t ${POSTGRESQL_APP_NAME} \
+      -f ./<%= "#{Constants::CONFIG_DIRECTORY_NAME}/#{databases[application_env]}/Dockerfile" %> . > /dev/null
+  fi
+<% end %>
+}
+
+rebuild() {
+  destroy
+  build
+}
+
+destroy(){
+  stop > /dev/null
+  remove > /dev/null
+  if docker images | grep "${RAILS_APP_NAME}" > /dev/null; then
+    echo "<%= '  ==> Destroying ${RAILS_APP_NAME}'.yellow %>"
+    docker rmi ${RAILS_APP_NAME} > /dev/null
+  else
+    echo "<%= '  ==> Image ${RAILS_APP_NAME} does not exists'.yellow %>"
+  fi
+<% if databases[application_env] == 'mysql' %>
+  if docker images | grep "${MYSQL_APP_NAME}" > /dev/null; then
+    echo "<%= '  ==> Destroying ${MYSQL_APP_NAME}'.yellow %>"
+    docker rmi ${MYSQL_APP_NAME} > /dev/null
+  else
+    echo "<%= '  ==> Image ${MYSQL_APP_NAME} does not exists'.yellow %>"
+  fi
+<% elsif databases[application_env] == 'postgresql' %>
+  if docker images | grep "${POSTGRESQL_APP_NAME}" > /dev/null; then
+    echo "<%= '  ==> Destroying ${POSTGRESQL_APP_NAME}'.yellow %>"
+    docker rmi ${POSTGRESQL_APP_NAME} > /dev/null
+  else
+    echo "<%= '  ==> Image ${POSTGRESQL_APP_NAME} does not exists'.yellow %>"
+  fi
+<% end %>
+}
+
+remove(){
+  stop > /dev/null
+  if docker ps -a | grep "${RAILS_APP_NAME}${SERVICE_NAME_POSTFIX}" > /dev/null; then
+    echo "<%= '  ==> Removing service ${RAILS_APP_NAME}${SERVICE_NAME_POSTFIX}'.yellow %>"
+    docker rm ${RAILS_APP_NAME}${SERVICE_NAME_POSTFIX} > /dev/null
+  else
+    echo "<%= '  ==> Service ${RAILS_APP_NAME}${SERVICE_NAME_POSTFIX} does not exists'.yellow %>"
+  fi
+<% if databases[application_env] == 'mysql' %>
+  if docker ps -a | grep "${MYSQL_APP_NAME}${SERVICE_NAME_POSTFIX}" > /dev/null; then
+    echo "<%= '  ==> Removing servic ${MYSQL_APP_NAME}${SERVICE_NAME_POSTFIX}'.yellow %>"
+    docker rm ${MYSQL_APP_NAME}${SERVICE_NAME_POSTFIX} > /dev/null
+  else
+    echo "<%= '  ==> Service ${MYSQL_APP_NAME}${SERVICE_NAME_POSTFIX} does not exists'.yellow %>"
+  fi
+<% elsif databases[application_env] == 'postgresql' %>
+  if docker ps -a | grep "${POSTGRESQL_APP_NAME}${SERVICE_NAME_POSTFIX}" > /dev/null; then
+    echo "<%= '  ==> Removing service ${POSTGRESQL_APP_NAME}${SERVICE_NAME_POSTFIX}'.yellow %>"
+    docker rm ${POSTGRESQL_APP_NAME}${SERVICE_NAME_POSTFIX} > /dev/null
+  else
+    echo "<%= '  ==> Service ${POSTGRESQL_APP_NAME}${SERVICE_NAME_POSTFIX} does not exists'.yellow %>"
+  fi
+<% end %>
+}
+
+create() {
+<% if databases[application_env] == 'mysql' %>
+
+  if docker images | grep "${MYSQL_APP_NAME}" > /dev/null; then
+    if docker ps -a | grep "${MYSQL_APP_NAME}${SERVICE_NAME_POSTFIX}" > /dev/null; then
+      echo "<%= '  ==> Service ${MYSQL_APP_NAME}${SERVICE_NAME_POSTFIX} already created. Starting instead'.blue %>"
+    else
+      echo "<%= '  ==> Creating service ${MYSQL_APP_NAME}${SERVICE_NAME_POSTFIX}'.blue %>"
+      docker run -d --name ${MYSQL_APP_NAME}${SERVICE_NAME_POSTFIX} \
+        --env MYSQL_ROOT_PASSWORD=root \
+        --env MYSQL_USER=user \
+        --env MYSQL_PASSWORD=pass \
+        --publish 3300:3306 \
+        --volume <%= File.join(PATHS.config_directory, databases[application_env], Constants::DATA_DIRECTORY_NAME) %>:/var/lib/<%= databases[application_env] %> \
+        ${MYSQL_APP_NAME} > /dev/null
+    fi
+    echo -ne "<%=  '  ==> Waiting for database server to start properly ...'.blue %>"
+    for i in {1..20}; do echo -ne '.'; sleep 1; done; echo
+
+  else
+
+    echo "<%= '  ==> Image ${MYSQL_APP_NAME} does not exists. Build first'.red %>"
+    exit 1
+
+  fi
+
+<% elsif databases[application_env] == 'postgresql' %>
+
+  if docker images | grep "${POSTGRESQL_APP_NAME}" > /dev/null; then
+    if docker ps -a | grep "${POSTGRESQL_APP_NAME}${SERVICE_NAME_POSTFIX}" > /dev/null; then
+      echo "<%= '  ==> Service ${POSTGRESQL_APP_NAME}${SERVICE_NAME_POSTFIX} already created. Starting instead'.blue %>"
+    else
+      echo "<%= '  ==> Creating service ${POSTGRESQL_APP_NAME}${SERVICE_NAME_POSTFIX}'.blue %>"
+      docker run -d --name ${POSTGRESQL_APP_NAME}${SERVICE_NAME_POSTFIX} \
+        --env POSTGRES_USER=user \
+        --env POSTGRES_PASSWORD=pass \
+        --publish 5400:5432
+        --volume <%= File.join(PATHS.config_directory, databases[application_env], Constants::DATA_DIRECTORY_NAME) %>:/var/lib/<%= databases[application_env] %> \
+        ${POSTGRESQL_APP_NAME} > /dev/null
+    fi
+    echo -ne "<%=  '  ==> Waiting for database server to start properly ...'.blue %>"
+    for i in {1..20}; do echo -ne '.'; sleep 1; done; echo
+  else
+
+    echo "<%= '  ==> Image ${POSTGRESQL_APP_NAME} does not exists. Build first'.red %>"
+    exit 1
+
+  fi
+
+<% end %>
+
+  if docker images | grep "${RAILS_APP_NAME}" > /dev/null; then
+    if docker ps -a | grep "${RAILS_APP_NAME}${SERVICE_NAME_POSTFIX}" > /dev/null; then
+      echo "<%= '  ==> Service ${RAILS_APP_NAME}${SERVICE_NAME_POSTFIX} already created. Starting instead'.blue %>"
+    else
+      echo "<%= '  ==> Creating service ${RAILS_APP_NAME}${SERVICE_NAME_POSTFIX}'.blue %>"
+      docker run -d --name ${RAILS_APP_NAME}${SERVICE_NAME_POSTFIX} \
+      <% if databases[application_env] == 'mysql' %>
+        --link ${MYSQL_APP_NAME}${SERVICE_NAME_POSTFIX}:databasehost \
+      <% elsif databases[application_env] == 'postgresql' %>
+        --link ${POSTGRESQL_APP_NAME}${SERVICE_NAME_POSTFIX}:databasehost \
+      <% end %>
+        --publish 5000:5000 \
+        --expose 5000 \
+        ${RAILS_APP_NAME} > /dev/null
+    fi
+  else
+    echo "<%= '  ==> Image ${RAILS_APP_NAME} does not exists. Build first'.red %>"
+  fi
+}
+
+recreate() {
+  remove > /dev/null
+  create
+}
+
+status(){
+  docker ps
+}
+
+start(){
+<% if databases[application_env] == 'mysql' %>
+  if docker ps | grep "${MYSQL_APP_NAME}${SERVICE_NAME_POSTFIX}" > /dev/null; then
+    echo "<%= '  ==> Service ${MYSQL_APP_NAME}${SERVICE_NAME_POSTFIX} already started'.blue %>"
+  elif docker ps -a | grep "${MYSQL_APP_NAME}${SERVICE_NAME_POSTFIX}" > /dev/null; then
+    echo "<%= '  ==> Starting service ${MYSQL_APP_NAME}${SERVICE_NAME_POSTFIX}'.blue %>"
+    docker start ${MYSQL_APP_NAME}${SERVICE_NAME_POSTFIX} > /dev/null
+    echo -ne "<%=  '  ==> Waiting for database server to start properly ...'.blue %>"
+    for i in {1..20}; do echo -ne '.'; sleep 1; done; echo
+  else
+    echo "<%= '  ==> Service ${MYSQL_APP_NAME}${SERVICE_NAME_POSTFIX} does not exists, create first'.red %>"
+  fi
+<% elsif databases[application_env] == 'postgresql' %>
+  if docker ps | grep "${POSTGRESQL_APP_NAME}${SERVICE_NAME_POSTFIX}" > /dev/null; then
+    echo "<%= '  ==> Service ${POSTGRESQL_APP_NAME}${SERVICE_NAME_POSTFIX} already started'.blue %>"
+  elif docker ps -a | grep "${POSTGRESQL_APP_NAME}${SERVICE_NAME_POSTFIX}" > /dev/null; then
+    echo "<%= '  ==> Starting service ${POSTGRESQL_APP_NAME}${SERVICE_NAME_POSTFIX}'.blue %>"
+    docker start ${POSTGRESQL_APP_NAME}${SERVICE_NAME_POSTFIX} > /dev/null
+    echo -ne "<%=  '  ==> Waiting for database server to start properly ...'.blue %>"
+    for i in {1..20}; do echo -ne '.'; sleep 1; done; echo
+  else
+    echo "<%= '  ==> Service ${POSTGRESQL_APP_NAME}${SERVICE_NAME_POSTFIX} does not exists, create first'.red %>"
+  fi
+<% end %>
+  if docker ps | grep "${RAILS_APP_NAME}${SERVICE_NAME_POSTFIX}" > /dev/null; then
+    echo "<%= '  ==> Service ${RAILS_APP_NAME}${SERVICE_NAME_POSTFIX} already started'.blue %>"
+  elif docker ps -a | grep "${RAILS_APP_NAME}${SERVICE_NAME_POSTFIX}" > /dev/null; then
+    echo "<%= '  ==> Starting service ${RAILS_APP_NAME}${SERVICE_NAME_POSTFIX}'.blue %>"
+    docker start ${RAILS_APP_NAME}${SERVICE_NAME_POSTFIX} > /dev/null > /dev/null
+  else
+    echo "<%= '  ==> Service ${RAILS_APP_NAME}${SERVICE_NAME_POSTFIX} does not exists, create first'.red %>"
+  fi
+}
+
+stop(){
+<% if databases[application_env] == 'mysql' %>
+  if docker ps | grep "${MYSQL_APP_NAME}${SERVICE_NAME_POSTFIX}" > /dev/null; then
+    echo "<%= '  ==> Stopping service ${MYSQL_APP_NAME}${SERVICE_NAME_POSTFIX}'.blue %>"
+    docker stop ${MYSQL_APP_NAME}${SERVICE_NAME_POSTFIX} > /dev/null
+  else
+    echo "<%= '  ==> Service ${MYSQL_APP_NAME}${SERVICE_NAME_POSTFIX} is not running'.blue %>"
+  fi
+<% elsif databases[application_env] == 'postgresql' %>
+  if docker ps | grep "${POSTGRESQL_APP_NAME}${SERVICE_NAME_POSTFIX}" > /dev/null; then
+    echo "<%= '  ==> Stopping service ${POSTGRESQL_APP_NAME}${SERVICE_NAME_POSTFIX}'.blue %>"
+    docker stop ${POSTGRESQL_APP_NAME}${SERVICE_NAME_POSTFIX} > /dev/null
+  else
+    echo "<%= '  ==> Service ${POSTGRESQL_APP_NAME}${SERVICE_NAME_POSTFIX} is not running'.blue %>"
+  fi
+<% end %>
+  if docker ps | grep "${RAILS_APP_NAME}${SERVICE_NAME_POSTFIX}" > /dev/null; then
+    echo "<%= '  ==> Stopping service ${RAILS_APP_NAME}${SERVICE_NAME_POSTFIX}'.blue %>"
+    docker stop ${RAILS_APP_NAME}${SERVICE_NAME_POSTFIX} > /dev/null
+  else
+    echo "<%= '  ==> Service ${RAILS_APP_NAME}${SERVICE_NAME_POSTFIX} is not running'.blue %>"
+  fi
+}
+
+restart() {
+  stop > /dev/null
+  start
+}
+
+
+case $1 in
+  build) build ;;
+  rebuild) rebuild;;
+  start) start;;
+  create) create ;;
+  recreate) recreate ;;
+  restart) restart ;;
+  stop) stop ;;
+  remove) remove ;;
+  destroy) destroy ;;
+  *)
+    echo "Usage:" >&2
+    echo "  ./<%= Constants::SHELL_SCRIPT_FILE_NAME %> {build|rebuild|create|recreate|start|restart|stop|remove|destroy}" >&2
+    exit 3
+  ;;
+esac
