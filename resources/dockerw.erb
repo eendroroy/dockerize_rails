@@ -168,7 +168,51 @@ recreate() {
 }
 
 status(){
-  docker ps
+  <% if databases[application_env] == 'mysql' %>
+    if docker ps | grep "${MYSQL_APP_NAME}${SERVICE_NAME_POSTFIX}" > /dev/null; then
+      echo "<%= '  ==> Service ${MYSQL_APP_NAME}${SERVICE_NAME_POSTFIX} started'.blue %>"
+    elif docker ps -a | grep "${MYSQL_APP_NAME}${SERVICE_NAME_POSTFIX}" > /dev/null; then
+      echo "<%= '  ==> Service ${MYSQL_APP_NAME}${SERVICE_NAME_POSTFIX} not started'.blue %>"
+    else
+      if docker images | grep "${MYSQL_APP_NAME}" > /dev/null; then
+        echo "<%= '  ==> Service ${MYSQL_APP_NAME}${SERVICE_NAME_POSTFIX} does not exists. Consider creating'.yellow %>"
+      else
+        echo "<%= '  ==> Image ${MYSQL_APP_NAME} does not exists. Consider building'.yellow %>"
+      fi
+    fi
+  <% elsif databases[application_env] == 'postgresql' %>
+    if docker ps | grep "${POSTGRESQL_APP_NAME}${SERVICE_NAME_POSTFIX}" > /dev/null; then
+      echo "<%= '  ==> Service ${POSTGRESQL_APP_NAME}${SERVICE_NAME_POSTFIX} started'.blue %>"
+    elif docker ps -a | grep "${POSTGRESQL_APP_NAME}${SERVICE_NAME_POSTFIX}" > /dev/null; then
+      echo "<%= '  ==> Service ${POSTGRESQL_APP_NAME}${SERVICE_NAME_POSTFIX} not started'.blue %>"
+    else
+      if docker images | grep "${POSTGRESQL_APP_NAME}" > /dev/null; then
+        echo "<%= '  ==> Service ${POSTGRESQL_APP_NAME}${SERVICE_NAME_POSTFIX} does not exists. Consider creating'.yellow %>"
+      else
+        echo "<%= '  ==> Image ${POSTGRESQL_APP_NAME} does not exists. Consider building'.yellow %>"
+      fi
+    fi
+  <% end %>
+  if docker ps | grep "${RAILS_APP_NAME}${SERVICE_NAME_POSTFIX}" > /dev/null; then
+    echo "<%= '  ==> Service ${RAILS_APP_NAME}${SERVICE_NAME_POSTFIX} started'.blue %>"
+  elif docker ps -a | grep "${RAILS_APP_NAME}${SERVICE_NAME_POSTFIX}" > /dev/null; then
+    echo "<%= '  ==> Service ${RAILS_APP_NAME}${SERVICE_NAME_POSTFIX} not started'.blue %>"
+  else
+    if docker images | grep "${RAILS_APP_NAME}" > /dev/null; then
+      echo "<%= '  ==> Service ${RAILS_APP_NAME}${SERVICE_NAME_POSTFIX} does not exists. Consider creating'.yellow %>"
+    else
+      echo "<%= '  ==> Image ${RAILS_APP_NAME} does not exists. Consider building'.yellow %>"
+    fi
+  fi
+}
+
+ps(){
+  cc=`docker ps | grep "bi_tool_mysql_service\|bi_tool_rails_service\|NAMES" | wc -l | tr -d ' \n'`
+  if [[ "$cc" == "3" ]] ; then
+    docker ps | grep "bi_tool_mysql_service\|bi_tool_rails_service\|NAMES"
+  else
+    docker ps -a | grep "bi_tool_mysql_service\|bi_tool_rails_service\|NAMES"
+  fi
 }
 
 start(){
@@ -242,12 +286,14 @@ case $1 in
   create) create ;;
   recreate) recreate ;;
   restart) restart ;;
+  status) status ;;
+  ps) ps ;;
   stop) stop ;;
   remove) remove ;;
   destroy) destroy ;;
   *)
     echo "Usage:" >&2
-    echo "  ./<%= Constants::SHELL_SCRIPT_FILE_NAME %> {build|rebuild|create|recreate|start|restart|stop|remove|destroy}" >&2
+    echo "  ./<%= Constants::SHELL_SCRIPT_FILE_NAME %> {build|rebuild|create|recreate|start|restart|status|stop|remove|destroy}" >&2
     exit 3
   ;;
 esac
