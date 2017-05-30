@@ -30,7 +30,7 @@ module DockerizeRails
         end
       else
         puts "\nDockerizeRails config file not generated...".yellow
-        puts "Run 'bundle exec rocker configure' to generate configuration file.\n".yellow
+        puts "Run 'bundle exec dock configure' to generate configuration file.\n".yellow
       end
     end
 
