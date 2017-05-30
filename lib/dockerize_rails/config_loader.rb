@@ -18,8 +18,9 @@ module DockerizeRails
         current_section = @app_config[section]
         current_section['username'] = DRConfig.database_user_name
         current_section['password'] = DRConfig.database_user_pass
-        current_section['database'] = "#{DRConfig.application_name}_#{section}"
-        current_section['host'] = 'databasehost'
+        current_section['database'] = "#{DRConfig.application_name}_#{section}" \
+          if DRConfig.database_host_type == Constants::DATABASE_HOST_LINKED
+        current_section['host'] = DRConfig.database_host_name
         @app_config[section] = current_section
       end
     end

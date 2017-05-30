@@ -1,10 +1,14 @@
 module DockerizeRails
   module ConfigGenerator
-    def self.configure
+    def self.configure(args)
       puts "\nGenerating DockerizeRails config file ...\n".yellow
       puts "  ==> #{Constants::DOCKERIZE_RAILS_CONFIG_FILE_NAME}".blue
       file = File.open(File.join(PATHS.current, Constants::DOCKERIZE_RAILS_CONFIG_FILE_NAME), 'w+')
-      file.write(DRConfig.to_yaml_str)
+      if args.include?('--skip-desc')
+        file.write(DRConfig.to_yaml)
+      else
+        file.write(DRConfig.to_yaml_str)
+      end
       file.close
       puts
       0
@@ -22,9 +26,12 @@ module DockerizeRails
       status
     end
 
-    def self.undockerize
+    def self.undockerize(args)
+      status = 0
       puts "\nRemoving docker config files ...\n".yellow
-      remove_config_directories
+      status += remove_config_directories
+      dir_op(Constants::DOCKERIZE_RAILS_CONFIG_FILE_NAME, 'rm_rf') if args.include?('--purge')
+      status
     end
 
     def self.dir_op(dir, method)
@@ -40,8 +47,10 @@ module DockerizeRails
     def self.create_config_directories
       db_values = DRConfig.databases.values
       dirs = Templates::ROOT_DIRECTORIES + Templates::RAILS_DIRECTORIES
-      dirs += Templates::MYSQL_DIRECTORIES if db_values.include? 'mysql'
-      dirs += Templates::PG_DIRECTORIES if db_values.include? 'postgresql'
+      if DRConfig.linked_database?
+        dirs += Templates::MYSQL_DIRECTORIES if db_values.include? 'mysql'
+        dirs += Templates::PG_DIRECTORIES if db_values.include? 'postgresql'
+      end
       dirs.each { |dir| dir_op(dir, 'mkdir_p') }
       0
     end
@@ -77,8 +86,10 @@ module DockerizeRails
       db_values = DRConfig.databases.values
       status = 0
       status += create_rails_configs
-      status += create_mysql_configs if db_values.include? 'mysql'
-      status += create_postgresql_configs if db_values.include? 'postgresql'
+      if DRConfig.linked_database?
+        status += create_mysql_configs if db_values.include? 'mysql'
+        status += create_postgresql_configs if db_values.include? 'postgresql'
+      end
       status += create_root_configs
       status
     end

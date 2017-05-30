@@ -20,6 +20,19 @@ module DockerizeRails
       0
     end
 
+    def self.params_help(command)
+      if command.key? :params
+        [command[:params].keys.map do |param|
+          "\n          #{('[' + param.to_s + ']').ljust(15, ' ')} -- #{command[:params][param]}"
+        end,
+         "\n"].join
+      else
+        ''
+      end
+    end
+
+    # rubocop:disable Metrics/MethodLength
+    # rubocop:disable Metrics/AbcSize
     def self.help
       ['
 Usage: rocker <command>
@@ -30,14 +43,20 @@ Usage: rocker <command>
        Constants::COMMANDS.keys.map do |key|
          command = Constants::COMMANDS[key]
          "        #{command[:aliases].map(&:to_s).join(', ').ljust(30, ' ')}" \
-           " - #{command[:help]}"
+           " - #{command[:help]}" + params_help(command)
        end,
        '
        '].join("\n")
     end
+    # rubocop:enable Metrics/MethodLength
+    # rubocop:enable Metrics/MethodLength
 
     def self.print_formatted_info(name, value)
       print name.ljust(15, ' ').yellow, value.blue
+    end
+
+    class << self
+      private :params_help
     end
   end
 end

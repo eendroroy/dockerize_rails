@@ -18,6 +18,8 @@ public/assets
 <%= Constants::DOCKER_COMPOSE_FILE_NAME %>
 <%= Constants::DOCKERIGNORE_FILE_NAME %>
 <%= Constants::SHELL_SCRIPT_FILE_NAME %>
+<% if DRConfig.linked_database? %>
 <% if databases.values.include?('mysql') || databases.values.include?('postgresql') %>
 <%= "#{Constants::CONFIG_DIRECTORY_NAME}/#{databases[application_env]}/#{Constants::DATA_DIRECTORY_NAME}/*" %>
+<% end %>
 <% end %>
