@@ -40,8 +40,10 @@ module DockerizeRails
     def self.create_config_directories
       db_values = DRConfig.databases.values
       dirs = Templates::ROOT_DIRECTORIES + Templates::RAILS_DIRECTORIES
-      dirs += Templates::MYSQL_DIRECTORIES if db_values.include? 'mysql'
-      dirs += Templates::PG_DIRECTORIES if db_values.include? 'postgresql'
+      if DRConfig.linked_database?
+        dirs += Templates::MYSQL_DIRECTORIES if db_values.include? 'mysql'
+        dirs += Templates::PG_DIRECTORIES if db_values.include? 'postgresql'
+      end
       dirs.each { |dir| dir_op(dir, 'mkdir_p') }
       0
     end
@@ -77,8 +79,10 @@ module DockerizeRails
       db_values = DRConfig.databases.values
       status = 0
       status += create_rails_configs
-      status += create_mysql_configs if db_values.include? 'mysql'
-      status += create_postgresql_configs if db_values.include? 'postgresql'
+      if DRConfig.linked_database?
+        status += create_mysql_configs if db_values.include? 'mysql'
+        status += create_postgresql_configs if db_values.include? 'postgresql'
+      end
       status += create_root_configs
       status
     end

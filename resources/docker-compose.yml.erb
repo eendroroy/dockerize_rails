@@ -9,13 +9,16 @@ services:
       - '<%= application_port %>'
     ports:
       - '<%= "#{application_port}:#{application_port}" %>'
+<% if DRConfig.linked_database? %>
 <% if databases.values.include?('mysql') || databases.values.include?('postgresql') %>
     links:
-      - '<%= databases[application_env] %>:databasehost'
+      - '<%= databases[application_env] %>:<%= database_host_name %>'
     depends_on:
       - <%= databases[application_env] %>
 <% end %>
+<% end %>
 
+<% if DRConfig.linked_database? %>
 <% if databases.values.include?('mysql') || databases.values.include?('postgresql') %>
   <%= databases[application_env] %>:
     build:
@@ -40,4 +43,5 @@ services:
       - MYSQL_PASSWORD=<%= database_user_pass %>
         <% end %>
       <% end %>
+<% end %>
 <% end %>

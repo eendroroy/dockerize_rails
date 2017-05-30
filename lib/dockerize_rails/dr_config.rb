@@ -2,7 +2,8 @@ module DockerizeRails
   class DRConfig
     ATTRIBUTES = %i[
       application_name ruby_version application_env application_port postgres_version mysql_version
-      database_root_pass database_user_name database_user_pass databases
+      database_host_type database_host_name database_root_pass database_user_name database_user_pass
+      databases
     ].freeze
 
     @application_name     = 'dockerize_rails'
@@ -14,6 +15,8 @@ module DockerizeRails
     @postgres_version     = 'alpine'
     @mysql_version        = 'latest'
 
+    @database_host_type   = Constants::DATABASE_HOST_LINKED
+    @database_host_name   = 'databasehost'
     @database_root_pass   = 'root'
     @database_user_name   = 'user'
     @database_user_pass   = 'pass'
@@ -34,6 +37,15 @@ module DockerizeRails
       end
     end
 
+    def self.external_database?
+      database_host_type == Constants::DATABASE_HOST_EXTERNAL
+    end
+
+    def self.linked_database?
+      database_host_type == Constants::DATABASE_HOST_LINKED
+    end
+
+    # rubocop:disable Metrics/AbcSize
     def self.to_yaml_str
       "---
 # Set application name
@@ -58,6 +70,16 @@ application_env: #{application_env}
 #
 # Default #{application_port}
 application_port: #{application_port}
+
+# Set database host type
+#
+# Available values are '#{Constants::DATABASE_HOST_LINKED}', '#{Constants::DATABASE_HOST_EXTERNAL}'
+# Default #{database_host_type}
+database_host_type: #{database_host_type}
+
+# Hostname to connect to database
+# Ignored if 'database_host_type' is '#{Constants::DATABASE_HOST_LINKED}'
+database_host_name: #{database_host_name}
 
 # Set root password for docker database container
 # it doesn't make any changes in your computer's database
@@ -91,6 +113,7 @@ database_user_name: #{database_user_name}
 database_user_pass: #{database_user_pass}
 "
     end
+    # rubocop:enable Metrics/AbcSize
 
     def self.to_hash
       Hash[ATTRIBUTES.map do |accessor|
@@ -100,6 +123,10 @@ database_user_pass: #{database_user_pass}
 
     class << self
       attr_accessor(*ATTRIBUTES)
+      def database_host_name
+        return 'databasehost' if database_host_type == Constants::DATABASE_HOST_LINKED
+        @database_host_name
+      end
     end
   end
 end

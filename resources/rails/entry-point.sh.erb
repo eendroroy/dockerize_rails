@@ -1,11 +1,11 @@
-<% if ruby_version.include? 'alpine' %>
-#!/usr/bin/env sh
-<% else %>
-#!/usr/bin/env bash
+<% if ruby_version.include? 'alpine' %>#!/usr/bin/env sh<% else %>#!/usr/bin/env bash<% end %>
+
+<% if DRConfig.linked_database? %>
+  <% if databases.values.include?('mysql') || databases.values.include?('postgres') %>
+echo "Waiting for database server to start properly ..." && sleep 20
+  <% end %>
 <% end %>
-<% if databases.values.include?('mysql') || databases.values.include?('postgres') %>
-echo "Waiting for database server to start properly ..." && sleep 10
-<% end %>
+
 <% if application_env == 'production' || application_env == 'staging' %>
 RAILS_ENV=<%= application_env %> bundle exec rake assets:precompile
 <% elsif application_env == 'development' %>
@@ -16,6 +16,7 @@ exit 1
 echo "Unknown environment '<%= application_env %>'"
 exit 1
 <% end %>
+
 RAILS_ENV=<%= application_env %> bundle exec rake db:create
 
 RAILS_ENV=<%= application_env %> bundle exec rake db:migrate

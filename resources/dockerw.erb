@@ -14,6 +14,7 @@ build() {
       -t ${RAILS_APP_NAME} \
       -f ./<%= "#{Constants::CONFIG_DIRECTORY_NAME}/rails/Dockerfile" %> . > /dev/null
   fi
+<% if DRConfig.linked_database? %>
 <% if databases[application_env] == 'mysql' %>
   if docker images | grep "${MYSQL_APP_NAME}" > /dev/null; then
     echo "<%= '  ==> Image ${MYSQL_APP_NAME} already exists'.blue %>"
@@ -33,6 +34,7 @@ build() {
       -f ./<%= "#{Constants::CONFIG_DIRECTORY_NAME}/#{databases[application_env]}/Dockerfile" %> . > /dev/null
   fi
 <% end %>
+<% end %>
 }
 
 rebuild() {
@@ -49,6 +51,7 @@ destroy(){
   else
     echo "<%= '  ==> Image ${RAILS_APP_NAME} does not exists'.yellow %>"
   fi
+<% if DRConfig.linked_database? %>
 <% if databases[application_env] == 'mysql' %>
   if docker images | grep "${MYSQL_APP_NAME}" > /dev/null; then
     echo "<%= '  ==> Destroying ${MYSQL_APP_NAME}'.yellow %>"
@@ -64,6 +67,7 @@ destroy(){
     echo "<%= '  ==> Image ${POSTGRESQL_APP_NAME} does not exists'.yellow %>"
   fi
 <% end %>
+<% end %>
 }
 
 remove(){
@@ -74,6 +78,7 @@ remove(){
   else
     echo "<%= '  ==> Service ${RAILS_APP_NAME}${SERVICE_NAME_POSTFIX} does not exists'.yellow %>"
   fi
+<% if DRConfig.linked_database? %>
 <% if databases[application_env] == 'mysql' %>
   if docker ps -a | grep "${MYSQL_APP_NAME}${SERVICE_NAME_POSTFIX}" > /dev/null; then
     echo "<%= '  ==> Removing servic ${MYSQL_APP_NAME}${SERVICE_NAME_POSTFIX}'.yellow %>"
@@ -89,9 +94,11 @@ remove(){
     echo "<%= '  ==> Service ${POSTGRESQL_APP_NAME}${SERVICE_NAME_POSTFIX} does not exists'.yellow %>"
   fi
 <% end %>
+<% end %>
 }
 
 create() {
+<% if DRConfig.linked_database? %>
 <% if databases[application_env] == 'mysql' %>
 
   if docker images | grep "${MYSQL_APP_NAME}" > /dev/null; then
@@ -141,6 +148,7 @@ create() {
   fi
 
 <% end %>
+<% end %>
 
   if docker images | grep "${RAILS_APP_NAME}" > /dev/null; then
     if docker ps -a | grep "${RAILS_APP_NAME}${SERVICE_NAME_POSTFIX}" > /dev/null; then
@@ -148,10 +156,12 @@ create() {
     else
       echo "<%= '  ==> Creating service ${RAILS_APP_NAME}${SERVICE_NAME_POSTFIX}'.blue %>"
       docker run -d --name ${RAILS_APP_NAME}${SERVICE_NAME_POSTFIX} \
+      <% if DRConfig.linked_database? %>
       <% if databases[application_env] == 'mysql' %>
         --link ${MYSQL_APP_NAME}${SERVICE_NAME_POSTFIX}:databasehost \
       <% elsif databases[application_env] == 'postgresql' %>
         --link ${POSTGRESQL_APP_NAME}${SERVICE_NAME_POSTFIX}:databasehost \
+      <% end %>
       <% end %>
         --publish 5000:5000 \
         --expose 5000 \
@@ -168,6 +178,7 @@ recreate() {
 }
 
 status(){
+<% if DRConfig.linked_database? %>
   <% if databases[application_env] == 'mysql' %>
     if docker ps | grep "${MYSQL_APP_NAME}${SERVICE_NAME_POSTFIX}" > /dev/null; then
       echo "<%= '  ==> Service ${MYSQL_APP_NAME}${SERVICE_NAME_POSTFIX} started'.blue %>"
@@ -193,6 +204,7 @@ status(){
       fi
     fi
   <% end %>
+<% end %>
   if docker ps | grep "${RAILS_APP_NAME}${SERVICE_NAME_POSTFIX}" > /dev/null; then
     echo "<%= '  ==> Service ${RAILS_APP_NAME}${SERVICE_NAME_POSTFIX} started'.blue %>"
   elif docker ps -a | grep "${RAILS_APP_NAME}${SERVICE_NAME_POSTFIX}" > /dev/null; then
@@ -216,6 +228,7 @@ ps(){
 }
 
 start(){
+<% if DRConfig.linked_database? %>
 <% if databases[application_env] == 'mysql' %>
   if docker ps | grep "${MYSQL_APP_NAME}${SERVICE_NAME_POSTFIX}" > /dev/null; then
     echo "<%= '  ==> Service ${MYSQL_APP_NAME}${SERVICE_NAME_POSTFIX} already started'.blue %>"
@@ -239,6 +252,7 @@ start(){
     echo "<%= '  ==> Service ${POSTGRESQL_APP_NAME}${SERVICE_NAME_POSTFIX} does not exists, create first'.red %>"
   fi
 <% end %>
+<% end %>
   if docker ps | grep "${RAILS_APP_NAME}${SERVICE_NAME_POSTFIX}" > /dev/null; then
     echo "<%= '  ==> Service ${RAILS_APP_NAME}${SERVICE_NAME_POSTFIX} already started'.blue %>"
   elif docker ps -a | grep "${RAILS_APP_NAME}${SERVICE_NAME_POSTFIX}" > /dev/null; then
@@ -250,6 +264,7 @@ start(){
 }
 
 stop(){
+<% if DRConfig.linked_database? %>
 <% if databases[application_env] == 'mysql' %>
   if docker ps | grep "${MYSQL_APP_NAME}${SERVICE_NAME_POSTFIX}" > /dev/null; then
     echo "<%= '  ==> Stopping service ${MYSQL_APP_NAME}${SERVICE_NAME_POSTFIX}'.blue %>"
@@ -264,6 +279,7 @@ stop(){
   else
     echo "<%= '  ==> Service ${POSTGRESQL_APP_NAME}${SERVICE_NAME_POSTFIX} is not running'.blue %>"
   fi
+<% end %>
 <% end %>
   if docker ps | grep "${RAILS_APP_NAME}${SERVICE_NAME_POSTFIX}" > /dev/null; then
     echo "<%= '  ==> Stopping service ${RAILS_APP_NAME}${SERVICE_NAME_POSTFIX}'.blue %>"

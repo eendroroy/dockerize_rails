@@ -13,6 +13,9 @@ module DockerizeRails
     DATA_DIRECTORY_NAME = 'data_dir'.freeze
     SQL_DIRECTORY_NAME = 'sql'.freeze
 
+    DATABASE_HOST_LINKED = 'linked_container'.freeze
+    DATABASE_HOST_EXTERNAL = 'external'.freeze
+
     COMMANDS = {
       configure: {
         aliases: %I[configure c rc cr],
