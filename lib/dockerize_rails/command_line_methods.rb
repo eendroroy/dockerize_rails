@@ -7,11 +7,11 @@ module DockerizeRails
       commands = Helpers.processed_commands
       case options[0]
       when *(commands[:configure])
-        return configure
+        return configure options[1][:args]
       when *(commands[:dockerize])
         return dockerize
       when *(commands[:undockerize])
-        return undockerize
+        return undockerize options[1][:args]
       when *(commands[:docker_info])
         return docker_info
       when *(commands[:help])
@@ -28,14 +28,14 @@ module DockerizeRails
       ConfigGenerator.dockerize
     end
 
-    def self.undockerize
+    def self.undockerize(args)
       Helpers.ensure_rails_root
-      ConfigGenerator.undockerize
+      ConfigGenerator.undockerize args
     end
 
-    def self.configure
+    def self.configure(args)
       Helpers.ensure_rails_root
-      ConfigGenerator.configure
+      ConfigGenerator.configure args
     end
 
     def self.help(status = 0)

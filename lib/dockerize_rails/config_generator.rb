@@ -1,10 +1,14 @@
 module DockerizeRails
   module ConfigGenerator
-    def self.configure
+    def self.configure(args)
       puts "\nGenerating DockerizeRails config file ...\n".yellow
       puts "  ==> #{Constants::DOCKERIZE_RAILS_CONFIG_FILE_NAME}".blue
       file = File.open(File.join(PATHS.current, Constants::DOCKERIZE_RAILS_CONFIG_FILE_NAME), 'w+')
-      file.write(DRConfig.to_yaml_str)
+      if args.include?('--skip-desc')
+        file.write(DRConfig.to_yaml)
+      else
+        file.write(DRConfig.to_yaml_str)
+      end
       file.close
       puts
       0
@@ -22,9 +26,12 @@ module DockerizeRails
       status
     end
 
-    def self.undockerize
+    def self.undockerize(args)
+      status = 0
       puts "\nRemoving docker config files ...\n".yellow
-      remove_config_directories
+      status += remove_config_directories
+      dir_op(Constants::DOCKERIZE_RAILS_CONFIG_FILE_NAME, 'rm_rf') if args.include?('--purge')
+      status
     end
 
     def self.dir_op(dir, method)

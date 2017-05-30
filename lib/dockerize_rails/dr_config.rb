@@ -54,12 +54,6 @@ module DockerizeRails
 # Default is Rails Application Directory Name
 application_name: #{application_name}
 
-# Set ruby version
-# Visit: https://hub.docker.com/_/ruby/ for list of available versions
-#
-# Default is #{ruby_version}
-ruby_version: #{ruby_version}
-
 # Set docker container's rails environment to production, staging, or development
 # Make sure application is properly configured to run in 'application_env' (#{application_env})
 #
@@ -71,6 +65,12 @@ application_env: #{application_env}
 #
 # Default #{application_port}
 application_port: #{application_port}
+
+# Set ruby version
+# Visit: https://hub.docker.com/_/ruby/ for list of available versions
+#
+# Default is #{ruby_version}
+ruby_version: #{ruby_version}
 
 # Set database host type
 #
@@ -111,6 +111,22 @@ database_user_name: #{database_user_name}
 # Default database password for container's internal use
 # It has no impact on host machine's database
 # Default #{database_user_pass}
+database_user_pass: #{database_user_pass}
+"
+    end
+
+    def self.to_yaml
+      "---
+application_name: #{application_name}
+application_env: #{application_env}
+application_port: #{application_port}
+ruby_version: #{ruby_version}
+database_host_type: #{database_host_type}
+database_host_name: #{database_host_name}
+mysql_root_pass: #{mysql_root_pass}
+postgres_version: #{postgres_version}
+mysql_version: #{mysql_version}
+database_user_name: #{database_user_name}
 database_user_pass: #{database_user_pass}
 "
     end
