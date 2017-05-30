@@ -13,8 +13,8 @@ module DockerizeRails
     DATA_DIRECTORY_NAME = 'data_dir'.freeze
     SQL_DIRECTORY_NAME = 'sql'.freeze
 
-    DATABASE_HOST_LINKED = 'linked_container'.freeze
-    DATABASE_HOST_EXTERNAL = 'external'.freeze
+    DATABASE_HOST_LINKED = 'linked'.freeze
+    DATABASE_HOST_REMOTE = 'remote'.freeze
 
     COMMANDS = {
       configure: {

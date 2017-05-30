@@ -37,7 +37,7 @@ services:
       - POSTGRES_USER=<%= database_user_name %>
       - POSTGRES_PASSWORD=<%= database_user_pass %>
       <% elsif databases[application_env] == 'mysql' %>
-      - MYSQL_ROOT_PASSWORD=<%= database_root_pass %>
+      - MYSQL_ROOT_PASSWORD=<%= mysql_root_pass %>
         <% if database_user_name != 'root' %>
       - MYSQL_USER=<%= database_user_name %>
       - MYSQL_PASSWORD=<%= database_user_pass %>

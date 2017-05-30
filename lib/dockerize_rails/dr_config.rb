@@ -2,7 +2,7 @@ module DockerizeRails
   class DRConfig
     ATTRIBUTES = %i[
       application_name ruby_version application_env application_port postgres_version mysql_version
-      database_host_type database_host_name database_root_pass database_user_name database_user_pass
+      database_host_type database_host_name mysql_root_pass database_user_name database_user_pass
       databases
     ].freeze
 
@@ -17,9 +17,10 @@ module DockerizeRails
 
     @database_host_type   = Constants::DATABASE_HOST_LINKED
     @database_host_name   = 'databasehost'
-    @database_root_pass   = 'root'
     @database_user_name   = 'user'
     @database_user_pass   = 'pass'
+
+    @mysql_root_pass      = 'root'
 
     @databases            = {}
 
@@ -37,8 +38,8 @@ module DockerizeRails
       end
     end
 
-    def self.external_database?
-      database_host_type == Constants::DATABASE_HOST_EXTERNAL
+    def self.remote_database?
+      database_host_type == Constants::DATABASE_HOST_REMOTE
     end
 
     def self.linked_database?
@@ -73,7 +74,7 @@ application_port: #{application_port}
 
 # Set database host type
 #
-# Available values are '#{Constants::DATABASE_HOST_LINKED}', '#{Constants::DATABASE_HOST_EXTERNAL}'
+# Available values are '#{Constants::DATABASE_HOST_LINKED}', '#{Constants::DATABASE_HOST_REMOTE}'
 # Default #{database_host_type}
 database_host_type: #{database_host_type}
 
@@ -85,8 +86,8 @@ database_host_name: #{database_host_name}
 # it doesn't make any changes in your computer's database
 # It will be used only for MySQL database
 #
-# Default #{database_root_pass}
-database_root_pass: #{database_root_pass}
+# Default #{mysql_root_pass}
+mysql_root_pass: #{mysql_root_pass}
 
 # Set postgres database version if application uses postgres
 # Visit: https://hub.docker.com/_/postgres/ for list of available versions
