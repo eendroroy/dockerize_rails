@@ -2,7 +2,7 @@ module DockerizeRails
   class DRConfig
     ATTRIBUTES = %i[
       application_name ruby_version application_env application_port postgres_version mysql_version
-      db_root_pass database_user_name database_user_pass databases
+      database_root_pass database_user_name database_user_pass databases
     ].freeze
 
     @application_name     = 'dockerize_rails'
@@ -14,7 +14,7 @@ module DockerizeRails
     @postgres_version     = 'alpine'
     @mysql_version        = 'latest'
 
-    @db_root_pass         = 'root'
+    @database_root_pass   = 'root'
     @database_user_name   = 'user'
     @database_user_pass   = 'pass'
 
@@ -63,8 +63,8 @@ application_port: #{application_port}
 # it doesn't make any changes in your computer's database
 # It will be used only for MySQL database
 #
-# Default #{db_root_pass}
-db_root_pass: #{db_root_pass}
+# Default #{database_root_pass}
+database_root_pass: #{database_root_pass}
 
 # Set postgres database version if application uses postgres
 # Visit: https://hub.docker.com/_/postgres/ for list of available versions
