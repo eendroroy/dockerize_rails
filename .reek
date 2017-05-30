@@ -16,3 +16,9 @@ IrresponsibleModule:
 
 TooManyInstanceVariables:
   enabled: false
+
+DuplicateMethodCall:
+  enabled: false
+
+InstanceVariableAssumption:
+  enabled: false
