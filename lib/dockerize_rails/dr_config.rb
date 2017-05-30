@@ -6,7 +6,7 @@ module DockerizeRails
       databases
     ].freeze
 
-    @application_name     = 'dockerize_rails'
+    @application_name     = File.basename PATHS.current
 
     @ruby_version         = 'latest'
     @application_env      = 'development'
@@ -51,7 +51,7 @@ module DockerizeRails
       "---
 # Set application name
 #
-# Default is #{application_name}
+# Default is Rails Application Directory Name
 application_name: #{application_name}
 
 # Set ruby version
