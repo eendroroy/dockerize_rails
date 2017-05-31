@@ -1,5 +1,6 @@
 module DockerizeRails
   module ConfigGenerator
+    require 'erb'
     def self.configure(args)
       puts "\nGenerating DockerizeRails config file ...\n".yellow
       puts "  ==> #{Constants::DOCKERIZE_RAILS_CONFIG_FILE_NAME}".blue
