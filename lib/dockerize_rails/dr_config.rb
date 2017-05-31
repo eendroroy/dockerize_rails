@@ -6,7 +6,7 @@ module DockerizeRails
       databases
     ].freeze
 
-    @application_name     = File.basename PATHS.current
+    @application_name     = File.basename(PATHS.current).downcase.tr(' ', '_')
 
     @ruby_version         = 'latest'
     @application_env      = 'development'
