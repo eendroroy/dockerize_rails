@@ -48,3 +48,5 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/eendro
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
 
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Feendroroy%2Fdockerize_rails.svg?type=large)](https://app.fossa.io/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Feendroroy%2Fdockerize_rails?ref=badge_large)
+
