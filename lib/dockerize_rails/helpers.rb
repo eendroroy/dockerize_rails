@@ -9,7 +9,13 @@ module DockerizeRails
     end
 
     def self.parse_opts
-      [ARGV[0].to_s, args: ARGV[1..ARGV.size].to_a]
+      options = { skip_desc: false, purge: false }
+      parser = OptionParser.new do |opts|
+        opts.on('--skip-desc') { options[:skip_desc] = true }
+        opts.on('--purge') { options[:purge] = true }
+      end
+      parser.parse!
+      [ARGV[0].to_s, args: options]
     end
 
     def self.ensure_rails_root
@@ -31,8 +37,8 @@ module DockerizeRails
       end
     end
 
-    # rubocop:disable Metrics/MethodLength
-    # rubocop:disable Metrics/AbcSize
+    # -rubocop:disable Metrics/MethodLength
+    # -rubocop:disable Metrics/AbcSize
     def self.help
       ['
 Usage: rocker <command>
@@ -48,8 +54,8 @@ Usage: rocker <command>
        '
        '].join("\n")
     end
-    # rubocop:enable Metrics/MethodLength
-    # rubocop:enable Metrics/MethodLength
+    # -rubocop:enable Metrics/MethodLength
+    # -rubocop:enable Metrics/MethodLength
 
     def self.print_formatted_info(name, value)
       print name.ljust(15, ' ').yellow, value.blue

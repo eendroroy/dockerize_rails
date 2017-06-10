@@ -5,7 +5,7 @@ module DockerizeRails
       puts "\nGenerating DockerizeRails config file ...\n".yellow
       puts "  ==> #{Constants::DOCKERIZE_RAILS_CONFIG_FILE_NAME}".blue
       file = File.open(File.join(PATHS.current, Constants::DOCKERIZE_RAILS_CONFIG_FILE_NAME), 'w+')
-      if args.include?('--skip-desc')
+      if args[:skip_desc]
         file.write(DRConfig.to_yaml)
       else
         file.write(DRConfig.to_yaml_str)
@@ -31,7 +31,7 @@ module DockerizeRails
       status = 0
       puts "\nRemoving docker config files ...\n".yellow
       status += remove_config_directories
-      dir_op(Constants::DOCKERIZE_RAILS_CONFIG_FILE_NAME, 'rm_rf') if args.include?('--purge')
+      dir_op(Constants::DOCKERIZE_RAILS_CONFIG_FILE_NAME, 'rm_rf') if args[:purge]
       status
     end
 
