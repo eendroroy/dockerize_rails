@@ -25,8 +25,11 @@ $ bundle
 ```bash
 $ bundle exec dock help
 $ bundle exec dock configure
+$ bundle exec dock configure --skip-desc
 $ bundle exec dock dockerize
+$ bundle exec dock dockerize --config-test
 $ bundle exec dock undockerize
+$ bundle exec dock undockerize --purge
 $ bundle exec dock docker_info
 ```
 
