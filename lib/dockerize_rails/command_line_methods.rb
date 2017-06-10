@@ -2,16 +2,17 @@ module DockerizeRails
   module CommandLineMethods
     require 'colorize'
 
-    # -rubocop:disable Metrics/MethodLength
+    # rubocop:disable Metrics/MethodLength
     def self.invoke(options)
+      DRNameSpace.add_hash options[1][:args]
       commands = Helpers.processed_commands
       case options[0]
       when *(commands[:configure])
-        return configure options[1][:args]
+        return configure
       when *(commands[:dockerize])
         return dockerize
       when *(commands[:undockerize])
-        return undockerize options[1][:args]
+        return undockerize
       when *(commands[:docker_info])
         return docker_info
       when *(commands[:help])
@@ -20,7 +21,7 @@ module DockerizeRails
         return help 1
       end
     end
-    # -rubocop:enable Metrics/MethodLength
+    # rubocop:enable Metrics/MethodLength
 
     def self.dockerize
       Helpers.ensure_rails_root
@@ -28,14 +29,14 @@ module DockerizeRails
       ConfigGenerator.dockerize
     end
 
-    def self.undockerize(args)
+    def self.undockerize
       Helpers.ensure_rails_root
-      ConfigGenerator.undockerize args
+      ConfigGenerator.undockerize
     end
 
-    def self.configure(args)
+    def self.configure
       Helpers.ensure_rails_root
-      ConfigGenerator.configure args
+      ConfigGenerator.configure
     end
 
     def self.help(status = 0)

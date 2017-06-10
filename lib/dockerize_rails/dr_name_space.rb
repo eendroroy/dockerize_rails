@@ -4,8 +4,6 @@ module DockerizeRails
 
     @namespace = OpenStruct.new
 
-    attr_reader :namespace
-
     def self.load
       DRConfig.load_dockerize_rails_config
       load_from_app_config
@@ -31,14 +29,12 @@ module DockerizeRails
     end
 
     def self.load_from_dockerize_rails_config
-      DRConfig.to_hash.map do |key, value|
-        @namespace.send("#{key}=", value)
-      end
+      add_hash DRConfig.to_hash
     end
 
     def self.add_hash(hash)
       hash.map do |key, value|
-        @namespace.send("#{attr}=", rc[key] || value)
+        @namespace.send("#{key}=", value)
       end
     end
 
@@ -47,6 +43,8 @@ module DockerizeRails
     end
 
     class << self
+      attr_reader :namespace
+
       private :load_from_app_config
       private :load_from_dockerize_rails_config
     end
