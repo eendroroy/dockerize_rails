@@ -1,6 +1,7 @@
 module DockerizeRails
   module Helpers
     require 'ostruct'
+    require 'optparse'
 
     def self.processed_commands
       Hash[Constants::COMMANDS.keys.map do |key|
