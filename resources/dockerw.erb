@@ -111,7 +111,7 @@ create() {
         --env MYSQL_USER=user \
         --env MYSQL_PASSWORD=pass \
         --publish 3300:3306 \
-        --volume <%= File.join(PATHS.config_directory, databases[application_env], Constants::DATA_DIRECTORY_NAME) %>:/var/lib/<%= databases[application_env] %> \
+        --volume $(pwd)/<%= File.join(Constants::CONFIG_DIRECTORY_NAME, databases[application_env], Constants::DATA_DIRECTORY_NAME) %>:/var/lib/<%= databases[application_env] %> \
         ${MYSQL_APP_NAME} > /dev/null
     fi
     echo -ne "<%=  '  ==> Waiting for database server to start properly ...'.blue %>"
@@ -135,7 +135,7 @@ create() {
         --env POSTGRES_USER=user \
         --env POSTGRES_PASSWORD=pass \
         --publish 5400:5432
-        --volume <%= File.join(PATHS.config_directory, databases[application_env], Constants::DATA_DIRECTORY_NAME) %>:/var/lib/<%= databases[application_env] %> \
+        --volume $(pwd)/<%= File.join(Constants::CONFIG_DIRECTORY_NAME, databases[application_env], Constants::DATA_DIRECTORY_NAME) %>:/var/lib/<%= databases[application_env] %> \
         ${POSTGRESQL_APP_NAME} > /dev/null
     fi
     echo -ne "<%=  '  ==> Waiting for database server to start properly ...'.blue %>"
