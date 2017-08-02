@@ -32,7 +32,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'docker-api', '~> 1.33', '>= 1.33.6'
   spec.add_dependency 'colorize', '~> 0.8.1'
 
-  spec.add_development_dependency 'bundler', '~> 1.15', '>= 1.15.3'
+  spec.add_development_dependency 'bundler', '~> 1.14', '>= 1.14.6'
   spec.add_development_dependency 'rake', '~> 12.0'
   spec.add_development_dependency 'rspec', '~> 3.6'
   spec.add_development_dependency 'yard', '~> 0.9.9'
