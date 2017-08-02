@@ -5,7 +5,7 @@ module DockerizeRails
       puts "\nGenerating DockerizeRails config file ...\n".yellow
       puts "  ==> #{Constants::DOCKERIZE_RAILS_CONFIG_FILE_NAME}".blue
       file = File.open(File.join(PATHS.current, Constants::DOCKERIZE_RAILS_CONFIG_FILE_NAME), 'w+')
-      if DRNameSpace.namespace.skip_desc
+      if DRNameSpace.namespace.tiny
         file.write(DRConfig.to_yaml)
       else
         file.write(DRConfig.to_yaml_str)

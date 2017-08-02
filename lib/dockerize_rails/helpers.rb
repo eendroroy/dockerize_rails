@@ -10,9 +10,9 @@ module DockerizeRails
     end
 
     def self.parse_opts
-      options = { skip_desc: false, purge: false, config_test: false }
+      options = { tiny: false, purge: false, config_test: false }
       parser = OptionParser.new do |opts|
-        opts.on('--skip-desc') { options[:skip_desc] = true }
+        opts.on('--tiny') { options[:tiny] = true }
         opts.on('--purge') { options[:purge] = true }
         opts.on('--config-test') { options[:config_test] = true }
       end

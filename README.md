@@ -25,7 +25,7 @@ $ bundle
 ```bash
 $ bundle exec dock help
 $ bundle exec dock configure
-$ bundle exec dock configure --skip-desc
+$ bundle exec dock configure --tiny
 $ bundle exec dock dockerize
 $ bundle exec dock dockerize --config-test
 $ bundle exec dock undockerize
