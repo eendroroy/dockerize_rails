@@ -28,7 +28,7 @@ module DockerizeRails
         aliases: %I[dockerize dc d],
         help: 'Generates docker config files'.freeze,
         params: {
-          :'--config-test' => 'generates configurations to run tests.'.freeze
+          :'--test-env' => 'generates configurations to run tests.'.freeze
         }
       },
       docker_info: {
