@@ -21,14 +21,14 @@ module DockerizeRails
         aliases: %I[configure c rc cr],
         help: "Generates '#{DOCKERIZE_RAILS_CONFIG_FILE_NAME}'".freeze,
         params: {
-          :'--skip-desc' => 'generates shorter config file, skipping all descriptions'.freeze
+          :'--tiny' => 'generates shorter config file, skipping all descriptions'.freeze
         }
       },
       dockerize: {
         aliases: %I[dockerize dc d],
         help: 'Generates docker config files'.freeze,
         params: {
-          :'--config-test' => 'generates configurations to run tests.'.freeze
+          :'--test-env' => 'generates configurations to run tests.'.freeze
         }
       },
       docker_info: {

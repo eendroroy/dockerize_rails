@@ -22,7 +22,7 @@ RAILS_ENV=<%= application_env %> bundle exec rake db:create
 RAILS_ENV=<%= application_env %> bundle exec rake db:migrate
 
 RAILS_ENV=<%= application_env %> bundle exec rake db:seed
-<% if DRNameSpace.namespace.config_test %>
+<% if DRNameSpace.namespace.test_env %>
 RAILS_ENV=<%= application_env %> bundle exec rake spec
 <% else %>
 RAILS_ENV=<%= application_env %> bundle exec rails server -b 0.0.0.0 -p <%= application_port %>
