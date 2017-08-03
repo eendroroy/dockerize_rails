@@ -17,6 +17,14 @@ module DockerizeRails
         return docker_info
       when *(commands[:help])
         return help
+      when *(commands[:pull])
+        DRNameSpace.load
+        DockerizeRails::DockerHelper.pull
+        return 0
+      when *(commands[:build])
+        DRNameSpace.load
+        DockerizeRails::DockerHelper.build
+        return 0
       else
         return help 1
       end

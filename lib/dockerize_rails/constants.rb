@@ -45,6 +45,14 @@ module DockerizeRails
       help: {
         aliases: %I[help h],
         help: 'prints this message'.freeze
+      },
+      pull: {
+        aliases: %I[pull p],
+        help: 'pulls images'.freeze
+      },
+      build: {
+        aliases: %I[build b],
+        help: 'builds images'.freeze
       }
     }.freeze
   end
