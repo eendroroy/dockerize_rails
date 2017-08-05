@@ -15,6 +15,10 @@ module DockerizeRails
         return undockerize
       when *(commands[:docker_info])
         return docker_info
+      when *(commands[:docker_pull])
+        return docker_pull
+      when *(commands[:docker_build])
+        return docker_build
       when *(commands[:help])
         return help
       else
@@ -59,6 +63,18 @@ module DockerizeRails
                                    "#{DateTime.parse(docker_version['BuildTime']).strftime('%b %d, %Y %I:%M %p')}\n"
       puts
       0
+    end
+
+    def self.docker_pull
+      DRNameSpace.load
+      DockerizeRails::DockerHelper.pull
+      0
+    end
+
+    def self.docker_build
+      DRNameSpace.load
+      DockerizeRails::DockerHelper.build
+      return 0
     end
   end
 end
