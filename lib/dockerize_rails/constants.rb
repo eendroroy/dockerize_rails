@@ -31,10 +31,6 @@ module DockerizeRails
           :'--test-env' => 'generates configurations to run tests.'.freeze
         }
       },
-      docker_info: {
-        aliases: %I[docker_info di],
-        help: 'Shows Docker information'.freeze
-      },
       undockerize: {
         aliases: %I[undockerize ud du u dd],
         help: 'Removes docker configurations'.freeze,
@@ -42,17 +38,21 @@ module DockerizeRails
           :'--purge' => "also removes #{Constants::DOCKERIZE_RAILS_CONFIG_FILE_NAME}".freeze
         }
       },
+      docker_info: {
+          aliases: %I[docker_info di],
+          help: 'Shows Docker information'.freeze
+      },
+      docker_pull: {
+          aliases: %I[docker_pull pull dp],
+          help: 'Pulls Docker images'.freeze
+      },
+      docker_build: {
+          aliases: %I[docker_build build db],
+          help: 'Builds Docker images'.freeze
+      },
       help: {
         aliases: %I[help h],
-        help: 'prints this message'.freeze
-      },
-      pull: {
-        aliases: %I[pull p],
-        help: 'pulls images'.freeze
-      },
-      build: {
-        aliases: %I[build b],
-        help: 'builds images'.freeze
+        help: 'Prints this message'.freeze
       }
     }.freeze
   end
