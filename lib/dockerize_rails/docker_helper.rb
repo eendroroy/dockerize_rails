@@ -22,11 +22,12 @@ module DockerizeRails
 
     def self.build
       status = 0
-      Docker::Image.build_from_dir(
+      image = Docker::Image.build_from_dir(
         '.',
         dockerfile: "#{Constants::CONFIG_DIRECTORY_NAME}/#{Constants::RAILS_DIRECTORY_NAME}/Dockerfile"
       )
-      puts "Image 'ruby:#{DRConfig.ruby_version}' build success".green
+      image.tag(repo: "#{DRConfig.application_name}_rails", tag: "#{DRConfig.application_env}")
+      puts "Image '#{DRConfig.application_name}_rails:#{DRConfig.application_env}' build success".green
       status += build_postgres
       status += build_mysql
       status
@@ -65,12 +66,12 @@ module DockerizeRails
 
     def self.build_mysql
       if DRConfig.linked_database? && DRConfig.databases[DRConfig.application_env] == 'mysql'
-        Docker::Image.build_from_dir(
+        image = Docker::Image.build_from_dir(
           '.',
           dockerfile: "#{Constants::CONFIG_DIRECTORY_NAME}/#{Constants::MYSQL_DIRECTORY_NAME}/Dockerfile"
         )
-
-        puts "Image 'mysql:#{DRConfig.mysql_version}' build success".green
+        image.tag(repo: "#{DRConfig.application_name}_mysql", tag: "#{DRConfig.application_env}")
+        puts "Image '#{DRConfig.application_name}_mysql:#{DRConfig.application_env}' build success".green
       end
       0
     rescue Docker::Error::NotFoundError => e
@@ -82,11 +83,12 @@ module DockerizeRails
 
     def self.build_postgres
       if DRConfig.linked_database? && DRConfig.databases[DRConfig.application_env] == 'postgresql'
-        Docker::Image.build_from_dir(
+        image = Docker::Image.build_from_dir(
           '.',
           dockerfile: "#{Constants::CONFIG_DIRECTORY_NAME}/#{Constants::PG_DIRECTORY_NAME}/Dockerfile"
         )
-        puts "Image 'postgres:#{DRConfig.postgres_version}' build success".green
+        image.tag(repo: "#{DRConfig.application_name}_postgres", tag: "#{DRConfig.application_env}")
+        puts "Image '#{DRConfig.application_name}_postgres:#{DRConfig.application_env}' build success".green
       end
       0
     rescue Docker::Error::NotFoundError => e
@@ -96,11 +98,11 @@ module DockerizeRails
       1
     end
 
-    # class << self
-    #   private :build_mysql
-    #   private :build_postgres
-    #   private :pull_mysql
-    #   private :pull_postgres
-    # end
+    class << self
+      private :build_mysql
+      private :build_postgres
+      private :pull_mysql
+      private :pull_postgres
+    end
   end
 end
