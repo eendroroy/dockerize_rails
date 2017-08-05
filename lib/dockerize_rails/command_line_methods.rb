@@ -52,7 +52,7 @@ module DockerizeRails
     end
 
     def self.docker_info
-      docker_version = DockerHelper.version
+      docker_version = DockerCommands.version
 
       puts
       Helpers.print_formatted_info 'Docker Version', "#{docker_version['Version']}\n"
@@ -69,13 +69,13 @@ module DockerizeRails
 
     def self.docker_pull
       DRNameSpace.load
-      DockerizeRails::DockerHelper.pull
+      DockerizeRails::DockerCommands.pull
       0
     end
 
     def self.docker_build
       DRNameSpace.load
-      DockerizeRails::DockerHelper.build
+      DockerizeRails::DockerCommands.build
       0
     end
   end
