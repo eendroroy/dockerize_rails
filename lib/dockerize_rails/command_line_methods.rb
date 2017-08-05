@@ -3,6 +3,7 @@ module DockerizeRails
     require 'colorize'
 
     # rubocop:disable Metrics/MethodLength
+    # rubocop:disable Metrics/AbcSize
     def self.invoke(options)
       DRNameSpace.add_hash options[1][:args]
       commands = Helpers.processed_commands
@@ -26,6 +27,7 @@ module DockerizeRails
       end
     end
     # rubocop:enable Metrics/MethodLength
+    # rubocop:enable Metrics/AbcSize
 
     def self.dockerize
       Helpers.ensure_rails_root
@@ -74,7 +76,7 @@ module DockerizeRails
     def self.docker_build
       DRNameSpace.load
       DockerizeRails::DockerHelper.build
-      return 0
+      0
     end
   end
 end

@@ -26,7 +26,7 @@ module DockerizeRails
         '.',
         dockerfile: "#{Constants::CONFIG_DIRECTORY_NAME}/#{Constants::RAILS_DIRECTORY_NAME}/Dockerfile"
       )
-      image.tag(repo: "#{DRConfig.application_name}_rails", tag: "#{DRConfig.application_env}")
+      image.tag(repo: "#{DRConfig.application_name}_rails", tag: DRConfig.application_env.to_s)
       puts "Image '#{DRConfig.application_name}_rails:#{DRConfig.application_env}' build success".green
       status += build_postgres
       status += build_mysql
@@ -70,7 +70,7 @@ module DockerizeRails
           '.',
           dockerfile: "#{Constants::CONFIG_DIRECTORY_NAME}/#{Constants::MYSQL_DIRECTORY_NAME}/Dockerfile"
         )
-        image.tag(repo: "#{DRConfig.application_name}_mysql", tag: "#{DRConfig.application_env}")
+        image.tag(repo: "#{DRConfig.application_name}_mysql", tag: DRConfig.application_env.to_s)
         puts "Image '#{DRConfig.application_name}_mysql:#{DRConfig.application_env}' build success".green
       end
       0
@@ -87,7 +87,7 @@ module DockerizeRails
           '.',
           dockerfile: "#{Constants::CONFIG_DIRECTORY_NAME}/#{Constants::PG_DIRECTORY_NAME}/Dockerfile"
         )
-        image.tag(repo: "#{DRConfig.application_name}_postgres", tag: "#{DRConfig.application_env}")
+        image.tag(repo: "#{DRConfig.application_name}_postgres", tag: DRConfig.application_env.to_s)
         puts "Image '#{DRConfig.application_name}_postgres:#{DRConfig.application_env}' build success".green
       end
       0

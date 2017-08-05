@@ -39,16 +39,16 @@ module DockerizeRails
         }
       },
       docker_info: {
-          aliases: %I[docker_info di],
-          help: 'Shows Docker information'.freeze
+        aliases: %I[docker_info di],
+        help: 'Shows Docker information'.freeze
       },
       docker_pull: {
-          aliases: %I[docker_pull pull dp],
-          help: 'Pulls Docker images'.freeze
+        aliases: %I[docker_pull pull dp],
+        help: 'Pulls Docker images'.freeze
       },
       docker_build: {
-          aliases: %I[docker_build build db],
-          help: 'Builds Docker images'.freeze
+        aliases: %I[docker_build build db],
+        help: 'Builds Docker images'.freeze
       },
       help: {
         aliases: %I[help h],
