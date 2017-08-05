@@ -31,6 +31,8 @@ $ bundle exec dock dockerize --test-env
 $ bundle exec dock undockerize
 $ bundle exec dock undockerize --purge
 $ bundle exec dock docker_info
+$ bundle exec dock docker_pull
+$ bundle exec dock docker_build
 ```
 
 ## Demo
