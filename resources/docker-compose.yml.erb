@@ -5,6 +5,7 @@ services:
     build:
       context: .
       dockerfile: ./<%= "#{Constants::CONFIG_DIRECTORY_NAME}/rails/Dockerfile" %>
+    image: <%= "#{DRConfig.application_name}_rails:#{application_env}" %>
     expose:
       - '<%= application_port %>'
     ports:
@@ -24,6 +25,7 @@ services:
     build:
       context: .
       dockerfile: ./<%= "#{Constants::CONFIG_DIRECTORY_NAME}/#{databases[application_env]}/Dockerfile" %>
+    image: <%= "#{DRConfig.application_name}_#{databases[application_env]}:#{application_env}" %>
     volumes:
       - './<%= "#{Constants::CONFIG_DIRECTORY_NAME}/#{databases[application_env]}/#{Constants::DATA_DIRECTORY_NAME}" %>:/var/lib/<%= databases[application_env] %>:rw'
     ports:
