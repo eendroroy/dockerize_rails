@@ -12,9 +12,9 @@ module DockerizeRails
       status += DockerPull.pull_mysql
       status += DockerPull.pull_postgres
       status
-    rescue Docker::Error::NotFoundError => e
+    rescue Docker::Error::NotFoundError => exception
       puts
-      puts e.to_s.red
+      puts exception.to_s.red
       puts
       1
     end
@@ -25,9 +25,9 @@ module DockerizeRails
       status += DockerBuild.build_postgres
       status += DockerBuild.build_mysql
       status
-    rescue Docker::Error::NotFoundError => e
+    rescue Docker::Error::NotFoundError => exception
       puts
-      puts e.to_s.red
+      puts exception.to_s.red
       puts
       1
     end

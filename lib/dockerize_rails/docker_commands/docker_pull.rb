@@ -4,9 +4,9 @@ module DockerizeRails
       def self.pull_ruby
         pull_docker_image('ruby', DRConfig.ruby_version)
         0
-      rescue Docker::Error::NotFoundError => e
+      rescue Docker::Error::NotFoundError => exception
         puts
-        puts e.to_s.red
+        puts exception.to_s.red
         puts
         1
       end
@@ -16,9 +16,9 @@ module DockerizeRails
           pull_docker_image('mysql', DRConfig.mysql_version)
         end
         0
-      rescue Docker::Error::NotFoundError => e
+      rescue Docker::Error::NotFoundError => exception
         puts
-        puts e.to_s.red
+        puts exception.to_s.red
         puts
         1
       end
@@ -28,9 +28,9 @@ module DockerizeRails
           pull_docker_image('postgres', DRConfig.postgres_version)
         end
         0
-      rescue Docker::Error::NotFoundError => e
+      rescue Docker::Error::NotFoundError => exception
         puts
-        puts e.to_s.red
+        puts exception.to_s.red
         puts
         1
       end
@@ -39,9 +39,9 @@ module DockerizeRails
         Docker::Image.create('fromImage' => "#{image_name}:#{tag}")
         puts "Base image '#{image_name}:#{tag}' ready".green
         0
-      rescue Docker::Error::NotFoundError => e
+      rescue Docker::Error::NotFoundError => exception
         puts
-        puts e.to_s.red
+        puts exception.to_s.red
         puts
         1
       end

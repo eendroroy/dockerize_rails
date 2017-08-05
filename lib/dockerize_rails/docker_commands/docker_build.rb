@@ -7,9 +7,9 @@ module DockerizeRails
           "#{DRConfig.application_name}_mysql"
         )
         0
-      rescue Docker::Error::NotFoundError => e
+      rescue Docker::Error::NotFoundError => exception
         puts
-        puts e.to_s.red
+        puts exception.to_s.red
         puts
         1
       end
@@ -22,9 +22,9 @@ module DockerizeRails
           )
         end
         0
-      rescue Docker::Error::NotFoundError => e
+      rescue Docker::Error::NotFoundError => exception
         puts
-        puts e.to_s.red
+        puts exception.to_s.red
         puts
         1
       end
@@ -37,9 +37,9 @@ module DockerizeRails
           )
         end
         0
-      rescue Docker::Error::NotFoundError => e
+      rescue Docker::Error::NotFoundError => exception
         puts
-        puts e.to_s.red
+        puts exception.to_s.red
         puts
         1
       end
@@ -52,9 +52,9 @@ module DockerizeRails
         image.tag(repo: repo, tag: DRConfig.application_env)
         puts "Image '#{repo}:#{DRConfig.application_env}' build success".green
         0
-      rescue Docker::Error::NotFoundError => e
+      rescue Docker::Error::NotFoundError => exception
         puts
-        puts e.to_s.red
+        puts exception.to_s.red
         puts
         1
       end
