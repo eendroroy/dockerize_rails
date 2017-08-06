@@ -22,6 +22,27 @@ $ bundle
 
 ## Usage
 
+First create the configuration file `.dockerize.yml` for the gem itself.
+Run: `bundle exec dock configure` to generate the template.
+Use `--tiny` option to skip the description of configuration fields: `bundle exec dock configure --tiny`.
+
+To create the docker config files (Dockerfile, provisions, docker-compose.yml etc.) run: `bundle exec dock dockerize`.
+To create docker environment for running tests use `--test-env` option: `bundle exec dock dockerize --test-env`.
+
+Use `docker-compose` to run application in docker: `docker-compose build && docker-compose up -d`.
+
+If you see **migration error** in browser run the following commands:
+
+```bash
+$ docker-compose down        # stop and destroy all running containers
+$ docker-compose up -d mysql # if application uses postgresql database use 'postgres' instead of 'mysql'
+$ sleep 30                   # wait 30 seconds to let the database container start properly
+$ docker-compose up -d rails # now start the rails container
+```
+
+To remove docker configurations: `bundle exec dock undockerize`. Use `--purge` option to remove `.dockerize.yml` file: `bundle exec dock undockerize --purge`
+
+All available commands:
 ```bash
 $ bundle exec dock help
 $ bundle exec dock configure
