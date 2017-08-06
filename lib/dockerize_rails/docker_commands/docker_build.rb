@@ -4,7 +4,7 @@ module DockerizeRails
       def self.build_rails
         build_docker_image(
           "#{Constants::CONFIG_DIRECTORY_NAME}/#{Constants::RAILS_DIRECTORY_NAME}/Dockerfile",
-          "#{DRConfig.application_name}_mysql"
+          "#{DRConfig.application_name}_rails"
         )
         0
       rescue Docker::Error::NotFoundError => exception
