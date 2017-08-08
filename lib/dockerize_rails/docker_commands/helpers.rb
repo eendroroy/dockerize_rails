@@ -1,8 +1,8 @@
 module DockerizeRails
   module DockerCommands
     module Helpers
-      def self.docker_compose_parser
-        docker_compose = YAML.load_file '/Users/indrajit/IFC/docker-compose.yml'
+      def self.get_services_from_docker_compose
+        docker_compose = YAML.load_file "#{DockerizeRails::PATHS.current}/docker-compose.yml"
         docker_compose['services']
       end
     end
