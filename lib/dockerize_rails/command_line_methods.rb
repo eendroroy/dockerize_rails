@@ -20,6 +20,8 @@ module DockerizeRails
         return docker_pull
       when *(commands[:docker_build])
         return docker_build
+      when *(commands[:docker_start])
+        return docker_start
       when *(commands[:help])
         return help
       else
@@ -76,6 +78,12 @@ module DockerizeRails
     def self.docker_build
       DRNameSpace.load
       DockerizeRails::DockerCommands.build
+      0
+    end
+
+    def self.docker_start
+      DRNameSpace.load
+      DockerizeRails::DockerCommands.start
       0
     end
   end
