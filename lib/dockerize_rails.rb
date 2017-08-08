@@ -15,22 +15,23 @@ require 'dockerize_rails/docker_commands'
 require 'dockerize_rails/command_line_methods'
 require 'dockerize_rails/command_line'
 
-module DockerizeRails
-  private_constant :PATHS
-  private_constant :Helpers
-  private_constant :DRNameSpace
-  private_constant :ConfigLoader
-  private_constant :DRConfig
-  private_constant :ConfigGenerator
-  private_constant :Constants
-  private_constant :Templates
-  private_constant :CommandLineMethods
-
-  module DockerCommands
-    private_constant :DockerPull
-    private_constant :DockerBuild
-  end
-end
+# module DockerizeRails
+#   private_constant :PATHS
+#   private_constant :Helpers
+#   private_constant :DRNameSpace
+#   private_constant :ConfigLoader
+#   private_constant :DRConfig
+#   private_constant :ConfigGenerator
+#   private_constant :Constants
+#   private_constant :Templates
+#   private_constant :CommandLineMethods
+#
+#   module DockerCommands
+#     private_constant :DockerPull
+#     private_constant :DockerBuild
+#     private_constant :DockerRun
+#   end
+# end
 
 class DockerizeRailsCLI
   extend DockerizeRails::CommandLine
