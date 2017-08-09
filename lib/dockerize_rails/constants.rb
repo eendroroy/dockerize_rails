@@ -17,48 +17,48 @@ module DockerizeRails
     DATABASE_HOST_REMOTE = 'remote'.freeze
 
     COMMANDS = {
-        configure: {
+      configure: {
         aliases: %I[configure c rc cr],
         help: "Generates '#{DOCKERIZE_RAILS_CONFIG_FILE_NAME}'".freeze,
         params: {
           :'--tiny' => 'generates shorter config file, skipping all descriptions'.freeze
         }
       },
-        dockerize: {
+      dockerize: {
         aliases: %I[dockerize dc d],
         help: 'Generates docker config files'.freeze,
         params: {
           :'--test-env' => 'generates configurations to run tests.'.freeze
         }
       },
-        undockerize: {
+      undockerize: {
         aliases: %I[undockerize ud du u dd],
         help: 'Removes docker configurations'.freeze,
         params: {
           :'--purge' => "also removes #{Constants::DOCKERIZE_RAILS_CONFIG_FILE_NAME}".freeze
         }
       },
-        docker_info: {
+      docker_info: {
         aliases: %I[docker_info di],
         help: 'Shows Docker information'.freeze
       },
-        docker_pull: {
+      docker_pull: {
         aliases: %I[docker_pull pull],
         help: 'Pulls Docker images'.freeze
       },
-        docker_build: {
+      docker_build: {
         aliases: %I[docker_build build],
         help: 'Builds Docker images'.freeze
       },
-        docker_start: {
-            aliases: %I[docker_start start],
-            help: 'Run Docker containers'.freeze
-        },
-        docker_stop: {
-            aliases: %I[docker_stop stop],
-            help: 'Run Docker containers'.freeze
-        },
-        help: {
+      docker_start: {
+        aliases: %I[docker_start start],
+        help: 'Run Docker containers'.freeze
+      },
+      docker_stop: {
+        aliases: %I[docker_stop stop],
+        help: 'Run Docker containers'.freeze
+      },
+      help: {
         aliases: %I[help h],
         help: 'Prints this message'.freeze
       }
