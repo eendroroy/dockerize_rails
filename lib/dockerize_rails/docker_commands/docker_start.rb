@@ -56,19 +56,19 @@ module DockerizeRails
         if service.key? 'ports'
           options['HostConfig'] = {}
           options['HostConfig'] = {
-              'PortBindings' => Hash[service['ports'].map do |ports|
-                ["#{ports.split(':')[0]}/tcp", [{ 'HostPort' => ports.split(':')[1] }]]
-              end]
+            'PortBindings' => Hash[service['ports'].map do |ports|
+              ["#{ports.split(':')[0]}/tcp", [{ 'HostPort' => ports.split(':')[1] }]]
+            end]
           }
         end
         if service.key? 'volumes'
           options['Volumes'] = Hash[service['volumes'].map do |volume|
             source =
-                if volume.split(':')[0].start_with?('/')
-                  volume.split(':')[0]
-                else
-                  File.join(DockerizeRails::PATHS.current, volume.split(':')[0])
-                end
+              if volume.split(':')[0].start_with?('/')
+                volume.split(':')[0]
+              else
+                File.join(DockerizeRails::PATHS.current, volume.split(':')[0])
+              end
             [source, { volume.split(':')[1] => volume.length > 2 ? volume.split(':')[2] : 'rw' }]
           end]
         end
