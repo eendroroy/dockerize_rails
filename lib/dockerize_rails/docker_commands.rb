@@ -31,5 +31,25 @@ module DockerizeRails
       puts
       1
     end
+
+    def self.start
+      status = 0
+      status += DockerStart.start_mysql
+      status += DockerStart.start_postgres
+      # puts
+      # (0..29).each do |i|
+      #   printf "\r => waiting for database server to start properly #{30 - i} ..."
+      #   $stdout.flush
+      #   sleep 1
+      # end
+      puts
+      status += DockerStart.start_rails
+      status
+    rescue Docker::Error::NotFoundError => exception
+      puts
+      puts exception.to_s.red
+      puts
+      1
+    end
   end
 end

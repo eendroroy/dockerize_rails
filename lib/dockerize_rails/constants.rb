@@ -2,7 +2,7 @@ module DockerizeRails
   module Constants
     SHELL_SCRIPT_FILE_NAME = 'dockerw'.freeze
 
-    DOCKERIZE_RAILS_CONFIG_FILE_NAME = '.dockerize.yml'.freeze
+    CONFIG_FILE_NAME = '.dockerize.yml'.freeze
     DOCKER_COMPOSE_FILE_NAME = 'docker-compose.yml'.freeze
     DOCKERIGNORE_FILE_NAME = '.dockerignore'.freeze
 
@@ -19,7 +19,7 @@ module DockerizeRails
     COMMANDS = {
       configure: {
         aliases: %I[configure c rc cr],
-        help: "Generates '#{DOCKERIZE_RAILS_CONFIG_FILE_NAME}'".freeze,
+        help: "Generates '#{CONFIG_FILE_NAME}'".freeze,
         params: {
           :'--tiny' => 'generates shorter config file, skipping all descriptions'.freeze
         }
@@ -35,7 +35,7 @@ module DockerizeRails
         aliases: %I[undockerize ud du u dd],
         help: 'Removes docker configurations'.freeze,
         params: {
-          :'--purge' => "also removes #{Constants::DOCKERIZE_RAILS_CONFIG_FILE_NAME}".freeze
+          :'--purge' => "also removes #{CONFIG_FILE_NAME}".freeze
         }
       },
       docker_info: {
@@ -43,12 +43,20 @@ module DockerizeRails
         help: 'Shows Docker information'.freeze
       },
       docker_pull: {
-        aliases: %I[docker_pull pull dp],
+        aliases: %I[docker_pull pull],
         help: 'Pulls Docker images'.freeze
       },
       docker_build: {
-        aliases: %I[docker_build build db],
+        aliases: %I[docker_build build],
         help: 'Builds Docker images'.freeze
+      },
+      docker_start: {
+        aliases: %I[docker_start start],
+        help: 'Run Docker containers'.freeze
+      },
+      docker_stop: {
+        aliases: %I[docker_stop stop],
+        help: 'Run Docker containers'.freeze
       },
       help: {
         aliases: %I[help h],
