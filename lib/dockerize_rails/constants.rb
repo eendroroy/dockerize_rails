@@ -2,7 +2,7 @@ module DockerizeRails
   module Constants
     SHELL_SCRIPT_FILE_NAME = 'dockerw'.freeze
 
-    DOCKERIZE_RAILS_CONFIG_FILE_NAME = '.dockerize.yml'.freeze
+    CONFIG_FILE_NAME = '.dockerize.yml'.freeze
     DOCKER_COMPOSE_FILE_NAME = 'docker-compose.yml'.freeze
     DOCKERIGNORE_FILE_NAME = '.dockerignore'.freeze
 
@@ -19,7 +19,7 @@ module DockerizeRails
     COMMANDS = {
       configure: {
         aliases: %I[configure c rc cr],
-        help: "Generates '#{DOCKERIZE_RAILS_CONFIG_FILE_NAME}'".freeze,
+        help: "Generates '#{CONFIG_FILE_NAME}'".freeze,
         params: {
           :'--tiny' => 'generates shorter config file, skipping all descriptions'.freeze
         }
@@ -35,7 +35,7 @@ module DockerizeRails
         aliases: %I[undockerize ud du u dd],
         help: 'Removes docker configurations'.freeze,
         params: {
-          :'--purge' => "also removes #{Constants::DOCKERIZE_RAILS_CONFIG_FILE_NAME}".freeze
+          :'--purge' => "also removes #{CONFIG_FILE_NAME}".freeze
         }
       },
       docker_info: {
