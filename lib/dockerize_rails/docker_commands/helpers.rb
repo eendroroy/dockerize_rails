@@ -23,9 +23,13 @@ module DockerizeRails
         docker_compose['services']
       end
 
-      def self.recurse_merge(a, b)
-        a.merge(b) do |_, x, y|
-          x.is_a?(Hash) && y.is_a?(Hash) ? recurse_merge(x, y) : [*x, *y]
+      def self.recurse_merge(first, second)
+        first.merge(second) do |_, first_element, second_element|
+          if first_element.is_a?(Hash) && second_element.is_a?(Hash)
+            recurse_merge(first_element, second_element)
+          else
+            [*first_element, *second_element]
+          end
         end
       end
     end
