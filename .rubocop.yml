@@ -5,7 +5,7 @@ AllCops:
     - 'vendor/**/*'
 
 Lint/SafeNavigationChain:
-    Enabled: false
+    Enabled: true
 
 Metrics/LineLength:
   Max: 120
@@ -21,6 +21,9 @@ Metrics/MethodLength:
 
 Metrics/AbcSize:
   Max: 20
+
+Metrics/PerceivedComplexity:
+  Max: 10
 
 Style/CyclomaticComplexity:
   Max: 10
