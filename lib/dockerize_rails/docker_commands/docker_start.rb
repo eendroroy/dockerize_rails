@@ -2,6 +2,10 @@ module DockerizeRails
   module DockerCommands
     module DockerStart
       def self.start_rails
+        Docker::Container.get(Helpers.get_name(:rails, :container))
+        puts " ==> Container >#{Helpers.get_name(:rails, :container)}< already running.".yellow
+        1
+      rescue Docker::Error::NotFoundError
         services = DockerizeRails::DockerCommands::Helpers.services_from_docker_compose
         services.key?('rails') && docker_start(services['rails'], :rails)
         0
@@ -13,6 +17,10 @@ module DockerizeRails
       end
 
       def self.start_mysql
+        Docker::Container.get(Helpers.get_name(:mysql, :container))
+        puts " ==> Container >#{Helpers.get_name(:mysql, :container)}< already running.".yellow
+        1
+      rescue Docker::Error::NotFoundError
         if DRConfig.linked_database? && DRConfig.databases[DRConfig.application_env] == 'mysql'
           services = DockerizeRails::DockerCommands::Helpers.services_from_docker_compose
           services.key?('mysql') && docker_start(services['mysql'], :mysql)
@@ -26,6 +34,10 @@ module DockerizeRails
       end
 
       def self.start_postgres
+        Docker::Container.get(Helpers.get_name(:postgres, :container))
+        puts " ==> Container >#{Helpers.get_name(:postgres, :container)}< already running.".yellow
+        1
+      rescue Docker::Error::NotFoundError
         if DRConfig.linked_database? && DRConfig.databases[DRConfig.application_env] == 'postgresql'
           services = DockerizeRails::DockerCommands::Helpers.services_from_docker_compose
           services.key?('postgresql') && docker_start(services['postgresql'], :postgres)
