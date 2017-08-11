@@ -2,6 +2,10 @@ module DockerizeRails
   module DockerCommands
     module DockerBuild
       def self.build_rails
+        if Docker::Image.exist? Helpers.get_name(:rails, :image)
+          puts " ==> Image >#{Helpers.get_name(:rails, :image)}< already exists".green
+          return 0
+        end
         build_docker_image(
           "#{Constants::CONFIG_DIRECTORY_NAME}/#{Constants::RAILS_DIRECTORY_NAME}/Dockerfile",
           Helpers.get_name(:rails, :image)
@@ -17,12 +21,16 @@ module DockerizeRails
 
       def self.build_mysql
         if DRConfig.linked_database? && DRConfig.databases[DRConfig.application_env] == 'mysql'
+          if Docker::Image.exist? Helpers.get_name(:mysql, :image)
+            puts " ==> Image >#{Helpers.get_name(:mysql, :image)}< already exists".green
+            return 0
+          end
           build_docker_image(
             "#{Constants::CONFIG_DIRECTORY_NAME}/#{Constants::MYSQL_DIRECTORY_NAME}/Dockerfile",
             Helpers.get_name(:mysql, :image)
           )
+          puts " ==> Image >#{Helpers.get_name(:mysql, :image)}< built successfully".green
         end
-        puts " ==> Image >#{Helpers.get_name(:mysql, :image)}< built successfully".green
         0
       rescue Docker::Error::NotFoundError => exception
         puts
@@ -33,12 +41,16 @@ module DockerizeRails
 
       def self.build_postgres
         if DRConfig.linked_database? && DRConfig.databases[DRConfig.application_env] == 'postgresql'
+          if Docker::Image.exist? Helpers.get_name(:postgres, :image)
+            puts " ==> Image >#{Helpers.get_name(:postgres, :image)}< already exists".green
+            return 0
+          end
           build_docker_image(
             "#{Constants::CONFIG_DIRECTORY_NAME}/#{Constants::PG_DIRECTORY_NAME}/Dockerfile",
             Helpers.get_name(:postgres, :image)
           )
+          puts " ==> Image >#{Helpers.get_name(:postgres, :image)}< built successfully".green
         end
-        puts " ==> Image >#{Helpers.get_name(:postgres, :image)}< built successfully".green
         0
       rescue Docker::Error::NotFoundError => exception
         puts
