@@ -32,6 +32,53 @@ module DockerizeRails
           end
         end
       end
+
+      # rubocop:disable Metrics/AbcSize
+      # rubocop:disable Metrics/MethodLength
+      def self.build_options(definitions, service)
+        options = recurse_merge(
+            {
+                'Image' => get_name(service, :image),
+                'name' => get_name(service, :container),
+                'Hostname' => '0.0.0.0'
+            },
+            if definitions.key?('expose')
+              {
+                  'ExposedPorts' => Hash[definitions['expose'].map { |ports| ["#{ports}/tcp", {}] }],
+                  'HostConfig' => { 'PortBindings' => Hash[definitions['expose'].map { |ports| ["#{ports}/tcp", [{}]] }] }
+              }
+            else
+              {}
+            end
+        )
+        options = recurse_merge(
+            options,
+            if definitions.key?('ports')
+              { 'HostConfig' => { 'PortBindings' => Hash[definitions['ports'].map do |ports|
+                ["#{ports.split(':')[0]}/tcp", [{ 'HostPort' => ports.split(':')[1] }]]
+              end] } }
+            else
+              {}
+            end
+        )
+        options = recurse_merge(
+            options,
+            definitions.key?('environment') ? { 'Env' => definitions['environment'] } : {}
+        )
+        options = recurse_merge(
+            options,
+            if definitions.key?('links')
+              { 'HostConfig' => { 'Links' => definitions['links'].map do |link|
+                "#{get_name(link.split(':')[0].to_sym, :container)}:#{link.split(':')[1]}"
+              end } }
+            else
+              {}
+            end
+        )
+        options
+      end
+      # rubocop:enable Metrics/AbcSize
+      # rubocop:enable Metrics/MethodLength
     end
   end
 end

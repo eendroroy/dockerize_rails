@@ -55,7 +55,7 @@ module DockerizeRails
 
       # rubocop:disable Metrics/AbcSize
       def self.docker_start(definitions, service)
-        options = build_options(definitions, service)
+        options = DockerCommands::Helpers.build_options(definitions, service)
         container = Docker::Container.create options
         binds =
           if definitions.key? 'volumes'
@@ -72,53 +72,6 @@ module DockerizeRails
         container.start binds
       end
       # rubocop:enable Metrics/AbcSize
-
-      # rubocop:disable Metrics/AbcSize
-      # rubocop:disable Metrics/MethodLength
-      def self.build_options(definitions, service)
-        options = Helpers.recurse_merge(
-          {
-            'Image' => Helpers.get_name(service, :image),
-            'name' => Helpers.get_name(service, :container),
-            'Hostname' => '0.0.0.0'
-          },
-          if definitions.key?('expose')
-            {
-              'ExposedPorts' => Hash[definitions['expose'].map { |ports| ["#{ports}/tcp", {}] }],
-              'HostConfig' => { 'PortBindings' => Hash[definitions['expose'].map { |ports| ["#{ports}/tcp", [{}]] }] }
-            }
-          else
-            {}
-          end
-        )
-        options = Helpers.recurse_merge(
-          options,
-          if definitions.key?('ports')
-            { 'HostConfig' => { 'PortBindings' => Hash[definitions['ports'].map do |ports|
-              ["#{ports.split(':')[0]}/tcp", [{ 'HostPort' => ports.split(':')[1] }]]
-            end] } }
-          else
-            {}
-          end
-        )
-        options = Helpers.recurse_merge(
-          options,
-          definitions.key?('environment') ? { 'Env' => definitions['environment'] } : {}
-        )
-        options = Helpers.recurse_merge(
-          options,
-          if definitions.key?('links')
-            { 'HostConfig' => { 'Links' => definitions['links'].map do |link|
-              "#{Helpers.get_name(link.split(':')[0].to_sym, :container)}:#{link.split(':')[1]}"
-            end } }
-          else
-            {}
-          end
-        )
-        options
-      end
-      # rubocop:enable Metrics/AbcSize
-      # rubocop:enable Metrics/MethodLength
     end
   end
 end
