@@ -54,17 +54,8 @@ module DockerizeRails
     end
 
     def self.docker_info
-      docker_version = DockerCommands.version
-
       puts
-      Helpers.print_formatted_info 'Docker Version', "#{docker_version['Version']}\n"
-      Helpers.print_formatted_info 'API', "#{docker_version['ApiVersion']} : #{docker_version['MinAPIVersion']}\n"
-      Helpers.print_formatted_info 'Git Commit', "#{docker_version['GitCommit']}\n"
-      Helpers.print_formatted_info 'Go Version', "#{docker_version['GoVersion']}\n"
-      # Helpers.print_formatted_info 'OS', "#{v['Os']}_#{v['Arch']}_#{v['KernelVersion']}\n"
-      Helpers.print_formatted_info 'Experimental', "#{docker_version['Experimental']}\n"
-      Helpers.print_formatted_info 'Build Time',
-                                   "#{DateTime.parse(docker_version['BuildTime']).strftime('%b %d, %Y %I:%M %p')}\n"
+      DockerCommands::Helpers.print_version
       puts
       0
     end

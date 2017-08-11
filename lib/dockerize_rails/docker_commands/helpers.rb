@@ -79,6 +79,24 @@ module DockerizeRails
       end
       # rubocop:enable Metrics/AbcSize
       # rubocop:enable Metrics/MethodLength
+
+      def self.print_version
+        docker_version = DockerCommands.version
+
+        DockerizeRails::Helpers.print_formatted_info('Docker Version', "#{docker_version['Version']}\n")
+        DockerizeRails::Helpers.print_formatted_info(
+          'API',
+          "#{docker_version['ApiVersion']} : #{docker_version['MinAPIVersion']}\n"
+        )
+        DockerizeRails::Helpers.print_formatted_info('Git Commit', "#{docker_version['GitCommit']}\n")
+        DockerizeRails::Helpers.print_formatted_info('Go Version', "#{docker_version['GoVersion']}\n")
+        # DockerizeRails::Helpers.print_formatted_info('OS', "#{v['Os']}_#{v['Arch']}_#{v['KernelVersion']}\n")
+        DockerizeRails::Helpers.print_formatted_info('Experimental', "#{docker_version['Experimental']}\n")
+        DockerizeRails::Helpers.print_formatted_info(
+          'Build Time',
+         "#{DateTime.parse(docker_version['BuildTime']).strftime('%b %d, %Y %I:%M %p')}\n"
+        )
+      end
     end
   end
 end
