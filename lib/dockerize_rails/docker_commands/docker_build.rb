@@ -4,7 +4,7 @@ module DockerizeRails
       def self.build_rails
         build_docker_image(
           "#{Constants::CONFIG_DIRECTORY_NAME}/#{Constants::RAILS_DIRECTORY_NAME}/Dockerfile",
-          "#{DRConfig.application_name}_rails"
+          Helpers.get_name(:rails, :image)
         )
         puts " ==> Image >#{Helpers.get_name(:rails, :image)}< built successfully".green
         0
@@ -19,7 +19,7 @@ module DockerizeRails
         if DRConfig.linked_database? && DRConfig.databases[DRConfig.application_env] == 'mysql'
           build_docker_image(
             "#{Constants::CONFIG_DIRECTORY_NAME}/#{Constants::MYSQL_DIRECTORY_NAME}/Dockerfile",
-            "#{DRConfig.application_name}_mysql"
+            Helpers.get_name(:mysql, :image)
           )
         end
         puts " ==> Image >#{Helpers.get_name(:mysql, :image)}< built successfully".green
@@ -35,7 +35,7 @@ module DockerizeRails
         if DRConfig.linked_database? && DRConfig.databases[DRConfig.application_env] == 'postgresql'
           build_docker_image(
             "#{Constants::CONFIG_DIRECTORY_NAME}/#{Constants::PG_DIRECTORY_NAME}/Dockerfile",
-            "#{DRConfig.application_name}_postgres"
+            Helpers.get_name(:postgres, :image)
           )
         end
         puts " ==> Image >#{Helpers.get_name(:postgres, :image)}< built successfully".green
