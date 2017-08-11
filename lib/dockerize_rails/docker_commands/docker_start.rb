@@ -8,6 +8,7 @@ module DockerizeRails
       rescue Docker::Error::NotFoundError
         services = DockerizeRails::DockerCommands::Helpers.services_from_docker_compose
         services.key?('rails') && docker_start(services['rails'], :rails)
+        puts " ==> Container >#{Helpers.get_name(:rails, :container)}< started successfully".green
         0
       rescue Docker::Error::NotFoundError => exception
         puts
@@ -24,6 +25,7 @@ module DockerizeRails
         if DRConfig.linked_database? && DRConfig.databases[DRConfig.application_env] == 'mysql'
           services = DockerizeRails::DockerCommands::Helpers.services_from_docker_compose
           services.key?('mysql') && docker_start(services['mysql'], :mysql)
+          puts " ==> Container >#{Helpers.get_name(:mysql, :container)}< started successfully".green
         end
         0
       rescue Docker::Error::NotFoundError => exception
@@ -41,6 +43,7 @@ module DockerizeRails
         if DRConfig.linked_database? && DRConfig.databases[DRConfig.application_env] == 'postgresql'
           services = DockerizeRails::DockerCommands::Helpers.services_from_docker_compose
           services.key?('postgresql') && docker_start(services['postgresql'], :postgres)
+          puts " ==> Container >#{Helpers.get_name(:postgres, :container)}< started successfully".green
         end
         0
       rescue Docker::Error::NotFoundError => exception
@@ -106,7 +109,6 @@ module DockerizeRails
           options,
           if definitions.key?('links')
             { 'HostConfig' => { 'Links' => definitions['links'].map do |link|
-              puts link, link.split(':')[1].to_sym
               "#{Helpers.get_name(link.split(':')[0].to_sym, :container)}:#{link.split(':')[1]}"
             end } }
           else

@@ -6,6 +6,7 @@ module DockerizeRails
           "#{Constants::CONFIG_DIRECTORY_NAME}/#{Constants::RAILS_DIRECTORY_NAME}/Dockerfile",
           "#{DRConfig.application_name}_rails"
         )
+        puts " ==> Image >#{Helpers.get_name(:rails, :image)}< built successfully".green
         0
       rescue Docker::Error::NotFoundError => exception
         puts
@@ -21,6 +22,7 @@ module DockerizeRails
             "#{DRConfig.application_name}_mysql"
           )
         end
+        puts " ==> Image >#{Helpers.get_name(:mysql, :image)}< built successfully".green
         0
       rescue Docker::Error::NotFoundError => exception
         puts
@@ -36,6 +38,7 @@ module DockerizeRails
             "#{DRConfig.application_name}_postgres"
           )
         end
+        puts " ==> Image >#{Helpers.get_name(:postgres, :image)}< built successfully".green
         0
       rescue Docker::Error::NotFoundError => exception
         puts
