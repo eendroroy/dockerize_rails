@@ -35,7 +35,7 @@ If you see **migration error** in browser run the following commands:
 
 ```bash
 $ docker-compose down        # stop and destroy all running containers
-$ docker-compose up -d mysql # if application uses postgresql database use 'postgres' instead of 'mysql'
+$ docker-compose up -d mysql # if application uses postgresql database use 'postgresql' instead of 'mysql'
 $ sleep 30                   # wait 30 seconds to let the database container start properly
 $ docker-compose up -d rails # now start the rails container
 ```
@@ -54,6 +54,7 @@ $ bundle exec dock undockerize --purge
 $ bundle exec dock docker_info
 $ bundle exec dock docker_pull
 $ bundle exec dock docker_build
+$ bundle exec dock docker_start
 ```
 
 ## Demo
