@@ -2,8 +2,10 @@ module DockerizeRails
   module DockerCommands
     require 'docker'
 
-    def self.version
-      Docker.version
+    def self.info
+      puts
+      DockerHelpers.print_version
+      puts
     end
 
     def self.pull

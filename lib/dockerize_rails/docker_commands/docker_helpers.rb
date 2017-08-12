@@ -1,6 +1,6 @@
 module DockerizeRails
   module DockerCommands
-    module Helpers
+    module DockerHelpers
       NAMES = {
         image: {
           suffix: ":#{::DockerizeRails::DRConfig.application_env}",
@@ -60,18 +60,18 @@ module DockerizeRails
       # rubocop:enable Metrics/MethodLength
 
       def self.print_version
-        docker_version = ::DockerizeRails::DockerCommands.version
+        docker_version = Docker.version
 
-        ::DockerizeRails::Helpers.print_formatted_info('Docker Version', "#{docker_version['Version']}\n")
-        ::DockerizeRails::Helpers.print_formatted_info(
+        Helpers.print_formatted_info('Docker Version', "#{docker_version['Version']}\n")
+        Helpers.print_formatted_info(
           'API',
           "#{docker_version['ApiVersion']} : #{docker_version['MinAPIVersion']}\n"
         )
-        ::DockerizeRails::Helpers.print_formatted_info('Git Commit', "#{docker_version['GitCommit']}\n")
-        ::DockerizeRails::Helpers.print_formatted_info('Go Version', "#{docker_version['GoVersion']}\n")
-        # ::DockerizeRails::Helpers.print_formatted_info('OS', "#{v['Os']}_#{v['Arch']}_#{v['KernelVersion']}\n")
-        ::DockerizeRails::Helpers.print_formatted_info('Experimental', "#{docker_version['Experimental']}\n")
-        ::DockerizeRails::Helpers.print_formatted_info(
+        Helpers.print_formatted_info('Git Commit', "#{docker_version['GitCommit']}\n")
+        Helpers.print_formatted_info('Go Version', "#{docker_version['GoVersion']}\n")
+        # Helpers.print_formatted_info('OS', "#{v['Os']}_#{v['Arch']}_#{v['KernelVersion']}\n")
+        Helpers.print_formatted_info('Experimental', "#{docker_version['Experimental']}\n")
+        Helpers.print_formatted_info(
           'Build Time',
          "#{DateTime.parse(docker_version['BuildTime']).strftime('%b %d, %Y %I:%M %p')}\n"
         )

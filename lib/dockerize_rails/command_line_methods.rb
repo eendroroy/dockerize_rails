@@ -54,27 +54,25 @@ module DockerizeRails
     end
 
     def self.docker_info
-      puts
-      DockerCommands::Helpers.print_version
-      puts
+      DockerCommands.info
       0
     end
 
     def self.docker_pull
       DRNameSpace.load
-      DockerizeRails::DockerCommands.pull
+      DockerCommands.pull
       0
     end
 
     def self.docker_build
       DRNameSpace.load
-      DockerizeRails::DockerCommands.build
+      DockerCommands.build
       0
     end
 
     def self.docker_start
       DRNameSpace.load
-      DockerizeRails::DockerCommands.start
+      DockerCommands.start
       0
     end
   end
