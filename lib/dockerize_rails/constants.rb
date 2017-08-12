@@ -39,7 +39,7 @@ module DockerizeRails
         }
       },
       docker_info: {
-        aliases: %I[docker_info di],
+        aliases: %I[docker_info info],
         help: 'Shows Docker information'.freeze
       },
       docker_pull: {
