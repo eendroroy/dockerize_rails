@@ -57,6 +57,7 @@ $ bundle exec dock docker_build
 $ bundle exec dock docker_start
 $ bundle exec dock docker_stop
 $ bundle exec dock docker_stop --delete
+$ bundle exec dock docker_delete
 ```
 
 Help message:
