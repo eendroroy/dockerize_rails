@@ -46,5 +46,16 @@ module DockerizeRails
       puts
       1
     end
+
+    def self.stop
+      status = 0
+      status += DockerStop.stop_mysql
+      status += DockerStop.stop_postgres
+      status += DockerStop.stop_rails
+      status
+    rescue Docker::Error::NotFoundError => exception
+      puts exception.to_s.strip.red
+      1
+    end
   end
 end
