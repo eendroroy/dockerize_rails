@@ -3,16 +3,16 @@ module DockerizeRails
     module DockerHelpers
       NAMES = {
         image: {
-          suffix: ":#{::DockerizeRails::DRConfig.application_env}",
-          rails: "#{::DockerizeRails::DRConfig.application_name}_rails".freeze,
-          mysql: "#{::DockerizeRails::DRConfig.application_name}_mysql".freeze,
-          postgres: "#{::DockerizeRails::DRConfig.application_name}_postgres".freeze
+          suffix: ":#{DRConfig.application_env}",
+          rails: "#{DRConfig.application_name}_rails".freeze,
+          mysql: "#{DRConfig.application_name}_mysql".freeze,
+          postgres: "#{DRConfig.application_name}_postgres".freeze
         }.freeze,
         container: {
           suffix: '',
-          rails: "#{::DockerizeRails::DRConfig.application_name}_rails_container".freeze,
-          mysql: "#{::DockerizeRails::DRConfig.application_name}_mysql_container".freeze,
-          postgres: "#{::DockerizeRails::DRConfig.application_name}_postgres_container".freeze
+          rails: "#{DRConfig.application_name}_rails_container".freeze,
+          mysql: "#{DRConfig.application_name}_mysql_container".freeze,
+          postgres: "#{DRConfig.application_name}_postgres_container".freeze
         }.freeze
       }.freeze
 
@@ -21,7 +21,7 @@ module DockerizeRails
       end
 
       def self.services_from_docker_compose
-        docker_compose = YAML.load_file "#{::DockerizeRails::PATHS.current}/docker-compose.yml"
+        docker_compose = YAML.load_file "#{PATHS.current}/docker-compose.yml"
         docker_compose['services']
       end
 
@@ -38,7 +38,7 @@ module DockerizeRails
       # rubocop:disable Metrics/AbcSize
       # rubocop:disable Metrics/MethodLength
       def self.build_options(definitions, service)
-        options = ::DockerizeRails::DockerCommands::DockerOptions.new
+        options = DockerOptions.new
         options.image get_name(service, :image)
         options.name get_name(service, :container)
         options.hostname '0.0.0.0'
