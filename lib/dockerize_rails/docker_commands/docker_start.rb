@@ -6,7 +6,7 @@ module DockerizeRails
         puts " ==> Container >#{DockerHelpers.get_name(:rails, :container)}< already running.".yellow
         1
       rescue Docker::Error::NotFoundError
-        services = DockerizeRails::DockerCommands::DockerHelpers.services_from_docker_compose
+        services = DockerHelpers.services_from_docker_compose
         services.key?('rails') && docker_start(services['rails'], :rails)
         puts " ==> Container >#{DockerHelpers.get_name(:rails, :container)}< started successfully".green
         0
@@ -23,7 +23,7 @@ module DockerizeRails
         1
       rescue Docker::Error::NotFoundError
         if DRConfig.linked_database? && DRConfig.databases[DRConfig.application_env] == 'mysql'
-          services = DockerizeRails::DockerCommands::DockerHelpers.services_from_docker_compose
+          services = DockerHelpers.services_from_docker_compose
           services.key?('mysql') && docker_start(services['mysql'], :mysql)
           puts " ==> Container >#{DockerHelpers.get_name(:mysql, :container)}< started successfully".green
         end
@@ -41,7 +41,7 @@ module DockerizeRails
         1
       rescue Docker::Error::NotFoundError
         if DRConfig.linked_database? && DRConfig.databases[DRConfig.application_env] == 'postgresql'
-          services = DockerizeRails::DockerCommands::DockerHelpers.services_from_docker_compose
+          services = DockerHelpers.services_from_docker_compose
           services.key?('postgresql') && docker_start(services['postgresql'], :postgres)
           puts " ==> Container >#{DockerHelpers.get_name(:postgres, :container)}< started successfully".green
         end
@@ -63,7 +63,7 @@ module DockerizeRails
               [if volume.split(':')[0].start_with?('/')
                  volume.split(':')[0]
                else
-                 File.join(DockerizeRails::PATHS.current, volume.split(':')[0])
+                 File.join(PATHS.current, volume.split(':')[0])
                end,
                volume.split(':')[1],
                volume.length > 2 ? volume.split(':')[2] : 'rw'].join(':')
