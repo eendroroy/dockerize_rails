@@ -1,7 +1,6 @@
 module DockerizeRails
   module DockerCommands
     class DockerOptions
-      require 'marshal'
       def initialize
         @options = {
           'Image' => '',

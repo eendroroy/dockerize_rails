@@ -22,7 +22,7 @@ module DockerizeRails
       def self.docker_delete(container_name)
         container = Docker::Container.get(container_name)
         container.stop if container.info['State']['Running']
-        container.delete(force: true)
+        container.delete(force: DRNameSpace.namespace.force || false)
         puts "Container >#{container_name}< deleted successfully.".green
         0
       rescue Docker::Error::NotFoundError => exception

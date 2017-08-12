@@ -46,22 +46,15 @@ To remove docker configurations: `bundle exec dock undockerize`. Use `--purge` o
 All available commands:
 ```bash
 $ bundle exec dock help
-$ bundle exec dock configure
-$ bundle exec dock configure --tiny
-$ bundle exec dock dockerize
-$ bundle exec dock dockerize --test-env
-$ bundle exec dock undockerize
-$ bundle exec dock undockerize --purge
+$ bundle exec dock configure [ --tiny ]
+$ bundle exec dock dockerize [ --test-env ]
+$ bundle exec dock undockerize [ --purge ]
 $ bundle exec dock docker_info
 $ bundle exec dock docker_pull
-$ bundle exec dock docker_build
-$ bundle exec dock docker_build --log
-$ bundle exec dock docker_build --rebuild
-$ bundle exec dock docker_build --rebuild --force
+$ bundle exec dock docker_build [ --log | --rebuild | --rebuild --force ]
 $ bundle exec dock docker_start
-$ bundle exec dock docker_stop
-$ bundle exec dock docker_stop --delete
-$ bundle exec dock docker_delete
+$ bundle exec dock docker_stop [ --delete ]
+$ bundle exec dock docker_delete [ --force ]
 ```
 
 Help message:
@@ -92,6 +85,8 @@ Usage: dock <command>
           [--delete]      -- Also deletes the containers
 
         docker_delete, delete          - Deletes Docker containers
+          [--force]       -- Force Container deletion.
+
         help, h                        - Prints this message
 ```
 
