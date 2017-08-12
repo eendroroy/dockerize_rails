@@ -1,3 +1,3 @@
 module DockerizeRails
-  VERSION = '1.1.0.beta.3'.freeze
+  VERSION = '1.2.0.beta.1'.freeze
 end
