@@ -55,6 +55,7 @@ $ bundle exec dock docker_info
 $ bundle exec dock docker_pull
 $ bundle exec dock docker_build
 $ bundle exec dock docker_start
+$ bundle exec dock docker_stop
 ```
 
 ## Demo
