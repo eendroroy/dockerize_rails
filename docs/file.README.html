@@ -80,7 +80,9 @@ src="https://img.shields.io/github/contributors/eendroroy/dockerize_rails.svg"><
 <pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_gem'>gem</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>dockerize_rails</span><span class='tstring_end'>&#39;</span></span>
 </code></pre>
 
-<p>And then execute: <code>bash $ bundle </code></p>
+<p>And then execute:</p>
+
+<pre class="code ruby"><code class="ruby">$ bundle install</code></pre>
 
 <h2 id="label-Usage">Usage</h2>
 
@@ -110,14 +112,12 @@ Use <code>--purge</code> option to remove <code>.dockerize.yml</code> file:
 <code>bundle exec dock undockerize --purge</code></p>
 
 <p>All available commands: <code>bash $ bundle exec dock help $ bundle exec
-dock configure $ bundle exec dock configure --tiny $ bundle exec dock
-dockerize $ bundle exec dock dockerize --test-env $ bundle exec dock
-undockerize $ bundle exec dock undockerize --purge $ bundle exec dock
-docker_info $ bundle exec dock docker_pull $ bundle exec dock docker_build
-$ bundle exec dock docker_build --log $ bundle exec dock docker_build
---rebuild $ bundle exec dock docker_build --rebuild --force $ bundle exec
-dock docker_start $ bundle exec dock docker_stop $ bundle exec dock
-docker_stop --delete $ bundle exec dock docker_delete </code></p>
+dock configure [ --tiny ] $ bundle exec dock dockerize [ --test-env ] $
+bundle exec dock undockerize [ --purge ] $ bundle exec dock docker_info $
+bundle exec dock docker_pull $ bundle exec dock docker_build [ --log |
+--rebuild | --rebuild --force ] $ bundle exec dock docker_start $ bundle
+exec dock docker_stop [ --delete ] $ bundle exec dock docker_delete [
+--force ] </code></p>
 
 <p>Help message: “` Usage: dock &lt;command&gt;  or: bundle exec dock
 &lt;command&gt;</p>
@@ -145,11 +145,13 @@ docker_stop --delete $ bundle exec dock docker_delete </code></p>
       [--delete]      -- Also deletes the containers
 
     docker_delete, delete          - Deletes Docker containers
+      [--force]       -- Force Container deletion.
+
     help, h                        - Prints this message</code></pre>
 
 <p>“`</p>
 
-<h2 id="label-Demo">Demo</h2>
+<h2 id="label-Demonstration">Demonstration</h2>
 
 <p><a href="https://asciinema.org/a/121552"><img
 src="https://asciinema.org/a/121552.png"></a></p>
@@ -181,7 +183,7 @@ src="https://app.fossa.io/api/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Feendroro
 </div></div>
 
       <div id="footer">
-  Generated on Sat Aug 12 16:08:38 2017 by
+  Generated on Sat Aug 12 16:43:27 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.1.0).
 </div>
