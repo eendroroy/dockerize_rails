@@ -3,23 +3,25 @@ module DockerizeRails
     module Helpers
       NAMES = {
         image: {
-          rails: "#{DRConfig.application_name}_rails:#{DRConfig.application_env}".freeze,
-          mysql: "#{DRConfig.application_name}_mysql:#{DRConfig.application_env}".freeze,
-          postgres: "#{DRConfig.application_name}_postgres:#{DRConfig.application_env}".freeze
+          suffix: ":#{::DockerizeRails::DRConfig.application_env}",
+          rails: "#{::DockerizeRails::DRConfig.application_name}_rails".freeze,
+          mysql: "#{::DockerizeRails::DRConfig.application_name}_mysql".freeze,
+          postgres: "#{::DockerizeRails::DRConfig.application_name}_postgres".freeze
         }.freeze,
         container: {
-          rails: "#{DRConfig.application_name}_rails_container".freeze,
-          mysql: "#{DRConfig.application_name}_mysql_container".freeze,
-          postgres: "#{DRConfig.application_name}_postgres_container".freeze
+          suffix: '',
+          rails: "#{::DockerizeRails::DRConfig.application_name}_rails_container".freeze,
+          mysql: "#{::DockerizeRails::DRConfig.application_name}_mysql_container".freeze,
+          postgres: "#{::DockerizeRails::DRConfig.application_name}_postgres_container".freeze
         }.freeze
       }.freeze
 
       def self.get_name(service, type)
-        NAMES[type][service]
+        "#{NAMES[type][service]}#{NAMES[type][:suffix]}".freeze
       end
 
       def self.services_from_docker_compose
-        docker_compose = YAML.load_file "#{DockerizeRails::PATHS.current}/docker-compose.yml"
+        docker_compose = YAML.load_file "#{::DockerizeRails::PATHS.current}/docker-compose.yml"
         docker_compose['services']
       end
 
@@ -36,63 +38,40 @@ module DockerizeRails
       # rubocop:disable Metrics/AbcSize
       # rubocop:disable Metrics/MethodLength
       def self.build_options(definitions, service)
-        options = recurse_merge(
-            {
-                'Image' => get_name(service, :image),
-                'name' => get_name(service, :container),
-                'Hostname' => '0.0.0.0'
-            },
-            if definitions.key?('expose')
-              {
-                  'ExposedPorts' => Hash[definitions['expose'].map { |ports| ["#{ports}/tcp", {}] }],
-                  'HostConfig' => { 'PortBindings' => Hash[definitions['expose'].map { |ports| ["#{ports}/tcp", [{}]] }] }
-              }
-            else
-              {}
-            end
-        )
-        options = recurse_merge(
-            options,
-            if definitions.key?('ports')
-              { 'HostConfig' => { 'PortBindings' => Hash[definitions['ports'].map do |ports|
-                ["#{ports.split(':')[0]}/tcp", [{ 'HostPort' => ports.split(':')[1] }]]
-              end] } }
-            else
-              {}
-            end
-        )
-        options = recurse_merge(
-            options,
-            definitions.key?('environment') ? { 'Env' => definitions['environment'] } : {}
-        )
-        options = recurse_merge(
-            options,
-            if definitions.key?('links')
-              { 'HostConfig' => { 'Links' => definitions['links'].map do |link|
-                "#{get_name(link.split(':')[0].to_sym, :container)}:#{link.split(':')[1]}"
-              end } }
-            else
-              {}
-            end
-        )
-        options
+        options = ::DockerizeRails::DockerCommands::DockerOptions.new
+        options.image get_name(service, :image)
+        options.name get_name(service, :container)
+        options.hostname '0.0.0.0'
+        definitions['expose'].each {|expose| options.expose expose} if definitions.key?('expose')
+        definitions['environment'].each {|env| options.add_env env} if definitions.key?('environment')
+        if definitions.key?('ports')
+          definitions['ports'].each do |ports|
+            options.add_port_binds(ports.split(':')[1], ports.split(':')[0])
+          end
+        end
+        if definitions.key?('links')
+          definitions['links'].each do |link|
+            options.add_links(get_name(link.split(':')[0].to_sym, :container), link.split(':')[1])
+          end
+        end
+        options.options
       end
       # rubocop:enable Metrics/AbcSize
       # rubocop:enable Metrics/MethodLength
 
       def self.print_version
-        docker_version = DockerCommands.version
+        docker_version = ::DockerizeRails::DockerCommands.version
 
-        DockerizeRails::Helpers.print_formatted_info('Docker Version', "#{docker_version['Version']}\n")
-        DockerizeRails::Helpers.print_formatted_info(
+        ::DockerizeRails::Helpers.print_formatted_info('Docker Version', "#{docker_version['Version']}\n")
+        ::DockerizeRails::Helpers.print_formatted_info(
           'API',
           "#{docker_version['ApiVersion']} : #{docker_version['MinAPIVersion']}\n"
         )
-        DockerizeRails::Helpers.print_formatted_info('Git Commit', "#{docker_version['GitCommit']}\n")
-        DockerizeRails::Helpers.print_formatted_info('Go Version', "#{docker_version['GoVersion']}\n")
-        # DockerizeRails::Helpers.print_formatted_info('OS', "#{v['Os']}_#{v['Arch']}_#{v['KernelVersion']}\n")
-        DockerizeRails::Helpers.print_formatted_info('Experimental', "#{docker_version['Experimental']}\n")
-        DockerizeRails::Helpers.print_formatted_info(
+        ::DockerizeRails::Helpers.print_formatted_info('Git Commit', "#{docker_version['GitCommit']}\n")
+        ::DockerizeRails::Helpers.print_formatted_info('Go Version', "#{docker_version['GoVersion']}\n")
+        # ::DockerizeRails::Helpers.print_formatted_info('OS', "#{v['Os']}_#{v['Arch']}_#{v['KernelVersion']}\n")
+        ::DockerizeRails::Helpers.print_formatted_info('Experimental', "#{docker_version['Experimental']}\n")
+        ::DockerizeRails::Helpers.print_formatted_info(
           'Build Time',
          "#{DateTime.parse(docker_version['BuildTime']).strftime('%b %d, %Y %I:%M %p')}\n"
         )
