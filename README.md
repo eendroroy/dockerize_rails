@@ -71,13 +71,13 @@ Usage: dock <command>
    commands:
 
         configure, c, rc, cr           - Generates '.dockerize.yml'
-          [--tiny]        -- generates shorter config file, skipping all descriptions
+          [--tiny]        -- Generates shorter config file, skipping all descriptions
 
         dockerize, dc, d               - Generates docker config files
-          [--test-env]    -- generates configurations to run tests.
+          [--test-env]    -- Generates configurations to run tests.
 
         undockerize, ud, du, u, dd     - Removes docker configurations
-          [--purge]       -- also removes .dockerize.yml
+          [--purge]       -- Also removes .dockerize.yml
 
         docker_info, info              - Shows Docker information
         docker_pull, pull              - Pulls base Docker images (ruby, mysql/postgres)
