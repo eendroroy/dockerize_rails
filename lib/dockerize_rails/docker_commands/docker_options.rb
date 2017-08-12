@@ -1,6 +1,7 @@
 module DockerizeRails
   module DockerCommands
     class DockerOptions
+      require 'marshal'
       def initialize
         @options = {
           'Image' => '',
@@ -45,13 +46,7 @@ module DockerizeRails
       end
 
       def options
-        deep_copy @options
-      end
-
-      private
-
-      def deep_copy(o)
-        Marshal.load(Marshal.dump(o))
+        Marshal.load(Marshal.dump(@options))
       end
     end
   end

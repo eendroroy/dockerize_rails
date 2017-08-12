@@ -9,7 +9,7 @@ TooManyConstants:
   enabled: false
 
 TooManyStatements:
-  max_statements: 15
+  max_statements: 30
 
 IrresponsibleModule:
   enabled: false

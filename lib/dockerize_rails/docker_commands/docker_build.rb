@@ -78,9 +78,9 @@ module DockerizeRails
       end
 
       def self.build_docker_image(dockerfile, repo)
-        image = Docker::Image.build_from_dir('.', dockerfile: dockerfile) do |v|
+        image = Docker::Image.build_from_dir('.', dockerfile: dockerfile) do |output|
           if DRNameSpace.namespace.stream_log
-            if (log = JSON.parse(v)) && log.key?('stream')
+            if (log = JSON.parse(output)) && log.key?('stream')
               $stdout.puts log['stream']
             end
           end
