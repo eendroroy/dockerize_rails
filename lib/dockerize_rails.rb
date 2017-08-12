@@ -29,6 +29,15 @@ module DockerizeRails
   private_constant :Templates
   private_constant :CommandLineMethods
   private_constant :DockerCommands
+
+  module DockerCommands
+    private_constant :DockerPull
+    private_constant :DockerBuild
+    private_constant :DockerStart
+    private_constant :DockerStop
+    private_constant :DockerDelete
+    private_constant :DockerHelpers
+  end
 end
 
 class DockerizeRailsCLI

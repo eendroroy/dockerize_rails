@@ -79,7 +79,7 @@ module DockerizeRails
 
       # rubocop:disable Metrics/AbcSize
       def self.docker_start(definitions, service)
-        options = DockerCommands::DockerHelpers.build_options(definitions, service)
+        options = DockerHelpers.build_options(definitions, service)
         container = Docker::Container.create options
         binds =
           if definitions.key? 'volumes'
