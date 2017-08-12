@@ -3,8 +3,6 @@
 [![GitHub tag](https://img.shields.io/github/tag/eendroroy/dockerize_rails.svg)](https://github.com/eendroroy/dockerize_rails)
 [![Gem Version](https://badge.fury.io/rb/dockerize_rails.svg)](https://rubygems.org/gems/dockerize_rails)
 [![Downloads](https://img.shields.io/gem/dt/dockerize_rails.svg)](https://rubygems.org/gems/dockerize_rails)
-[![Build Status](https://travis-ci.org/eendroroy/dockerize_rails.svg?branch=master)](https://travis-ci.org/eendroroy/dockerize_rails)
-[![Code Climate](https://codeclimate.com/github/eendroroy/dockerize_rails/badges/gpa.svg)](https://codeclimate.com/github/eendroroy/dockerize_rails)
 [![Contributors](https://img.shields.io/github/contributors/eendroroy/dockerize_rails.svg)](CONTRIBUTORS.md)
 
 ## Installation
