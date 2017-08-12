@@ -46,7 +46,6 @@ module DockerizeRails
       database_host_type == Constants::DATABASE_HOST_LINKED
     end
 
-    # rubocop:disable Metrics/AbcSize
     def self.to_yaml_str
       "---
 # Set application name
@@ -130,7 +129,6 @@ database_user_name: #{database_user_name}
 database_user_pass: #{database_user_pass}
 "
     end
-    # rubocop:enable Metrics/AbcSize
 
     def self.to_hash
       Hash[ATTRIBUTES.map do |accessor|

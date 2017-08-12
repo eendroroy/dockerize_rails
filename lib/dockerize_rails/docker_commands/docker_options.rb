@@ -29,11 +29,11 @@ module DockerizeRails
 
       def expose(port)
         @options['ExposedPorts']["#{port}/tcp"] = {}
-        @options['HostConfig']['PortBindings']["#{port}/tcp"] = [{'HostPort' => port}]
+        @options['HostConfig']['PortBindings']["#{port}/tcp"] = [{ 'HostPort' => port }]
       end
 
       def add_port_binds(container, host)
-        @options['HostConfig']['PortBindings']["#{container}/tcp"] = [{'HostPort' => host}]
+        @options['HostConfig']['PortBindings']["#{container}/tcp"] = [{ 'HostPort' => host }]
       end
 
       def add_env(env)

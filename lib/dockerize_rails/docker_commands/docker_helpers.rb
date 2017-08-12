@@ -35,15 +35,13 @@ module DockerizeRails
         end
       end
 
-      # rubocop:disable Metrics/AbcSize
-      # rubocop:disable Metrics/MethodLength
       def self.build_options(definitions, service)
         options = DockerOptions.new
         options.image get_name(service, :image)
         options.name get_name(service, :container)
         options.hostname '0.0.0.0'
-        definitions['expose'].each {|expose| options.expose expose} if definitions.key?('expose')
-        definitions['environment'].each {|env| options.add_env env} if definitions.key?('environment')
+        definitions['expose'].each { |expose| options.expose expose } if definitions.key?('expose')
+        definitions['environment'].each { |env| options.add_env env } if definitions.key?('environment')
         if definitions.key?('ports')
           definitions['ports'].each do |ports|
             options.add_port_binds(ports.split(':')[1], ports.split(':')[0])
@@ -56,8 +54,6 @@ module DockerizeRails
         end
         options.options
       end
-      # rubocop:enable Metrics/AbcSize
-      # rubocop:enable Metrics/MethodLength
 
       def self.print_version
         docker_version = Docker.version
@@ -73,7 +69,7 @@ module DockerizeRails
         Helpers.print_formatted_info('Experimental', "#{docker_version['Experimental']}\n")
         Helpers.print_formatted_info(
           'Build Time',
-         "#{DateTime.parse(docker_version['BuildTime']).strftime('%b %d, %Y %I:%M %p')}\n"
+          "#{DateTime.parse(docker_version['BuildTime']).strftime('%b %d, %Y %I:%M %p')}\n"
         )
       end
     end

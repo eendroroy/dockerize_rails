@@ -77,7 +77,6 @@ module DockerizeRails
         container.start(options)
       end
 
-      # rubocop:disable Metrics/AbcSize
       def self.docker_start(definitions, service)
         options = DockerHelpers.build_options(definitions, service)
         container = Docker::Container.create options
@@ -95,7 +94,6 @@ module DockerizeRails
           end
         container.start binds
       end
-      # rubocop:enable Metrics/AbcSize
 
       class << self
         private :docker_start
