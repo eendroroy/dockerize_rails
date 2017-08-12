@@ -44,6 +44,7 @@ $ docker-compose up -d rails # now start the rails container
 To remove docker configurations: `bundle exec dock undockerize`. Use `--purge` option to remove `.dockerize.yml` file: `bundle exec dock undockerize --purge`
 
 All available commands:
+
 ```bash
 $ bundle exec dock help
 $ bundle exec dock configure [ --tiny ]
@@ -58,6 +59,7 @@ $ bundle exec dock docker_delete [ --force ]
 ```
 
 Help message:
+
 ```
 Usage: dock <command>
    or: bundle exec dock <command>
