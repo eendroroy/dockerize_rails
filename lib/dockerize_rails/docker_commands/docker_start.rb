@@ -97,5 +97,10 @@ module DockerizeRails
       end
       # rubocop:enable Metrics/AbcSize
     end
+
+    class << self
+      private :docker_start
+      private :docker_start_container
+    end
   end
 end

@@ -34,6 +34,10 @@ module DockerizeRails
         puts exception.to_s.strip.red
         1
       end
+
+      class << self
+        private :docker_stop
+      end
     end
   end
 end
