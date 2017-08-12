@@ -2,8 +2,10 @@ module DockerizeRails
   module DockerCommands
     require 'docker'
 
-    def self.version
-      Docker.version
+    def self.info
+      puts
+      DockerHelpers.print_version
+      puts
     end
 
     def self.pull
@@ -29,6 +31,41 @@ module DockerizeRails
       puts
       puts exception.to_s.red
       puts
+      1
+    end
+
+    def self.start
+      status = 0
+      status += DockerStart.start_mysql
+      status += DockerStart.start_postgres
+      status += DockerStart.start_rails
+      status
+    rescue Docker::Error::NotFoundError => exception
+      puts
+      puts exception.to_s.red
+      puts
+      1
+    end
+
+    def self.stop
+      status = 0
+      status += DockerStop.stop_rails
+      status += DockerStop.stop_mysql
+      status += DockerStop.stop_postgres
+      status
+    rescue Docker::Error::NotFoundError => exception
+      puts exception.to_s.strip.red
+      1
+    end
+
+    def self.delete
+      status = 0
+      status += DockerDelete.delete_rails
+      status += DockerDelete.delete_mysql
+      status += DockerDelete.delete_postgres
+      status
+    rescue Docker::Error::NotFoundError => exception
+      puts exception.to_s.strip.red
       1
     end
   end

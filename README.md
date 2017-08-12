@@ -35,7 +35,7 @@ If you see **migration error** in browser run the following commands:
 
 ```bash
 $ docker-compose down        # stop and destroy all running containers
-$ docker-compose up -d mysql # if application uses postgresql database use 'postgres' instead of 'mysql'
+$ docker-compose up -d mysql # if application uses postgresql database use 'postgresql' instead of 'mysql'
 $ sleep 30                   # wait 30 seconds to let the database container start properly
 $ docker-compose up -d rails # now start the rails container
 ```
@@ -54,6 +54,36 @@ $ bundle exec dock undockerize --purge
 $ bundle exec dock docker_info
 $ bundle exec dock docker_pull
 $ bundle exec dock docker_build
+$ bundle exec dock docker_start
+$ bundle exec dock docker_stop
+$ bundle exec dock docker_stop --delete
+```
+
+Help message:
+```
+Usage: dock <command>
+   or: bundle exec dock <command>
+
+   commands:
+
+        configure, c, rc, cr           - Generates '.dockerize.yml'
+          [--tiny]        -- generates shorter config file, skipping all descriptions
+
+        dockerize, dc, d               - Generates docker config files
+          [--test-env]    -- generates configurations to run tests.
+
+        undockerize, ud, du, u, dd     - Removes docker configurations
+          [--purge]       -- also removes .dockerize.yml
+
+        docker_info, info              - Shows Docker information
+        docker_pull, pull              - Pulls base Docker images (ruby, mysql/postgres)
+        docker_build, build            - Builds Docker images
+        docker_start, start            - Run/Starts Docker containers
+        docker_stop, stop              - Stops Docker containers
+          [--delete]      -- also deletes the containers
+
+        docker_delete, delete          - Deletes Docker containers
+        help, h                        - Prints this message
 ```
 
 ## Demo

@@ -7,8 +7,13 @@ require 'dockerize_rails/dr_config'
 require 'dockerize_rails/config_loader'
 require 'dockerize_rails/dr_name_space'
 require 'dockerize_rails/config_generator'
+require 'dockerize_rails/docker_commands/docker_options'
+require 'dockerize_rails/docker_commands/docker_helpers'
 require 'dockerize_rails/docker_commands/docker_pull'
 require 'dockerize_rails/docker_commands/docker_build'
+require 'dockerize_rails/docker_commands/docker_start'
+require 'dockerize_rails/docker_commands/docker_stop'
+require 'dockerize_rails/docker_commands/docker_delete'
 require 'dockerize_rails/docker_commands'
 require 'dockerize_rails/command_line_methods'
 require 'dockerize_rails/command_line'
@@ -23,10 +28,16 @@ module DockerizeRails
   private_constant :Constants
   private_constant :Templates
   private_constant :CommandLineMethods
+  private_constant :DockerCommands
 
   module DockerCommands
     private_constant :DockerPull
     private_constant :DockerBuild
+    private_constant :DockerStart
+    private_constant :DockerStop
+    private_constant :DockerDelete
+    private_constant :DockerHelpers
+    private_constant :DockerOptions
   end
 end
 

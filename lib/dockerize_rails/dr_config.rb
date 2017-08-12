@@ -25,7 +25,7 @@ module DockerizeRails
     @databases            = {}
 
     def self.load_dockerize_rails_config
-      dockerize_rails_config_file = File.join(PATHS.current, Constants::DOCKERIZE_RAILS_CONFIG_FILE_NAME)
+      dockerize_rails_config_file = File.join(PATHS.current, Constants::CONFIG_FILE_NAME)
       if File.exist? dockerize_rails_config_file
         dockerize_rails_config = YAML.load_file(dockerize_rails_config_file)
         ATTRIBUTES.each do |attr|

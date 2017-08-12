@@ -101,7 +101,7 @@ option: <code>bundle exec dock dockerize --test-env</code>.</p>
 commands:</p>
 
 <pre class="code ruby"><code class="ruby">$ docker-compose down        # stop and destroy all running containers
-$ docker-compose up -d mysql # if application uses postgresql database use &#39;postgres&#39; instead of &#39;mysql&#39;
+$ docker-compose up -d mysql # if application uses postgresql database use &#39;postgresql&#39; instead of &#39;mysql&#39;
 $ sleep 30                   # wait 30 seconds to let the database container start properly
 $ docker-compose up -d rails # now start the rails container</code></pre>
 
@@ -114,7 +114,34 @@ dock configure $ bundle exec dock configure --tiny $ bundle exec dock
 dockerize $ bundle exec dock dockerize --test-env $ bundle exec dock
 undockerize $ bundle exec dock undockerize --purge $ bundle exec dock
 docker_info $ bundle exec dock docker_pull $ bundle exec dock docker_build
-</code></p>
+$ bundle exec dock docker_start $ bundle exec dock docker_stop $ bundle
+exec dock docker_stop --delete </code></p>
+
+<p>Help message: “` Usage: dock &lt;command&gt;  or: bundle exec dock
+&lt;command&gt;</p>
+
+<p>commands:</p>
+
+<pre class="code ruby"><code class="ruby">    configure, c, rc, cr           - Generates &#39;.dockerize.yml&#39;
+      [--tiny]        -- generates shorter config file, skipping all descriptions
+
+    dockerize, dc, d               - Generates docker config files
+      [--test-env]    -- generates configurations to run tests.
+
+    undockerize, ud, du, u, dd     - Removes docker configurations
+      [--purge]       -- also removes .dockerize.yml
+
+    docker_info, info              - Shows Docker information
+    docker_pull, pull              - Pulls base Docker images (ruby, mysql/postgres)
+    docker_build, build            - Builds Docker images
+    docker_start, start            - Run/Starts Docker containers
+    docker_stop, stop              - Stops Docker containers
+      [--delete]      -- also deletes the containers
+
+    docker_delete, delete          - Deletes Docker containers
+    help, h                        - Prints this message</code></pre>
+
+<p>“`</p>
 
 <h2 id="label-Demo">Demo</h2>
 
@@ -148,7 +175,7 @@ src="https://app.fossa.io/api/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Feendroro
 </div></div>
 
       <div id="footer">
-  Generated on Sat Aug 12 07:58:59 2017 by
+  Generated on Sat Aug 12 10:16:56 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.1.0).
 </div>

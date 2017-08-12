@@ -20,6 +20,12 @@ module DockerizeRails
         return docker_pull
       when *(commands[:docker_build])
         return docker_build
+      when *(commands[:docker_start])
+        return docker_start
+      when *(commands[:docker_stop])
+        return docker_stop
+      when *(commands[:docker_delete])
+        return docker_delete
       when *(commands[:help])
         return help
       else
@@ -52,30 +58,37 @@ module DockerizeRails
     end
 
     def self.docker_info
-      docker_version = DockerCommands.version
-
-      puts
-      Helpers.print_formatted_info 'Docker Version', "#{docker_version['Version']}\n"
-      Helpers.print_formatted_info 'API', "#{docker_version['ApiVersion']} : #{docker_version['MinAPIVersion']}\n"
-      Helpers.print_formatted_info 'Git Commit', "#{docker_version['GitCommit']}\n"
-      Helpers.print_formatted_info 'Go Version', "#{docker_version['GoVersion']}\n"
-      # Helpers.print_formatted_info 'OS', "#{v['Os']}_#{v['Arch']}_#{v['KernelVersion']}\n"
-      Helpers.print_formatted_info 'Experimental', "#{docker_version['Experimental']}\n"
-      Helpers.print_formatted_info 'Build Time',
-                                   "#{DateTime.parse(docker_version['BuildTime']).strftime('%b %d, %Y %I:%M %p')}\n"
-      puts
+      DockerCommands.info
       0
     end
 
     def self.docker_pull
       DRNameSpace.load
-      DockerizeRails::DockerCommands.pull
+      DockerCommands.pull
       0
     end
 
     def self.docker_build
       DRNameSpace.load
-      DockerizeRails::DockerCommands.build
+      DockerCommands.build
+      0
+    end
+
+    def self.docker_start
+      DRNameSpace.load
+      DockerCommands.start
+      0
+    end
+
+    def self.docker_stop
+      DRNameSpace.load
+      DockerCommands.stop
+      0
+    end
+
+    def self.docker_delete
+      DRNameSpace.load
+      DockerCommands.delete
       0
     end
   end

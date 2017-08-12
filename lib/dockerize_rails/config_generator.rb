@@ -3,8 +3,8 @@ module DockerizeRails
     require 'erb'
     def self.configure
       puts "\nGenerating DockerizeRails config file ...\n".yellow
-      puts "  ==> #{Constants::DOCKERIZE_RAILS_CONFIG_FILE_NAME}".blue
-      file = File.open(File.join(PATHS.current, Constants::DOCKERIZE_RAILS_CONFIG_FILE_NAME), 'w+')
+      puts "  ==> #{Constants::CONFIG_FILE_NAME}".blue
+      file = File.open(File.join(PATHS.current, Constants::CONFIG_FILE_NAME), 'w+')
       if DRNameSpace.namespace.tiny
         file.write(DRConfig.to_yaml)
       else
@@ -31,7 +31,7 @@ module DockerizeRails
       status = 0
       puts "\nRemoving docker config files ...\n".yellow
       status += remove_config_directories
-      dir_op(Constants::DOCKERIZE_RAILS_CONFIG_FILE_NAME, 'rm_rf') if DRNameSpace.namespace.purge
+      dir_op(Constants::CONFIG_FILE_NAME, 'rm_rf') if DRNameSpace.namespace.purge
       status
     end
 
