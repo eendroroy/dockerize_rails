@@ -44,7 +44,7 @@ module DockerizeRails
     # -rubocop:disable Metrics/AbcSize
     def self.help
       ['
-Usage: rocker <command>
+Usage: dock <command>
    or: bundle exec dock <command>
 
    commands:
