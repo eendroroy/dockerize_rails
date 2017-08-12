@@ -101,7 +101,7 @@ option: <code>bundle exec dock dockerize --test-env</code>.</p>
 commands:</p>
 
 <pre class="code ruby"><code class="ruby">$ docker-compose down        # stop and destroy all running containers
-$ docker-compose up -d mysql # if application uses postgresql database use &#39;postgres&#39; instead of &#39;mysql&#39;
+$ docker-compose up -d mysql # if application uses postgresql database use &#39;postgresql&#39; instead of &#39;mysql&#39;
 $ sleep 30                   # wait 30 seconds to let the database container start properly
 $ docker-compose up -d rails # now start the rails container</code></pre>
 
@@ -114,7 +114,7 @@ dock configure $ bundle exec dock configure --tiny $ bundle exec dock
 dockerize $ bundle exec dock dockerize --test-env $ bundle exec dock
 undockerize $ bundle exec dock undockerize --purge $ bundle exec dock
 docker_info $ bundle exec dock docker_pull $ bundle exec dock docker_build
-</code></p>
+$ bundle exec dock docker_start </code></p>
 
 <h2 id="label-Demo">Demo</h2>
 
@@ -148,7 +148,7 @@ src="https://app.fossa.io/api/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Feendroro
 </div></div>
 
       <div id="footer">
-  Generated on Sat Aug 12 07:58:59 2017 by
+  Generated on Sat Aug 12 08:01:16 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.1.0).
 </div>
