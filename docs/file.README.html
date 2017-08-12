@@ -114,8 +114,10 @@ dock configure $ bundle exec dock configure --tiny $ bundle exec dock
 dockerize $ bundle exec dock dockerize --test-env $ bundle exec dock
 undockerize $ bundle exec dock undockerize --purge $ bundle exec dock
 docker_info $ bundle exec dock docker_pull $ bundle exec dock docker_build
-$ bundle exec dock docker_start $ bundle exec dock docker_stop $ bundle
-exec dock docker_stop --delete $ bundle exec dock docker_delete </code></p>
+$ bundle exec dock docker_build --log $ bundle exec dock docker_build
+--rebuild $ bundle exec dock docker_build --rebuild --force $ bundle exec
+dock docker_start $ bundle exec dock docker_stop $ bundle exec dock
+docker_stop --delete $ bundle exec dock docker_delete </code></p>
 
 <p>Help message: “` Usage: dock &lt;command&gt;  or: bundle exec dock
 &lt;command&gt;</p>
@@ -123,20 +125,24 @@ exec dock docker_stop --delete $ bundle exec dock docker_delete </code></p>
 <p>commands:</p>
 
 <pre class="code ruby"><code class="ruby">    configure, c, rc, cr           - Generates &#39;.dockerize.yml&#39;
-      [--tiny]        -- generates shorter config file, skipping all descriptions
+      [--tiny]        -- Generates shorter config file, skipping all descriptions
 
     dockerize, dc, d               - Generates docker config files
-      [--test-env]    -- generates configurations to run tests.
+      [--test-env]    -- Generates configurations to run tests.
 
     undockerize, ud, du, u, dd     - Removes docker configurations
-      [--purge]       -- also removes .dockerize.yml
+      [--purge]       -- Also removes .dockerize.yml
 
     docker_info, info              - Shows Docker information
     docker_pull, pull              - Pulls base Docker images (ruby, mysql/postgres)
     docker_build, build            - Builds Docker images
+      [--log]         -- Displays/Streams build log
+      [--rebuild]     -- Deletes images if exists and rebuilds
+      [--force]       -- Force Image deletion. Works only with --rebuild option
+
     docker_start, start            - Run/Starts Docker containers
     docker_stop, stop              - Stops Docker containers
-      [--delete]      -- also deletes the containers
+      [--delete]      -- Also deletes the containers
 
     docker_delete, delete          - Deletes Docker containers
     help, h                        - Prints this message</code></pre>
@@ -175,7 +181,7 @@ src="https://app.fossa.io/api/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Feendroro
 </div></div>
 
       <div id="footer">
-  Generated on Sat Aug 12 10:26:28 2017 by
+  Generated on Sat Aug 12 15:48:45 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.1.0).
 </div>

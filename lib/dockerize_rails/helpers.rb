@@ -16,6 +16,9 @@ module DockerizeRails
         opts.on('--purge') { options[:purge] = true }
         opts.on('--test-env') { options[:test_env] = true }
         opts.on('--delete') { options[:delete_containers] = true }
+        opts.on('--log') { options[:stream_log] = true }
+        opts.on('--rebuild') { options[:rebuild] = true }
+        opts.on('--force') { options[:force] = true }
       end
       parser.parse!
       [ARGV[0].to_s, args: options]

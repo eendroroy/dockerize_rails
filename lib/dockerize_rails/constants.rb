@@ -21,21 +21,21 @@ module DockerizeRails
         aliases: %I[configure c rc cr],
         help: "Generates '#{CONFIG_FILE_NAME}'".freeze,
         params: {
-          :'--tiny' => 'generates shorter config file, skipping all descriptions'.freeze
+          :'--tiny' => 'Generates shorter config file, skipping all descriptions'.freeze
         }
       },
       dockerize: {
         aliases: %I[dockerize dc d],
         help: 'Generates docker config files'.freeze,
         params: {
-          :'--test-env' => 'generates configurations to run tests.'.freeze
+          :'--test-env' => 'Generates configurations to run tests.'.freeze
         }
       },
       undockerize: {
         aliases: %I[undockerize ud du u dd],
         help: 'Removes docker configurations'.freeze,
         params: {
-          :'--purge' => "also removes #{CONFIG_FILE_NAME}".freeze
+          :'--purge' => "Also removes #{CONFIG_FILE_NAME}".freeze
         }
       },
       docker_info: {
@@ -48,7 +48,12 @@ module DockerizeRails
       },
       docker_build: {
         aliases: %I[docker_build build],
-        help: 'Builds Docker images'.freeze
+        help: 'Builds Docker images'.freeze,
+        params:{
+          :'--log' => 'Displays/Streams build log'.freeze,
+          :'--rebuild' => 'Deletes images if exists and rebuilds'.freeze,
+          :'--force' => 'Force Image deletion. Works only with --rebuild option'.freeze
+        }
       },
       docker_start: {
         aliases: %I[docker_start start],
@@ -58,7 +63,7 @@ module DockerizeRails
         aliases: %I[docker_stop stop],
         help: 'Stops Docker containers'.freeze,
         params: {
-            :'--delete' => 'also deletes the containers'.freeze
+            :'--delete' => 'Also deletes the containers'.freeze
         }
       },
       docker_delete: {
