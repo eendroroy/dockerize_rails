@@ -54,6 +54,9 @@ $ bundle exec dock undockerize --purge
 $ bundle exec dock docker_info
 $ bundle exec dock docker_pull
 $ bundle exec dock docker_build
+$ bundle exec dock docker_build --log
+$ bundle exec dock docker_build --rebuild
+$ bundle exec dock docker_build --rebuild --force
 $ bundle exec dock docker_start
 $ bundle exec dock docker_stop
 $ bundle exec dock docker_stop --delete
@@ -79,9 +82,13 @@ Usage: dock <command>
         docker_info, info              - Shows Docker information
         docker_pull, pull              - Pulls base Docker images (ruby, mysql/postgres)
         docker_build, build            - Builds Docker images
+          [--log]         -- Displays/Streams build log
+          [--rebuild]     -- Deletes images if exists and rebuilds
+          [--force]       -- Force Image deletion. Works only with --rebuild option
+
         docker_start, start            - Run/Starts Docker containers
         docker_stop, stop              - Stops Docker containers
-          [--delete]      -- also deletes the containers
+          [--delete]      -- Also deletes the containers
 
         docker_delete, delete          - Deletes Docker containers
         help, h                        - Prints this message
