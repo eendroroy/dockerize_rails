@@ -15,6 +15,7 @@ module DockerizeRails
         opts.on('--tiny') { options[:tiny] = true }
         opts.on('--purge') { options[:purge] = true }
         opts.on('--test-env') { options[:test_env] = true }
+        opts.on('--delete') { options[:delete_containers] = true }
       end
       parser.parse!
       [ARGV[0].to_s, args: options]

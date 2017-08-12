@@ -23,7 +23,9 @@ module DockerizeRails
         container = Docker::Container.get(container_name)
         if container.info['State']['Running']
           container.stop
+          container.delete(:force => true) if DRNameSpace.namespace.delete_containers
           puts "Container >#{container_name}< stopped successfully.".green
+          puts "Container >#{container_name}< deleted successfully.".green if DRNameSpace.namespace.delete_containers
         else
           puts "Container >#{container_name}< is not running.".blue
         end

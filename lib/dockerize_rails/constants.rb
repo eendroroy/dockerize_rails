@@ -56,7 +56,10 @@ module DockerizeRails
       },
       docker_stop: {
         aliases: %I[docker_stop stop],
-        help: 'Run Docker containers'.freeze
+        help: 'Run Docker containers'.freeze,
+        params: {
+            :'--delete' => 'also deletes the containers'.freeze
+        }
       },
       help: {
         aliases: %I[help h],
