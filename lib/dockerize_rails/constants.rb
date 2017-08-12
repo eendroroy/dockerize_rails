@@ -48,7 +48,10 @@ module DockerizeRails
       },
       docker_build: {
         aliases: %I[docker_build build],
-        help: 'Builds Docker images'.freeze
+        help: 'Builds Docker images'.freeze,
+        params:{
+          :'--log' => 'Displays/Streams build log'.freeze
+        }
       },
       docker_start: {
         aliases: %I[docker_start start],
