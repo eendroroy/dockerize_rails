@@ -16,8 +16,9 @@ gem 'dockerize_rails'
 ```
 
 And then execute:
+
 ```bash
-$ bundle
+$ bundle install
 ```
 
 ## Usage
@@ -94,7 +95,7 @@ Usage: dock <command>
         help, h                        - Prints this message
 ```
 
-## Demo
+## Demonstration
 
 [![asciicast](https://asciinema.org/a/121552.png)](https://asciinema.org/a/121552)
 
