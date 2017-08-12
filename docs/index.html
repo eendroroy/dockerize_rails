@@ -111,45 +111,50 @@ $ docker-compose up -d rails # now start the rails container</code></pre>
 Use <code>--purge</code> option to remove <code>.dockerize.yml</code> file:
 <code>bundle exec dock undockerize --purge</code></p>
 
-<p>All available commands: <code>bash $ bundle exec dock help $ bundle exec
-dock configure [ --tiny ] $ bundle exec dock dockerize [ --test-env ] $
-bundle exec dock undockerize [ --purge ] $ bundle exec dock docker_info $
-bundle exec dock docker_pull $ bundle exec dock docker_build [ --log |
---rebuild | --rebuild --force ] $ bundle exec dock docker_start $ bundle
-exec dock docker_stop [ --delete ] $ bundle exec dock docker_delete [
---force ] </code></p>
+<p>All available commands:</p>
 
-<p>Help message: “` Usage: dock &lt;command&gt;  or: bundle exec dock
-&lt;command&gt;</p>
+<pre class="code ruby"><code class="ruby">$ bundle exec dock help
+$ bundle exec dock configure [ --tiny ]
+$ bundle exec dock dockerize [ --test-env ]
+$ bundle exec dock undockerize [ --purge ]
+$ bundle exec dock docker_info
+$ bundle exec dock docker_pull
+$ bundle exec dock docker_build [ --log | --rebuild | --rebuild --force ]
+$ bundle exec dock docker_start
+$ bundle exec dock docker_stop [ --delete ]
+$ bundle exec dock docker_delete [ --force ]</code></pre>
 
-<p>commands:</p>
+<p>Help message:</p>
 
-<pre class="code ruby"><code class="ruby">    configure, c, rc, cr           - Generates &#39;.dockerize.yml&#39;
-      [--tiny]        -- Generates shorter config file, skipping all descriptions
+<pre class="code ruby"><code class="ruby">Usage: dock &lt;command&gt;
+   or: bundle exec dock &lt;command&gt;
 
-    dockerize, dc, d               - Generates docker config files
-      [--test-env]    -- Generates configurations to run tests.
+   commands:
 
-    undockerize, ud, du, u, dd     - Removes docker configurations
-      [--purge]       -- Also removes .dockerize.yml
+        configure, c, rc, cr           - Generates &#39;.dockerize.yml&#39;
+          [--tiny]        -- Generates shorter config file, skipping all descriptions
 
-    docker_info, info              - Shows Docker information
-    docker_pull, pull              - Pulls base Docker images (ruby, mysql/postgres)
-    docker_build, build            - Builds Docker images
-      [--log]         -- Displays/Streams build log
-      [--rebuild]     -- Deletes images if exists and rebuilds
-      [--force]       -- Force Image deletion. Works only with --rebuild option
+        dockerize, dc, d               - Generates docker config files
+          [--test-env]    -- Generates configurations to run tests.
 
-    docker_start, start            - Run/Starts Docker containers
-    docker_stop, stop              - Stops Docker containers
-      [--delete]      -- Also deletes the containers
+        undockerize, ud, du, u, dd     - Removes docker configurations
+          [--purge]       -- Also removes .dockerize.yml
 
-    docker_delete, delete          - Deletes Docker containers
-      [--force]       -- Force Container deletion.
+        docker_info, info              - Shows Docker information
+        docker_pull, pull              - Pulls base Docker images (ruby, mysql/postgres)
+        docker_build, build            - Builds Docker images
+          [--log]         -- Displays/Streams build log
+          [--rebuild]     -- Deletes images if exists and rebuilds
+          [--force]       -- Force Image deletion. Works only with --rebuild option
 
-    help, h                        - Prints this message</code></pre>
+        docker_start, start            - Run/Starts Docker containers
+        docker_stop, stop              - Stops Docker containers
+          [--delete]      -- Also deletes the containers
 
-<p>“`</p>
+        docker_delete, delete          - Deletes Docker containers
+          [--force]       -- Force Container deletion.
+
+        help, h                        - Prints this message</code></pre>
 
 <h2 id="label-Demonstration">Demonstration</h2>
 
@@ -183,7 +188,7 @@ src="https://app.fossa.io/api/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Feendroro
 </div></div>
 
       <div id="footer">
-  Generated on Sat Aug 12 16:43:27 2017 by
+  Generated on Sat Aug 12 16:47:41 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.1.0).
 </div>
