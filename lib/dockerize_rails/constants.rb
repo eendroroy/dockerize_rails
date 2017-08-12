@@ -50,7 +50,9 @@ module DockerizeRails
         aliases: %I[docker_build build],
         help: 'Builds Docker images'.freeze,
         params:{
-          :'--log' => 'Displays/Streams build log'.freeze
+          :'--log' => 'Displays/Streams build log'.freeze,
+          :'--rebuild' => 'Deletes images if exists and rebuilds'.freeze,
+          :'--force' => 'Force Image deletion. Works only with --rebuild option'.freeze
         }
       },
       docker_start: {

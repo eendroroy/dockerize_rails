@@ -3,8 +3,14 @@ module DockerizeRails
     module DockerBuild
       def self.build_rails
         if Docker::Image.exist? DockerHelpers.get_name(:rails, :image)
-          puts " ==> Image >#{DockerHelpers.get_name(:rails, :image)}< already exists".green
-          return 0
+          if DRNameSpace.namespace.rebuild
+            image = Docker::Image.get DockerHelpers.get_name(:rails, :image)
+            puts " ==> Removing Image: #{DockerHelpers.get_name(:rails, :image)}".blue
+            image.remove( force: DRNameSpace.namespace.force || false)
+          else
+            puts " ==> Image >#{DockerHelpers.get_name(:rails, :image)}< already exists".green
+            return 0
+          end
         end
         build_docker_image(
             "#{Constants::CONFIG_DIRECTORY_NAME}/#{Constants::RAILS_DIRECTORY_NAME}/Dockerfile",
@@ -22,8 +28,14 @@ module DockerizeRails
       def self.build_mysql
         if DRConfig.linked_database? && DRConfig.databases[DRConfig.application_env] == 'mysql'
           if Docker::Image.exist? DockerHelpers.get_name(:mysql, :image)
-            puts " ==> Image >#{DockerHelpers.get_name(:mysql, :image)}< already exists".green
-            return 0
+            if DRNameSpace.namespace.rebuild
+              image = Docker::Image.get DockerHelpers.get_name(:mysql, :image)
+              puts " ==> Removing Image: #{DockerHelpers.get_name(:mysql, :image)}".blue
+              image.remove( force: DRNameSpace.namespace.force || false)
+            else
+              puts " ==> Image >#{DockerHelpers.get_name(:mysql, :image)}< already exists".green
+              return 0
+            end
           end
           build_docker_image(
               "#{Constants::CONFIG_DIRECTORY_NAME}/#{Constants::MYSQL_DIRECTORY_NAME}/Dockerfile",
@@ -42,8 +54,14 @@ module DockerizeRails
       def self.build_postgres
         if DRConfig.linked_database? && DRConfig.databases[DRConfig.application_env] == 'postgresql'
           if Docker::Image.exist? DockerHelpers.get_name(:postgres, :image)
-            puts " ==> Image >#{DockerHelpers.get_name(:postgres, :image)}< already exists".green
-            return 0
+            if DRNameSpace.namespace.rebuild
+              image = Docker::Image.get DockerHelpers.get_name(:postgres, :image)
+              puts " ==> Removing Image: #{DockerHelpers.get_name(:postgres, :image)}".blue
+              image.remove( force: DRNameSpace.namespace.force || false)
+            else
+              puts " ==> Image >#{DockerHelpers.get_name(:postgres, :image)}< already exists".green
+              return 0
+            end
           end
           build_docker_image(
               "#{Constants::CONFIG_DIRECTORY_NAME}/#{Constants::PG_DIRECTORY_NAME}/Dockerfile",
