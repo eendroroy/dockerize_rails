@@ -24,6 +24,8 @@ module DockerizeRails
         return docker_start
       when *(commands[:docker_stop])
         return docker_stop
+      when *(commands[:docker_delete])
+        return docker_delete
       when *(commands[:help])
         return help
       else
@@ -81,6 +83,12 @@ module DockerizeRails
     def self.docker_stop
       DRNameSpace.load
       DockerCommands.stop
+      0
+    end
+
+    def self.docker_delete
+      DRNameSpace.load
+      DockerCommands.delete
       0
     end
   end

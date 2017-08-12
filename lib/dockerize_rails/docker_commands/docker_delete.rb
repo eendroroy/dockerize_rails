@@ -2,19 +2,19 @@ module DockerizeRails
   module DockerCommands
     module DockerDelete
       def self.delete_rails
-        docker_stop DockerHelpers.get_name(:rails, :container)
+        docker_delete DockerHelpers.get_name(:rails, :container)
       end
 
       def self.delete_mysql
         if DRConfig.linked_database? && DRConfig.databases[DRConfig.application_env] == 'mysql'
-          return docker_stop DockerHelpers.get_name(:mysql, :container)
+          return docker_delete DockerHelpers.get_name(:mysql, :container)
         end
         0
       end
 
       def self.delete_postgres
         if DRConfig.linked_database? && DRConfig.databases[DRConfig.application_env] == 'postgresql'
-          return docker_stop DockerHelpers.get_name(:postgres, :container)
+          return docker_delete DockerHelpers.get_name(:postgres, :container)
         end
         0
       end

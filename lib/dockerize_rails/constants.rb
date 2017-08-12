@@ -61,6 +61,10 @@ module DockerizeRails
             :'--delete' => 'also deletes the containers'.freeze
         }
       },
+      docker_delete: {
+        aliases: %I[docker_delete delete],
+        help: 'Deletes Docker containers'.freeze
+      },
       help: {
         aliases: %I[help h],
         help: 'Prints this message'.freeze
