@@ -2,55 +2,79 @@ module DockerizeRails
   module DockerCommands
     module DockerStart
       def self.start_rails
-        Docker::Container.get(DockerHelpers.get_name(:rails, :container))
-        puts " ==> Container >#{DockerHelpers.get_name(:rails, :container)}< already running.".yellow
-        1
-      rescue Docker::Error::NotFoundError
         services = DockerHelpers.services_from_docker_compose
-        services.key?('rails') && docker_start(services['rails'], :rails)
-        puts " ==> Container >#{DockerHelpers.get_name(:rails, :container)}< started successfully".green
-        0
-      rescue Docker::Error::NotFoundError => exception
-        puts
-        puts exception.to_s.red
-        puts
-        1
+        begin
+          container = Docker::Container.get(DockerHelpers.get_name(:rails, :container))
+          if container.info['State']['Running']
+            puts " ==> Container >#{DockerHelpers.get_name(:rails, :container)}< already running.".yellow
+          else
+            docker_start_container(container, services['rails'], :rails)
+            puts " ==> Container >#{DockerHelpers.get_name(:rails, :container)}< started successfully".green
+          end
+          0
+        rescue Docker::Error::NotFoundError
+          services.key?('rails') && docker_start(services['rails'], :rails)
+          puts " ==> Container >#{DockerHelpers.get_name(:rails, :container)}< started successfully".green
+          0
+        rescue Docker::Error::NotFoundError => exception
+          puts
+          puts exception.to_s.red
+          puts
+          1
+        end
       end
 
       def self.start_mysql
-        Docker::Container.get(DockerHelpers.get_name(:mysql, :container))
-        puts " ==> Container >#{DockerHelpers.get_name(:mysql, :container)}< already running.".yellow
-        1
-      rescue Docker::Error::NotFoundError
-        if DRConfig.linked_database? && DRConfig.databases[DRConfig.application_env] == 'mysql'
-          services = DockerHelpers.services_from_docker_compose
+        return 0 unless DRConfig.linked_database? && DRConfig.databases[DRConfig.application_env] == 'mysql'
+        services = DockerHelpers.services_from_docker_compose
+        begin
+          container = Docker::Container.get(DockerHelpers.get_name(:mysql, :container))
+          if container.info['State']['Running']
+            puts " ==> Container >#{DockerHelpers.get_name(:mysql, :container)}< already running.".yellow
+          else
+            docker_start_container(container, services['mysql'], :mysql)
+            puts " ==> Container >#{DockerHelpers.get_name(:mysql, :container)}< started successfully".green
+          end
+          0
+        rescue Docker::Error::NotFoundError
           services.key?('mysql') && docker_start(services['mysql'], :mysql)
           puts " ==> Container >#{DockerHelpers.get_name(:mysql, :container)}< started successfully".green
+          0
+        rescue Docker::Error::NotFoundError => exception
+          puts
+          puts exception.to_s.red
+          puts
+          1
         end
-        0
-      rescue Docker::Error::NotFoundError => exception
-        puts
-        puts exception.to_s.red
-        puts
-        1
       end
 
       def self.start_postgres
-        Docker::Container.get(DockerHelpers.get_name(:postgres, :container))
-        puts " ==> Container >#{DockerHelpers.get_name(:postgres, :container)}< already running.".yellow
-        1
-      rescue Docker::Error::NotFoundError
-        if DRConfig.linked_database? && DRConfig.databases[DRConfig.application_env] == 'postgresql'
-          services = DockerHelpers.services_from_docker_compose
+        return 0 unless DRConfig.linked_database? && DRConfig.databases[DRConfig.application_env] == 'postgresql'
+        services = DockerHelpers.services_from_docker_compose
+        begin
+          container = Docker::Container.get(DockerHelpers.get_name(:postgres, :container))
+          if container.info['State']['Running']
+            puts " ==> Container >#{DockerHelpers.get_name(:postgres, :container)}< already running.".yellow
+          else
+            docker_start_container(container, services['postgresql'], :postgres)
+            puts " ==> Container >#{DockerHelpers.get_name(:postgres, :container)}< started successfully".green
+          end
+          0
+        rescue Docker::Error::NotFoundError
           services.key?('postgresql') && docker_start(services['postgresql'], :postgres)
           puts " ==> Container >#{DockerHelpers.get_name(:postgres, :container)}< started successfully".green
+          0
+        rescue Docker::Error::NotFoundError => exception
+          puts
+          puts exception.to_s.red
+          puts
+          1
         end
-        0
-      rescue Docker::Error::NotFoundError => exception
-        puts
-        puts exception.to_s.red
-        puts
-        1
+      end
+
+      def self.docker_start_container(container, definitions, service)
+        options = DockerCommands::DockerHelpers.build_options(definitions, service)
+        container.start(options)
       end
 
       # rubocop:disable Metrics/AbcSize
