@@ -44,7 +44,7 @@ module DockerizeRails
       },
       docker_pull: {
         aliases: %I[docker_pull pull],
-        help: 'Pulls Docker images'.freeze
+        help: 'Pulls base Docker images (ruby, mysql/postgres)'.freeze
       },
       docker_build: {
         aliases: %I[docker_build build],
@@ -52,11 +52,11 @@ module DockerizeRails
       },
       docker_start: {
         aliases: %I[docker_start start],
-        help: 'Run Docker containers'.freeze
+        help: 'Run/Starts Docker containers'.freeze
       },
       docker_stop: {
         aliases: %I[docker_stop stop],
-        help: 'Run Docker containers'.freeze,
+        help: 'Stops Docker containers'.freeze,
         params: {
             :'--delete' => 'also deletes the containers'.freeze
         }
