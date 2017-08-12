@@ -59,6 +59,33 @@ $ bundle exec dock docker_stop
 $ bundle exec dock docker_stop --delete
 ```
 
+Help message:
+```
+Usage: dock <command>
+   or: bundle exec dock <command>
+
+   commands:
+
+        configure, c, rc, cr           - Generates '.dockerize.yml'
+          [--tiny]        -- generates shorter config file, skipping all descriptions
+
+        dockerize, dc, d               - Generates docker config files
+          [--test-env]    -- generates configurations to run tests.
+
+        undockerize, ud, du, u, dd     - Removes docker configurations
+          [--purge]       -- also removes .dockerize.yml
+
+        docker_info, info              - Shows Docker information
+        docker_pull, pull              - Pulls base Docker images (ruby, mysql/postgres)
+        docker_build, build            - Builds Docker images
+        docker_start, start            - Run/Starts Docker containers
+        docker_stop, stop              - Stops Docker containers
+          [--delete]      -- also deletes the containers
+
+        docker_delete, delete          - Deletes Docker containers
+        help, h                        - Prints this message
+```
+
 ## Demo
 
 [![asciicast](https://asciinema.org/a/121552.png)](https://asciinema.org/a/121552)
