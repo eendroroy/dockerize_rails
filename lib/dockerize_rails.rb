@@ -37,6 +37,7 @@ module DockerizeRails
     private_constant :DockerStop
     private_constant :DockerDelete
     private_constant :DockerHelpers
+    private_constant :DockerOptions
   end
 end
 
