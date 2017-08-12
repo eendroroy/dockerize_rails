@@ -57,5 +57,16 @@ module DockerizeRails
       puts exception.to_s.strip.red
       1
     end
+
+    def self.delete
+      status = 0
+      status += DockerDelete.delete_rails
+      status += DockerDelete.delete_mysql
+      status += DockerDelete.delete_postgres
+      status
+    rescue Docker::Error::NotFoundError => exception
+      puts exception.to_s.strip.red
+      1
+    end
   end
 end
