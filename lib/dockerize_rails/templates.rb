@@ -6,7 +6,7 @@ module DockerizeRails
       #{Constants::SHELL_SCRIPT_FILE_NAME}
     ].freeze
 
-    RAILS_TEMPLATES = %w[Dockerfile entry-point.sh secrets.yml].freeze
+    RAILS_TEMPLATES = %w[Dockerfile entry-point.sh].freeze
     MYSQL_TEMPLATES = %W[Dockerfile #{Constants::SQL_DIRECTORY_NAME}/initdb-mysql.sql].freeze
     POSTGRES_TEMPLATES = %w[Dockerfile].freeze
 

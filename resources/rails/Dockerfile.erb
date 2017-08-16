@@ -20,7 +20,6 @@ RUN bundle install
 COPY . /usr/src/app
 COPY ./<%= PATHS.relative_from_current(PATHS.rails_directory) %>/entry-point.sh /usr/src/app/entry-point.sh
 COPY ./<%= PATHS.relative_from_current(PATHS.rails_directory) %>/database.yml /usr/src/app/config/database.yml
-COPY ./<%= PATHS.relative_from_current(PATHS.rails_directory) %>/secrets.yml /usr/src/app/config/secrets.yml
 
 EXPOSE <%= application_port %>
 CMD ["bash", "/usr/src/app/entry-point.sh"]
