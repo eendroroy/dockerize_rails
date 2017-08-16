@@ -73,7 +73,7 @@ module DockerizeRails
       end
 
       def self.docker_start_container(container, definitions, service)
-        options = DockerCommands::DockerHelpers.build_options(definitions, service)
+        options = DockerHelpers.build_options(definitions, service)
         container.start(options)
       end
 
