@@ -80,8 +80,12 @@ module DockerizeRails
       def self.build_docker_image(dockerfile, repo)
         image = Docker::Image.build_from_dir('.', dockerfile: dockerfile) do |output|
           if DRNameSpace.namespace.stream_log
-            if (log = JSON.parse(output)) && log.key?('stream')
-              $stdout.puts log['stream']
+            begin
+              if (log = JSON.parse(output)) && log.key?('stream')
+                $stdout.puts log['stream']
+              end
+            rescue JSON::ParserError => exception
+              puts " ==> JSON Parse Error #{exception.to_s}".red
             end
           end
         end
