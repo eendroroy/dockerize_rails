@@ -90,7 +90,7 @@ Usage: dock <command>
         help, h                        - Prints this message
 ```
 
-## Demonstration
+## Demonstration (V: 1.0.1.beta.2)
 
 [![asciicast](https://asciinema.org/a/121552.png)](https://asciinema.org/a/121552)
 
