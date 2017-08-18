@@ -35,6 +35,23 @@ module DockerizeRails
         end
       end
 
+      def self.ensure_docker_service
+        Docker.version
+        0
+      rescue Excon::Error::Socket => exception
+        puts exception.to_s.red
+        puts ' ==> Is docker running?'.yellow
+        exit(1)
+      rescue Docker::Error::ServerError => exception
+        puts exception.to_s.red
+        puts ' ==> Is docker running?'.yellow
+        exit(1)
+      rescue Excon::Error::BadGateway => exception
+        puts exception.to_s.red
+        puts ' ==> Is docker running?'.yellow
+        exit(1)
+      end
+
       def self.build_options(definitions, service)
         options = DockerOptions.new
         options.image get_name(service, :image)

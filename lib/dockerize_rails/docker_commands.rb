@@ -3,12 +3,14 @@ module DockerizeRails
     require 'docker'
 
     def self.info
+      DockerHelpers.ensure_docker_service
       puts
       DockerHelpers.print_version
       puts
     end
 
     def self.pull
+      DockerHelpers.ensure_docker_service
       status = 0
       status += DockerPull.pull_ruby
       status += DockerPull.pull_mysql
@@ -22,6 +24,7 @@ module DockerizeRails
     end
 
     def self.build
+      DockerHelpers.ensure_docker_service
       status = 0
       status += DockerBuild.build_rails
       status += DockerBuild.build_postgres
@@ -35,6 +38,7 @@ module DockerizeRails
     end
 
     def self.start
+      DockerHelpers.ensure_docker_service
       status = 0
       status += DockerStart.start_mysql
       status += DockerStart.start_postgres
@@ -48,6 +52,7 @@ module DockerizeRails
     end
 
     def self.stop
+      DockerHelpers.ensure_docker_service
       status = 0
       status += DockerStop.stop_rails
       status += DockerStop.stop_mysql
@@ -59,6 +64,7 @@ module DockerizeRails
     end
 
     def self.delete
+      DockerHelpers.ensure_docker_service
       status = 0
       status += DockerDelete.delete_rails
       status += DockerDelete.delete_mysql
