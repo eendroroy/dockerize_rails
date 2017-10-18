@@ -1,6 +1,7 @@
 module DockerizeRails
   module CommandLineMethods
     require 'colorize'
+    require 'spin_r'
 
     def self.invoke(options)
       DRNameSpace.add_hash options[1][:args]
@@ -59,32 +60,42 @@ module DockerizeRails
     end
 
     def self.docker_pull
-      DRNameSpace.load
-      DockerCommands.pull
+      SpinR.spin SpinR::Spinners::DOTTED_3, :green do
+        DRNameSpace.load
+        DockerCommands.pull
+      end
       0
     end
 
     def self.docker_build
-      DRNameSpace.load
-      DockerCommands.build
+      SpinR.spin SpinR::Spinners::DOTTED_3, :green do
+        DRNameSpace.load
+        DockerCommands.build
+      end
       0
     end
 
     def self.docker_start
-      DRNameSpace.load
-      DockerCommands.start
+      SpinR.spin SpinR::Spinners::DOTTED_3, :green do
+        DRNameSpace.load
+        DockerCommands.start
+      end
       0
     end
 
     def self.docker_stop
-      DRNameSpace.load
-      DockerCommands.stop
+      SpinR.spin SpinR::Spinners::DOTTED_3, :green do
+        DRNameSpace.load
+        DockerCommands.stop
+      end
       0
     end
 
     def self.docker_delete
-      DRNameSpace.load
-      DockerCommands.delete
+      SpinR.spin SpinR::Spinners::DOTTED_3, :green do
+        DRNameSpace.load
+        DockerCommands.delete
+      end
       0
     end
   end
